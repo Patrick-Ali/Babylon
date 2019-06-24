@@ -15,14 +15,16 @@ from kivy.uix.textinput import TextInput  # allow for ...text input.
     ##1 row and column for app, second row and column for user 
 
 class ChatPageMain(GridLayout):
-    def __init__(self, **kwargs):
+    def __init__(self, cols, rows, **kwargs):
         
         super().__init__(**kwargs)
         ##orientation = 'vertical'
         ##self.row_default_height = Window.height/2
         ##self.row_force_default = True
-        self.cols = 1
-        self.rows = 2
+        self.cols = cols
+        self.rows = rows
+        print(self.cols)
+        print(self.rows)
         ##self.size_hint_y = None
         ##self.minimum_height=.setter('height')
         ##self.size(Window.width, Window.height)
@@ -80,13 +82,17 @@ class BabylonApp(App):
 
    
     def build(self):
-        grid = ChatPageMain()
+        grid = ChatPageMain(1,3)
+        header = ChatPageMain(2,1)
+        footer = ChatPageMain(2,1)
+        grid.add_widget(header)
         #grid.bind(minimum_height=grid.setter('height'))
         chatPannel = ChatPannel()
         chat = ChatPage()
         chat.bind(minimum_height=chat.setter('height'))
         chatPannel.add_widget(chat)
         grid.add_widget(chatPannel)
+        grid.add_widget(footer)
         return grid
         ##root = StackLayout(orientation='lr-tb')
         ##btn1 = Button(text="Expand")
