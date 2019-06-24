@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.stacklayout import StackLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
@@ -17,7 +18,9 @@ class ChatPageMain(GridLayout):
     def __init__(self, **kwargs):
         
         super().__init__(**kwargs)
-
+        ##orientation = 'vertical'
+        ##self.row_default_height = Window.height/2
+        ##self.row_force_default = True
         self.cols = 1
         self.rows = 2
         ##self.size_hint_y = None
