@@ -37,12 +37,16 @@ class ChatPannel(ScrollView):
 
         self.do_scroll_x = False
         self.do_scroll_y = True
-        self.size_hint = (1, None)
+        self.size_hint = (1, 1)
         self.scroll_type = ['bars', 'content']
         self.size=(Window.width, Window.height)
         
+##class MainWindow(Window):
+    ##def __init__(self, **kwargs):
+        ##super().__init__(self)
 
-class ChatPage(StackLayout):
+        
+class ChatPage(BoxLayout):
     
     def __init__(self, **kwargs):
         
@@ -52,7 +56,7 @@ class ChatPage(StackLayout):
         ##self.size(Window.width, Window.height)
         ##self.size_hint(None, None)
 
-        #self.orientation='tb-lr'
+        self.orientation='vertical'
 
         ##self.cols = 2
         ##self.rows = 1
@@ -60,7 +64,9 @@ class ChatPage(StackLayout):
         for i in range(25):
             btn = Button(text=str(i),size_hint_y=None, height=40)
             self.add_widget(btn)
-        
+
+        def _on_resize(width, height):
+            print(width, height)
         ###---Example Code---###
         ##self.cols = 2  # used for our grid
 
@@ -82,6 +88,7 @@ class BabylonApp(App):
 
    
     def build(self):
+        #win = MainWindow()
         grid = ChatPageMain(1,3)
         header = ChatPageMain(2,1)
         footer = ChatPageMain(2,1)
