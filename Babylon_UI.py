@@ -8,7 +8,7 @@ from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
 from kivy.uix.textinput import TextInput  # allow for ...text input.
-
+from kivy.uix.label import Label
 
 class ChatPageMain(GridLayout):
     def __init__(self, cols, rows, **kwargs):
@@ -48,7 +48,18 @@ class ChatPage(BoxLayout):
             btn = Button(text=str(i),size_hint_y=None, height=40)
             self.add_widget(btn)
 
-        
+class Lab(Label):
+     def __init__(self, text, **kwargs):
+        super().__init__(**kwargs)
+        self.text = text
+
+class UserIn(TextInput):
+    def __init__(self, text, **kwargs):
+        super().__init__(**kwargs)
+        self.hint_text = text
+        self.multiline = True#False
+        self.focus = True
+        #self.use_bubble = True
 
 class BabylonApp(App):
     
@@ -56,8 +67,24 @@ class BabylonApp(App):
    
     def build(self):
         grid = ChatPageMain(1,3)
+        print(Window.height)
+        ##grid.rows_minimum[0]= 120/5 #(Window.height/100)*20
         header = ChatPageMain(2,1)
+        header.size_hint_y = 0.10
+        title = Lab("Test")
+        title.size_hint_x=0.80
+        settings = Button(text="Set",size_hint_x=0.10)
+        header.add_widget(title)
+        header.add_widget(settings)
+        ##header.size_hint(1,1)
         footer = ChatPageMain(2,1)
+        footer.size_hint_y = 0.10
+        userInput = UserIn("Test Input")
+        userInput.size_hint_x=0.80
+        enter = Button(text="Sub",size_hint_x=0.10)
+        #textinput = TextInput(text='Hello world')
+        footer.add_widget(userInput)
+        footer.add_widget(enter)
         grid.add_widget(header)
         chatPannel = ChatPannel()
         chat = ChatPage()
