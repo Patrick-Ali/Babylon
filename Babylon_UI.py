@@ -73,7 +73,7 @@ class BabylonApp(App):
         header.size_hint_y = 0.10
         title = Lab("Test")
         title.size_hint_x=0.80
-        settings = Button(text="Set",size_hint_x=0.10)
+        settings = Button(text=u"⚙️",size_hint_x=0.10)
         header.add_widget(title)
         header.add_widget(settings)
         ##header.size_hint(1,1)
