@@ -73,33 +73,68 @@ class UserIn(TextInput):
 
 class BabylonApp(App):
     
-    userInput = UserIn("I want a program to add two numbers")
+    userInput = UserIn("Example: I want a program to add two numbers.")
    
     def build(self):
+
+        #Create the base sections for the app
         grid = ChatPageMain(1,3)
-        print(Window.height)
-                header = ChatPageMain(2,1)
+
+        #Create the header section which contains the
+        #App title and settings button
+        header = ChatPageMain(2,1)
+        
+        #Set the header to fill 10% of the app height 
         header.size_hint_y = 0.10
+
+        #App title set to 80% width of the header 
         title = Lab("Babylon")
-        title.size_hint_x=0.80
-        settings = Button(text="Settings", size_hint_x=0.10)
+        title.size_hint_x = 0.80
+
+        #Settings button set to 10% width of the header  
+        settings = Button(text="Settings", size_hint_x = 0.10)
+
+        #Add title and settings button to the app 
         header.add_widget(title)
         header.add_widget(settings)
+
+        #Create the footer section which contains the
+        #User input and submit button
         footer = ChatPageMain(2,1)
         footer.size_hint_y = 0.10
-        self.userInput.size_hint_x=0.80
-        enter = Button(text="Submit",size_hint_x=0.10)
-        enter.bind(on_press=self.send_message)
+
+        #User input set to 80% width of the footer
+        self.userInput.size_hint_x = 0.80
+
+        #Submit button set to 10% width of the footer  
+        submit = Button(text="Submit",size_hint_x = 0.10)
+        #On clicking submit call send_message function
+        submit.bind(on_press=self.send_message)
+
+        #Add user input and submit button to the app
         footer.add_widget(self.userInput)
-        footer.add_widget(enter)
+        footer.add_widget(submit)
+
+        #Add header section to the app
         grid.add_widget(header)
-        chatPannel = ChatPannel()
-        chat = ChatPage()
+
+        #Create the section where the chat will appear
+        chatPannel = ChatPannel()# Container for scrolling
+        chat = ChatPage()# Container for adding messages
+
+        #Allow the chat to be scrollable
         chat.bind(minimum_height=chat.setter('height'))
+
+        #Add chat section to the app
         chatPannel.add_widget(chat)
         grid.add_widget(chatPannel)
+
+        #Add footer section to the app
         grid.add_widget(footer)
+
+        #When user presses key call the on_key_down function 
         Window.bind(on_key_down=self.on_key_down)
+        
         return grid
     
     def focus_text_input(self, _):
@@ -108,6 +143,8 @@ class BabylonApp(App):
         
     def send_message(self, _):
         print(self.userInput.text)
+        
+        #Set the user input to original state
         self.userInput.text = ''
         Clock.schedule_once(self.focus_text_input, 0.1)
         

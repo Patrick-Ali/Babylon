@@ -70,3 +70,4 @@ print(self.rows)
 #self.hint_text = 'Test input'
 # But we want to take an action only when Enter key is being pressed, and send a message
 # allow for ...text input.
+#print(Window.height)
