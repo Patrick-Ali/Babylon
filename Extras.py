@@ -55,3 +55,18 @@ print(self.rows)
         ##pass
         #grid.bind(minimum_height=grid.setter('height'))
         #win = MainWindow()
+
+
+#self.use_bubble = True
+##grid.rows_minimum[0]= 120/5 #(Window.height/100)*20
+#settings.background_normal = "Gear2.png"
+#text=u"⚙️"
+##header.size_hint(1,1)
+#self.userInput = UserIn("Test Input")
+#textinput = TextInput(text='Hello world')
+#self.userInput.select_all()
+#self.userInput.do_backspace(from_undo=False, mode='bkspc')
+#self.userInput.focus = True
+#self.hint_text = 'Test input'
+# But we want to take an action only when Enter key is being pressed, and send a message
+# allow for ...text input.
