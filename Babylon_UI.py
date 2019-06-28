@@ -1,7 +1,7 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.gridlayout import GridLayout
-from kivy.uix.stacklayout import StackLayout
+#from kivy.uix.stacklayout import StackLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -11,6 +11,8 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.uix.image import Image
+from kivy.uix.anchorlayout import AnchorLayout
+from kivy.graphics import Color, Rectangle
 
 class ChatPageMain(GridLayout):
     def __init__(self, cols, rows, **kwargs):
@@ -39,7 +41,15 @@ class ChatPannel(ScrollView):
         self.size=(Window.width, Window.height)
         
 
+class message(AnchorLayout):
+    def __init__(self, anchor, **kwargs):
+        super().__init__(**kwargs)
 
+        #Create a scrollable area
+        self.size_hint_y = None
+        
+        self.anchor_x = anchor
+        self.anchor_y = 'bottom'
         
 class ChatPage(BoxLayout):
     
@@ -53,15 +63,48 @@ class ChatPage(BoxLayout):
         #Allow objects to stack top to bottom
         self.orientation='vertical'
 
+        alter = True
 
+        #Demo chat
         for i in range(25):
-            btn = Button(text=str(i),size_hint_y=None, height=40)
-            self.add_widget(btn)
+            if alter:
+                msg = message("left")
+                #btn = Button(text= str(i), size_hint_x = 0.40)
+                bot = Lab(str(i), 0.40,[25,181,254,0.50]) 
+                msg.add_widget(bot)
+                self.add_widget(msg)
+                alter = False
+            else:
+                msg = message("right")
+                #btn = Button(text= str(i), size_hint_x = 0.40)
+                user = Lab(str(i), 0.40,[0,0,255,0.50])
+                msg.add_widget(user)
+                self.add_widget(msg)
+                alter = True
+                #,[0,0,0,0.25]
+        #,size_hint_y = None, height = 40
+        #for i in range(25):
+            #btn = Button(text= str(i),size_hint_y = None, height = 40)
+            #self.add_widget(btn)
 
 class Lab(Label):
-     def __init__(self, text, **kwargs):
+    colour = [0,0,0,0.25]
+    def __init__(self, text, width, RGBA, **kwargs):
         super().__init__(**kwargs)
         self.text = text
+        self.size_hint_x = width
+        self.colour = RGBA
+        #self.background_color = (255, 0, 0, 1)
+        #with self.canvas:
+            #Color(255,0,0,1)
+            #Rectangle(pos=self.pos, size=self.size)
+
+    def on_size(self, *args):
+        self.canvas.before.clear()
+        with self.canvas.before:
+            Color(self.colour[0], self.colour[1], self.colour[2], self.colour[3])
+            Rectangle(pos=self.pos, size=self.size)
+
 
 class UserIn(TextInput):
     def __init__(self, text, **kwargs):
@@ -88,8 +131,8 @@ class BabylonApp(App):
         header.size_hint_y = 0.10
 
         #App title set to 80% width of the header 
-        title = Lab("Babylon")
-        title.size_hint_x = 0.80
+        title = Lab("Babylon", 0.80, [255,0,0,0.25])
+        #title.size_hint_x = 0.80
 
         #Settings button set to 10% width of the header  
         settings = Button(text="Settings", size_hint_x = 0.10)
@@ -107,7 +150,7 @@ class BabylonApp(App):
         self.userInput.size_hint_x = 0.80
 
         #Submit button set to 10% width of the footer  
-        submit = Button(text="Submit",size_hint_x = 0.10)
+        submit = Button(text="Submit", size_hint_x = 0.10)
         #On clicking submit call send_message function
         submit.bind(on_press=self.send_message)
 
