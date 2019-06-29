@@ -1,7 +1,6 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.gridlayout import GridLayout
-#from kivy.uix.stacklayout import StackLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -69,23 +68,17 @@ class ChatPage(BoxLayout):
         for i in range(25):
             if alter:
                 msg = message("left")
-                #btn = Button(text= str(i), size_hint_x = 0.40)
                 bot = Lab(str(i), 0.40,[25,181,254,0.50]) 
                 msg.add_widget(bot)
                 self.add_widget(msg)
                 alter = False
             else:
                 msg = message("right")
-                #btn = Button(text= str(i), size_hint_x = 0.40)
                 user = Lab(str(i), 0.40,[0,0,255,0.50])
                 msg.add_widget(user)
                 self.add_widget(msg)
                 alter = True
-                #,[0,0,0,0.25]
-        #,size_hint_y = None, height = 40
-        #for i in range(25):
-            #btn = Button(text= str(i),size_hint_y = None, height = 40)
-            #self.add_widget(btn)
+
 
 class Lab(Label):
     colour = [0,0,0,0.25]
@@ -94,10 +87,6 @@ class Lab(Label):
         self.text = text
         self.size_hint_x = width
         self.colour = RGBA
-        #self.background_color = (255, 0, 0, 1)
-        #with self.canvas:
-            #Color(255,0,0,1)
-            #Rectangle(pos=self.pos, size=self.size)
 
     def on_size(self, *args):
         self.canvas.before.clear()
@@ -179,7 +168,8 @@ class BabylonApp(App):
         Window.bind(on_key_down=self.on_key_down)
         
         return grid
-    
+
+    #Reset user input to original state
     def focus_text_input(self, _):
         self.userInput.focus = True
         self.userInput.do_backspace(from_undo=False, mode='bkspc')

@@ -78,4 +78,22 @@
         #self.path = file
 #print(temp)
 
+#return hold.checkFile("./user.csv")
+#assert ch.checkFile("./user.csv") == True
+#if __name__ == "__main__":
+    #print(test_check())
 
+#from kivy.uix.stacklayout import StackLayout
+
+#self.background_color = (255, 0, 0, 1)
+#with self.canvas:
+#Color(255,0,0,1)
+#Rectangle(pos=self.pos, size=self.size)
+
+#,[0,0,0,0.25]
+#,size_hint_y = None, height = 40
+#for i in range(25):
+#btn = Button(text= str(i),size_hint_y = None, height = 40)
+#self.add_widget(btn)
+#btn = Button(text= str(i), size_hint_x = 0.40)
+#btn = Button(text= str(i), size_hint_x = 0.40)
