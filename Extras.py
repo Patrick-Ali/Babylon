@@ -5,8 +5,8 @@
 ##orientation = 'vertical'
 ##self.row_default_height = Window.height/2
 ##self.row_force_default = True
-print(self.cols)
-print(self.rows)
+#print(self.cols)
+#print(self.rows)
 ##self.size_hint_y = None
 ##self.minimum_height=.setter('height')
 ##self.size(Window.width, Window.height)
@@ -71,3 +71,11 @@ print(self.rows)
 # But we want to take an action only when Enter key is being pressed, and send a message
 # allow for ...text input.
 #print(Window.height)
+
+    #path = ""
+
+    #def __init__(file):
+        #self.path = file
+#print(temp)
+
+
