@@ -66,39 +66,56 @@ class ChatPage(BoxLayout):
         
 
         hold = ch()
-        chat = hold.readFile("./user.csv")
-        bot = hold.readFile("./bot.csv")
-        
-        
-        count = 0
-
-        if len(chat) >= len(bot):
-            for msge in range(len(chat)):
-                if count < len(bot):
-                    msg = message("left")
-                    botHold = Lab(bot[count], 0.40,[25,181,254,0.50])
-                    msg.add_widget(botHold)
-                    self.add_widget(msg)
-                    count+=1
+        chat = hold.readFile("./chat.csv")
+        for msge in range(len(chat)):
+            if chat[msge][0] == 'b':
+                msg = message("left")
+                botHold = Lab(chat[msge][1:], 0.40,[25,181,254,0.50])
+                msg.add_widget(botHold)
+                self.add_widget(msg)
                 
+            elif chat[msge][0] == 'u':
                 msg = message("right")
-                user = Lab(chat[msge], 0.40,[0,0,255,0.50])
+                user = Lab(chat[msge][1:], 0.40,[0,0,255,0.50])
                 msg.add_widget(user)
                 self.add_widget(msg)
                 
-        elif len(bot) > len(chat):
-            for msge in range(len(bot)):
-                msg = message("left")
-                botHold = Lab(bot[msge], 0.40,[25,181,254,0.50])
-                msg.add_widget(botHold)
-                self.add_widget(msg)
+            else:
+                continue
+                
+        #chat = hold.readFile("./user.csv")
+        #bot = hold.readFile("./bot.csv")
+        
+        
+        #count = 0
 
-                if count < len(chat):
-                    msg2 = message("right")
-                    user = Lab(chat[count], 0.40,[0,0,255,0.50])
-                    msg2.add_widget(user)
-                    self.add_widget(msg)
-                    count+=1
+        #if len(chat) >= len(bot):
+            #for msge in range(len(chat)):
+                #if count < len(bot):
+                    #msg = message("left")
+                    #botHold = Lab(bot[count], 0.40,[25,181,254,0.50])
+                    #msg.add_widget(botHold)
+                    #self.add_widget(msg)
+                    #count+=1
+                
+                #msg = message("right")
+                #user = Lab(chat[msge], 0.40,[0,0,255,0.50])
+                #msg.add_widget(user)
+                #self.add_widget(msg)
+                
+        #elif len(bot) > len(chat):
+            #for msge in range(len(bot)):
+                #msg = message("left")
+                #botHold = Lab(bot[msge], 0.40,[25,181,254,0.50])
+                #msg.add_widget(botHold)
+                #self.add_widget(msg)
+
+                #if count < len(chat):
+                    #msg2 = message("right")
+                    #user = Lab(chat[count], 0.40,[0,0,255,0.50])
+                    #msg2.add_widget(user)
+                    #self.add_widget(msg)
+                    #count+=1
 
 
 class Lab(Label):
@@ -200,12 +217,13 @@ class BabylonApp(App):
 
     def botResponse(self, userInput):
         #print("Hello")
-        chatLog = self.hold.writeFile("./bot.csv", ("Paroting: " + userInput))
+        chatLog = self.hold.writeFile("./chat.csv", ("bParoting: " + userInput))
 
         
     def send_message(self, _):
-        
-        chatLog = self.hold.writeFile("./user.csv", self.userInput.text)
+
+        #Refresh the chat
+        chatLog = self.hold.writeFile("./chat.csv", ('u' + self.userInput.text))
         self.botResponse(self.userInput.text)
         self.chatPannel.remove_widget(self.chat)
         self.chat = ChatPage()
