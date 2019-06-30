@@ -40,8 +40,8 @@ if __name__ == "__main__":
     
     #checkFile("./user.csv")
     hold = ChatHistory()
-    if(hold.checkFile("./user.csv")):
-        hold.writeFile("./user.csv", "Hello")
-        chat = hold.readFile("./user.csv")
+    if(hold.checkFile("./bot.csv")):
+        hold.writeFile("./bot.csv", "Hello")
+        chat = hold.readFile("./bot.csv")
         for msg in chat:
             print(msg)

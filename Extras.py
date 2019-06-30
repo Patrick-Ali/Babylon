@@ -97,3 +97,23 @@
 #self.add_widget(btn)
 #btn = Button(text= str(i), size_hint_x = 0.40)
 #btn = Button(text= str(i), size_hint_x = 0.40)
+
+#Demo chat
+        #for i in range(25):
+            #if alter:
+                #msg = message("left")
+                #bot = Lab(str(i), 0.40,[25,181,254,0.50]) 
+                #msg.add_widget(bot)
+                #self.add_widget(msg)
+                #alter = False
+            #else:
+                #msg = message("right")
+                #user = Lab(str(i), 0.40,[0,0,255,0.50])
+                #msg.add_widget(user)
+                #self.add_widget(msg)
+                #alter = True
+#print("Here")
+#print(msge)
+#test = len(chat) == len(bot)
+#alter = True
+
