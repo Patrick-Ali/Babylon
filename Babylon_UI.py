@@ -45,7 +45,7 @@ class message(AnchorLayout):
     def __init__(self, anchor, **kwargs):
         super().__init__(**kwargs)
 
-        #Create a scrollable area
+        
         self.size_hint_y = None
         
         self.anchor_x = anchor
@@ -63,13 +63,13 @@ class ChatPage(BoxLayout):
         #Allow objects to stack top to bottom
         self.orientation='vertical'
 
-        alter = True
+        
 
         hold = ch()
         chat = hold.readFile("./user.csv")
         bot = hold.readFile("./bot.csv")
         
-        #test = len(chat) == len(bot)
+        
         count = 0
 
         if len(chat) >= len(bot):
@@ -127,7 +127,10 @@ class UserIn(TextInput):
 class BabylonApp(App):
     
     userInput = UserIn("Example: I want a program to add two numbers.")
-   
+    chat = ChatPage()# Container for adding messages
+    hold = ch()
+    chatPannel = ChatPannel()# Container for scrolling
+    
     def build(self):
 
         #Create the base sections for the app
@@ -172,15 +175,15 @@ class BabylonApp(App):
         grid.add_widget(header)
 
         #Create the section where the chat will appear
-        chatPannel = ChatPannel()# Container for scrolling
-        chat = ChatPage()# Container for adding messages
+        
+        
 
         #Allow the chat to be scrollable
-        chat.bind(minimum_height=chat.setter('height'))
+        self.chat.bind(minimum_height=self.chat.setter('height'))
 
         #Add chat section to the app
-        chatPannel.add_widget(chat)
-        grid.add_widget(chatPannel)
+        self.chatPannel.add_widget(self.chat)
+        grid.add_widget(self.chatPannel)
 
         #Add footer section to the app
         grid.add_widget(footer)
@@ -194,9 +197,20 @@ class BabylonApp(App):
     def focus_text_input(self, _):
         self.userInput.focus = True
         self.userInput.do_backspace(from_undo=False, mode='bkspc')
+
+    def botResponse(self, userInput):
+        #print("Hello")
+        chatLog = self.hold.writeFile("./bot.csv", ("Paroting: " + userInput))
+
         
     def send_message(self, _):
-        print(self.userInput.text)
+        
+        chatLog = self.hold.writeFile("./user.csv", self.userInput.text)
+        self.botResponse(self.userInput.text)
+        self.chatPannel.remove_widget(self.chat)
+        self.chat = ChatPage()
+        self.chat.bind(minimum_height=self.chat.setter('height'))
+        self.chatPannel.add_widget(self.chat)
         
         #Set the user input to original state
         self.userInput.text = ''

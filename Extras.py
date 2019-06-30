@@ -117,3 +117,11 @@
 #test = len(chat) == len(bot)
 #alter = True
 
+#print(self.userInput.text)
+#msg = message("right")
+#userHold = Lab(self.userInput.text, 0.40,[0,0,255,0.50])
+#msg.add_widget(userHold)
+#self.chat.add_widget(msg)
+
+
+
