@@ -123,5 +123,53 @@
 #msg.add_widget(userHold)
 #self.chat.add_widget(msg)
 
+#Line(rounded_rectangle=(self.pos[0], self.pos[1], self.size[0]+1.9, self.size[1]+1.9, 10))
+
+#False
+
+        #chat = hold.readFile("./user.csv")
+        #bot = hold.readFile("./bot.csv")
+        
+        
+        #count = 0
+
+        #if len(chat) >= len(bot):
+            #for msge in range(len(chat)):
+                #if count < len(bot):
+                    #msg = message("left")
+                    #botHold = Lab(bot[count], 0.40,[25,181,254,0.50])
+                    #msg.add_widget(botHold)
+                    #self.add_widget(msg)
+                    #count+=1
+                
+                #msg = message("right")
+                #user = Lab(chat[msge], 0.40,[0,0,255,0.50])
+                #msg.add_widget(user)
+                #self.add_widget(msg)
+                
+        #elif len(bot) > len(chat):
+            #for msge in range(len(bot)):
+                #msg = message("left")
+                #botHold = Lab(bot[msge], 0.40,[25,181,254,0.50])
+                #msg.add_widget(botHold)
+                #self.add_widget(msg)
+
+                #if count < len(chat):
+                    #msg2 = message("right")
+                    #user = Lab(chat[count], 0.40,[0,0,255,0.50])
+                    #msg2.add_widget(user)
+                    #self.add_widget(msg)
+                    #count+=1
+
+#, Line
+#from kivy.uix.image import Image
+
+##class Symbols(Image):
+##    
+##    def __init__(self, source, **kwargs):
+##        super().__init__(**kwargs)
+##        self.source = source
+##        self.y = self.parent.y + self.parent.height - 250
+##
 
 

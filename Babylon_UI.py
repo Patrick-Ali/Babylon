@@ -9,9 +9,9 @@ from kivy.core.window import Window
 from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
 from kivy.clock import Clock
-from kivy.uix.image import Image
 from kivy.uix.anchorlayout import AnchorLayout
-from kivy.graphics import Color, Rectangle
+from kivy.graphics import Color, Rectangle, RoundedRectangle
+
 from ChatHistory import ChatHistory as ch
 
 class ChatPageMain(GridLayout):
@@ -20,13 +20,6 @@ class ChatPageMain(GridLayout):
         super().__init__(**kwargs)
         self.cols = cols
         self.rows = rows
-
-class Symbols(Image):
-    
-    def __init__(self, source, **kwargs):
-        super().__init__(**kwargs)
-        self.source = source
-        self.y = self.parent.y + self.parent.height - 250
         
         
 class ChatPannel(ScrollView):
@@ -70,74 +63,47 @@ class ChatPage(BoxLayout):
         for msge in range(len(chat)):
             if chat[msge][0] == 'b':
                 msg = message("left")
-                botHold = Lab(chat[msge][1:], 0.40,[25,181,254,0.50])
+                botHold = Lab(chat[msge][1:], 0.40,[25,181,254,0.50], 10)
                 msg.add_widget(botHold)
                 self.add_widget(msg)
                 
             elif chat[msge][0] == 'u':
                 msg = message("right")
-                user = Lab(chat[msge][1:], 0.40,[0,0,255,0.50])
+                user = Lab(chat[msge][1:], 0.40,[0,0,255,0.50], 10)
                 msg.add_widget(user)
                 self.add_widget(msg)
                 
             else:
                 continue
                 
-        #chat = hold.readFile("./user.csv")
-        #bot = hold.readFile("./bot.csv")
-        
-        
-        #count = 0
-
-        #if len(chat) >= len(bot):
-            #for msge in range(len(chat)):
-                #if count < len(bot):
-                    #msg = message("left")
-                    #botHold = Lab(bot[count], 0.40,[25,181,254,0.50])
-                    #msg.add_widget(botHold)
-                    #self.add_widget(msg)
-                    #count+=1
-                
-                #msg = message("right")
-                #user = Lab(chat[msge], 0.40,[0,0,255,0.50])
-                #msg.add_widget(user)
-                #self.add_widget(msg)
-                
-        #elif len(bot) > len(chat):
-            #for msge in range(len(bot)):
-                #msg = message("left")
-                #botHold = Lab(bot[msge], 0.40,[25,181,254,0.50])
-                #msg.add_widget(botHold)
-                #self.add_widget(msg)
-
-                #if count < len(chat):
-                    #msg2 = message("right")
-                    #user = Lab(chat[count], 0.40,[0,0,255,0.50])
-                    #msg2.add_widget(user)
-                    #self.add_widget(msg)
-                    #count+=1
 
 
 class Lab(Label):
     colour = [0,0,0,0.25]
-    def __init__(self, text, width, RGBA, **kwargs):
+    corner = 0
+    def __init__(self, text, width, RGBA, corner, **kwargs):
         super().__init__(**kwargs)
         self.text = text
         self.size_hint_x = width
         self.colour = RGBA
+        self.corner = corner
 
     def on_size(self, *args):
         self.canvas.before.clear()
         with self.canvas.before:
             Color(self.colour[0], self.colour[1], self.colour[2], self.colour[3])
-            Rectangle(pos=self.pos, size=self.size)
+            
+            if self.corner > 0:
+                RoundedRectangle(pos=self.pos, size=self.size, corner_radius = self.corner)
+            else:
+                Rectangle(pos=self.pos, size=self.size)
 
 
 class UserIn(TextInput):
     def __init__(self, text, **kwargs):
         super().__init__(**kwargs)
         self.hint_text = text
-        self.multiline = True #False 
+        self.multiline = True 
         self.focus = True
         
 
@@ -161,7 +127,7 @@ class BabylonApp(App):
         header.size_hint_y = 0.10
 
         #App title set to 80% width of the header 
-        title = Lab("Babylon", 0.80, [255,0,0,0.25])
+        title = Lab("Babylon", 0.80, [255,0,0,0.25], 0)
         #title.size_hint_x = 0.80
 
         #Settings button set to 10% width of the header  
