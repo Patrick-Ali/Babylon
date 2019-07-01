@@ -40,15 +40,19 @@ class message(AnchorLayout):
 
         
         self.size_hint_y = None
+
+        self.padding = [20,20,20,20]
         
         self.anchor_x = anchor
-        self.anchor_y = 'bottom'
+        self.anchor_y = 'top'
         
 class ChatPage(BoxLayout):
     
     def __init__(self, **kwargs):
         
         super().__init__(**kwargs)
+
+        test = ["b ", "b", "u ", "u"]
         
         #Create a scrollable area
         self.size_hint_y = None
@@ -56,25 +60,55 @@ class ChatPage(BoxLayout):
         #Allow objects to stack top to bottom
         self.orientation='vertical'
 
-        
+        self.padding = [10,10,10,10]
 
         hold = ch()
         chat = hold.readFile("./chat.csv")
+        
         for msge in range(len(chat)):
-            if chat[msge][0] == 'b':
-                msg = message("left")
-                botHold = Lab(chat[msge][1:], 0.40,[25,181,254,0.50], 10)
-                msg.add_widget(botHold)
-                self.add_widget(msg)
+            length = len(chat[msge])
+            leng_check = round(length/62, 2)
+
+            if leng_check > 1:
+
+                temp = chat[msge][:72]
+                hold = chat[msge][72:]
+                count = 2
                 
-            elif chat[msge][0] == 'u':
-                msg = message("right")
-                user = Lab(chat[msge][1:], 0.40,[0,0,255,0.50], 10)
-                msg.add_widget(user)
-                self.add_widget(msg)
-                
-            else:
+                current = chat[msge][0]
+                while count > 0:
+                    if temp not in test:
+                        self.display_msg(temp)
+                    
+                    if count == 2:
+                        if len(hold) > 72:
+                            temp = current + hold
+                            hold = hold[72:]
+                            
+                        else:
+                           temp = current + hold
+                           
+                    if len(temp) <= 73:
+                        count -= 1
                 continue
+
+            if chat[msge] not in test:
+                self.display_msg(chat[msge])
+            
+                        
+    def display_msg(self, msg):
+        
+        if msg[0] == 'b':
+            msge = message("left")
+            botHold = Lab(msg[1:], 0.40,[25,181,254,0.50], 10)
+            msge.add_widget(botHold)
+            self.add_widget(msge)
+            
+        elif msg[0] == 'u':
+            msge = message("right")
+            user = Lab(msg[1:], 0.40,[0,0,255,0.50], 10)
+            msge.add_widget(user)
+            self.add_widget(msge)
                 
 
 
@@ -87,6 +121,8 @@ class Lab(Label):
         self.size_hint_x = width
         self.colour = RGBA
         self.corner = corner
+        self.text_size = (250, None)
+        self.size = self.texture_size
 
     def on_size(self, *args):
         self.canvas.before.clear()
@@ -94,7 +130,9 @@ class Lab(Label):
             Color(self.colour[0], self.colour[1], self.colour[2], self.colour[3])
             
             if self.corner > 0:
-                RoundedRectangle(pos=self.pos, size=self.size, corner_radius = self.corner)
+                temp = (self.size[0]+10, self.size[1]+10)
+                temp_pos = (self.pos[0]-5, self.pos[1]-5)
+                RoundedRectangle(pos=temp_pos, size=temp, corner_radius = self.corner)
             else:
                 Rectangle(pos=self.pos, size=self.size)
 
@@ -187,7 +225,7 @@ class BabylonApp(App):
 
         
     def send_message(self, _):
-
+        
         #Refresh the chat
         chatLog = self.hold.writeFile("./chat.csv", ('u' + self.userInput.text))
         self.botResponse(self.userInput.text)

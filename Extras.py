@@ -172,4 +172,29 @@
 ##        self.y = self.parent.y + self.parent.height - 250
 ##
 
+#print(length)
+#print(leng_check)
+#cont = False
 
+#self.padding = [0,0,0,0]
+            #if chat[msge][0] == 'b':
+                #msg = message("left")
+                #botHold = Lab(chat[msge][1:], 0.40,[25,181,254,0.50], 10)
+                #msg.add_widget(botHold)
+                #self.add_widget(msg)
+                
+            #elif chat[msge][0] == 'u':
+                #msg = message("right")
+                #user = Lab(chat[msge][1:], 0.40,[0,0,255,0.50], 10)
+                #msg.add_widget(user)
+                #self.add_widget(msg)
+                
+            #else:
+                #continue
+
+#print(chat[msge][:72])
+#print(chat[msge][73:])
+#print(count)
+#print("Temp: " + temp)
+#print("Temp len " + str(len(temp)))
+#print("Message: " + msg)
