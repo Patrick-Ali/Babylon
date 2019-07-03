@@ -5,8 +5,8 @@
 ##orientation = 'vertical'
 ##self.row_default_height = Window.height/2
 ##self.row_force_default = True
-print(self.cols)
-print(self.rows)
+#print(self.cols)
+#print(self.rows)
 ##self.size_hint_y = None
 ##self.minimum_height=.setter('height')
 ##self.size(Window.width, Window.height)
@@ -55,3 +55,146 @@ print(self.rows)
         ##pass
         #grid.bind(minimum_height=grid.setter('height'))
         #win = MainWindow()
+
+
+#self.use_bubble = True
+##grid.rows_minimum[0]= 120/5 #(Window.height/100)*20
+#settings.background_normal = "Gear2.png"
+#text=u"⚙️"
+##header.size_hint(1,1)
+#self.userInput = UserIn("Test Input")
+#textinput = TextInput(text='Hello world')
+#self.userInput.select_all()
+#self.userInput.do_backspace(from_undo=False, mode='bkspc')
+#self.userInput.focus = True
+#self.hint_text = 'Test input'
+# But we want to take an action only when Enter key is being pressed, and send a message
+# allow for ...text input.
+#print(Window.height)
+
+    #path = ""
+
+    #def __init__(file):
+        #self.path = file
+#print(temp)
+
+#return hold.checkFile("./user.csv")
+#assert ch.checkFile("./user.csv") == True
+#if __name__ == "__main__":
+    #print(test_check())
+
+#from kivy.uix.stacklayout import StackLayout
+
+#self.background_color = (255, 0, 0, 1)
+#with self.canvas:
+#Color(255,0,0,1)
+#Rectangle(pos=self.pos, size=self.size)
+
+#,[0,0,0,0.25]
+#,size_hint_y = None, height = 40
+#for i in range(25):
+#btn = Button(text= str(i),size_hint_y = None, height = 40)
+#self.add_widget(btn)
+#btn = Button(text= str(i), size_hint_x = 0.40)
+#btn = Button(text= str(i), size_hint_x = 0.40)
+
+#Demo chat
+        #for i in range(25):
+            #if alter:
+                #msg = message("left")
+                #bot = Lab(str(i), 0.40,[25,181,254,0.50]) 
+                #msg.add_widget(bot)
+                #self.add_widget(msg)
+                #alter = False
+            #else:
+                #msg = message("right")
+                #user = Lab(str(i), 0.40,[0,0,255,0.50])
+                #msg.add_widget(user)
+                #self.add_widget(msg)
+                #alter = True
+#print("Here")
+#print(msge)
+#test = len(chat) == len(bot)
+#alter = True
+
+#print(self.userInput.text)
+#msg = message("right")
+#userHold = Lab(self.userInput.text, 0.40,[0,0,255,0.50])
+#msg.add_widget(userHold)
+#self.chat.add_widget(msg)
+
+#Line(rounded_rectangle=(self.pos[0], self.pos[1], self.size[0]+1.9, self.size[1]+1.9, 10))
+
+#False
+
+        #chat = hold.readFile("./user.csv")
+        #bot = hold.readFile("./bot.csv")
+        
+        
+        #count = 0
+
+        #if len(chat) >= len(bot):
+            #for msge in range(len(chat)):
+                #if count < len(bot):
+                    #msg = message("left")
+                    #botHold = Lab(bot[count], 0.40,[25,181,254,0.50])
+                    #msg.add_widget(botHold)
+                    #self.add_widget(msg)
+                    #count+=1
+                
+                #msg = message("right")
+                #user = Lab(chat[msge], 0.40,[0,0,255,0.50])
+                #msg.add_widget(user)
+                #self.add_widget(msg)
+                
+        #elif len(bot) > len(chat):
+            #for msge in range(len(bot)):
+                #msg = message("left")
+                #botHold = Lab(bot[msge], 0.40,[25,181,254,0.50])
+                #msg.add_widget(botHold)
+                #self.add_widget(msg)
+
+                #if count < len(chat):
+                    #msg2 = message("right")
+                    #user = Lab(chat[count], 0.40,[0,0,255,0.50])
+                    #msg2.add_widget(user)
+                    #self.add_widget(msg)
+                    #count+=1
+
+#, Line
+#from kivy.uix.image import Image
+
+##class Symbols(Image):
+##    
+##    def __init__(self, source, **kwargs):
+##        super().__init__(**kwargs)
+##        self.source = source
+##        self.y = self.parent.y + self.parent.height - 250
+##
+
+#print(length)
+#print(leng_check)
+#cont = False
+
+#self.padding = [0,0,0,0]
+            #if chat[msge][0] == 'b':
+                #msg = message("left")
+                #botHold = Lab(chat[msge][1:], 0.40,[25,181,254,0.50], 10)
+                #msg.add_widget(botHold)
+                #self.add_widget(msg)
+                
+            #elif chat[msge][0] == 'u':
+                #msg = message("right")
+                #user = Lab(chat[msge][1:], 0.40,[0,0,255,0.50], 10)
+                #msg.add_widget(user)
+                #self.add_widget(msg)
+                
+            #else:
+                #continue
+
+#print(chat[msge][:72])
+#print(chat[msge][73:])
+#print(count)
+#print("Temp: " + temp)
+#print("Temp len " + str(len(temp)))
+#print("Message: " + msg)

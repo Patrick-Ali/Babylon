@@ -2,3 +2,6 @@ __pycache__/
 Old/
 Images/
 nltk_test/
+.pytest_cache/
+htmlcov/
+Testing/

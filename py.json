@@ -1,0 +1,40 @@
+{
+	"function": {
+		"code": "def <name>(<param>):",
+		"connect": {
+			"first": "paramater",
+			"second": "body",
+			"third": "return"
+			}
+		}, 
+	"paramater": "<name> = []",
+	"subscript": {
+		"beginning": "<name>[",
+		"end": "]"
+	},
+	"print": {
+		"beginning": "print(",
+		"end": ")"
+	},
+	"return": "return <name>",
+
+	"if": {
+		"beginning":"if ",
+		"comp_one": "<para1>",
+		"comp_two": "<para1> <comp> <para2>",
+		"or":" or ",
+		"and": " and ",
+		"less": " < ",
+		"more": " > ",
+	    "lesseq": " <= ",
+		"moreeq": " >= ",
+		"equal": " == ",
+		"in": " in ",
+		"not": " not ",
+
+		"end": ":"
+	},
+
+	"run": "if __name__ == '__main__':"
+
+}
