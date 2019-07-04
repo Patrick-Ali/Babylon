@@ -10,7 +10,8 @@
 	"paramater": "<name> = []",
 	"subscript": {
 		"beginning": "<name>[",
-		"end": "]"
+		"end": "]",
+		"open": "["
 	},
 	"print": {
 		"beginning": "print(",
@@ -26,8 +27,8 @@
 		"and": " and ",
 		"less": " < ",
 		"more": " > ",
-	    "lesseq": " <= ",
-		"moreeq": " >= ",
+	    "less_eq": " <= ",
+		"more_eq": " >= ",
 		"equal": " == ",
 		"in": " in ",
 		"not": " not ",
@@ -35,6 +36,34 @@
 		"end": ":"
 	},
 
-	"run": "if __name__ == '__main__':"
+	"run": "if __name__ == '__main__':",
+
+	"add":{
+		"name": "op_add",
+		"vars": 2,
+		"code": "op_add = <var1> + <var2>",
+		"return": "return op_add"
+	},
+
+	"subtract":{
+		"name": "op_sub",
+		"vars": 2,
+		"code": "op_sub = <var1> - <var2>",
+		"return": "return op_sub"
+	},
+
+	"divide":{
+		"name": "op_div",
+		"vars": 2,
+		"code": "op_div = <var1> / <var2>",
+		"return": "return op_div"
+	},
+
+	"multiply":{
+		"name": "op_mul",
+		"vars": 2,
+		"code": "op_mul = <var1> * <var2>",
+		"return": "return op_mul"
+	}
 
 }
