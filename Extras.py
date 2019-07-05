@@ -302,3 +302,56 @@
 #if __name__ == '__main__':
     
     #BabylonApp().run()
+
+#print(data)
+#[value]
+#, value
+
+#print("Here")
+#print(dict1)
+#print(dict2)
+
+#print(dict1[key])
+
+##test = JSON()
+##data = {
+##    "Test":"Data"
+##    }
+###dataWhole = test.loadData()
+##file = "test"
+##dataWhole = test.loadData(file)
+###z = {**data, **dataWhole}
+##z = test.mergeDict(dataWhole, data)
+##print(z)
+##test.addData(file, z)
+##print(test.getData(file, "Test"))
+
+'''Testing text analysis'''
+##test = TextAnalysis()
+##word = 'Dog,'
+##word = test.lower_capital(word)
+##word = test.remove_punctuation(word)
+##word2 = 'red'
+##sentence = "Hello Mr. Smith, how are you doing today?"
+##sentence2 = "The sky is pinkish-blue"
+##para = sentence + ' ' + sentence2
+##para_tokens = test.tokenize_text(para)
+##sentence = test.lower_capital(sentence)
+##sentence = test.remove_punctuation(sentence)
+##sentence2 = test.lower_capital(sentence2)
+##tokens1 = test.tokenize_sentence(sentence2)
+##sentence2 = test.remove_punctuation(sentence2)
+##tokens2 = test.tokenize_sentence(sentence2)
+##print(tokens2)
+##for token in tokens1:
+##    if token not in tokens2:
+##        tokens2.append(token)
+##print(tokens1)
+##print(tokens2)
+##print(para_tokens)
+##print(sentence)
+##print(word)
+##print(test.synonym(word))
+##print(test.synonym(word2))
+##print(test.similarity(word, word2))
+

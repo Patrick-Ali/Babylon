@@ -11,7 +11,7 @@ class PyCreate():
 
     reader = JSON()
     
-    def create_function(self, name, param_name, operation):
+    def create_function(self, name, param_name, operation, file):
         indent = "   "
         new_line = "\n"
         line = self.reader.getData("py", "function", "code")
@@ -21,14 +21,20 @@ class PyCreate():
             param = self.create_param(True, p_name)
             params.append(param)
         param = ''
+        count = 0
         for p in params:
-            param += (p + ", ")
+            count += 1
+            if count < len(params):
+                param += (p + ", ")
+            else:
+                param += (p)
+            
         line = line.replace("<param>", param)
         line_two = self.create_body(operation, params)
         line_three = self.create_return(operation)
         text = line + new_line + indent + line_two + new_line + indent + line_three
 
-        self.write_line("test.py", text)
+        self.write_line(file, text)
         
     def create_param(self, func_param, name, value = "[]"):
         param = name
@@ -39,23 +45,34 @@ class PyCreate():
     def create_body(self, operation, variables):
         # Suggestion - variables, values, operations, return
         line = self.reader.getData("py", operation, "code")
+        count = 0
         for var in variables:
-           line.replace("<name" + str(var) + ">", var)
+            count += 1
+            #print("Here")
+            line = line.replace("<var" + str(count) + ">", var)
+        #print(line)
         return line
     
     def create_return(self, operation):
         line = self.reader.getData("py", operation, "return")
         return line
 
-    def create_app_run(self, call, params):
+    def create_app_run(self, call, params, file):
         indent = "   "
         new_line = "\n"
         line = self.reader.getData("py", "run")
         line_two = call
+        count = 0
+        print_b = self.reader.getData("py", "print", "beginning")
+        print_e = self.reader.getData("py", "print", "end")
         for p in params:
-            line_two += (p + ",")
-        text = new_line + line + new_line + indent + line_two + ")"
-        self.write_line("test.py", text)
+            count += 1
+            if count < len(params):
+                line_two += (p + ", ")
+            else:
+                line_two += (p)
+        text = new_line + new_line + line + new_line + indent + print_b + line_two + print_e + print_e
+        self.write_line(file, text)
             
     def write_line(self, file, text):
         with open(file, 'a') as f:
@@ -74,8 +91,9 @@ class PyCreate():
 
 if __name__ == '__main__':
     test = PyCreate()
-    test.create_function("add", ["num1", "num2"], "add")
-    test.create_app_run("add(", ["1", "2"])
+    test.create_function("add", ["num1", "num2"], "add", "test.py")
+    test.create_app_run("add(", ["1", "2"], "test.py")
+    print(test.call_py("test.py"))
     #indent = "   "
     #new_line = "\n"
     #test_call()
