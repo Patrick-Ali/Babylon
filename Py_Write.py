@@ -12,6 +12,10 @@ class PyCreate():
     reader = JSON()
     
     def create_function(self, name, param_name, operation, file):
+        print(name)
+        print(param_name)
+        print(operation)
+        print(file)
         indent = "   "
         new_line = "\n"
         line = self.reader.getData("py", "function", "code")
@@ -44,7 +48,9 @@ class PyCreate():
             
     def create_body(self, operation, variables):
         # Suggestion - variables, values, operations, return
-        line = self.reader.getData("py", operation, "code")
+        line = self.reader.getData("py", "functions", operation)
+        line = line["code"]
+        print(line)
         count = 0
         for var in variables:
             count += 1
@@ -54,7 +60,9 @@ class PyCreate():
         return line
     
     def create_return(self, operation):
-        line = self.reader.getData("py", operation, "return")
+        #line = self.reader.getData("py", operation, "return")
+        line = self.reader.getData("py", "functions", operation)
+        line = line["return"]
         return line
 
     def create_app_run(self, call, params, file):

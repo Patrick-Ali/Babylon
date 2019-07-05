@@ -35,13 +35,33 @@ class Rules():
                operation = possible_operations[0][1]
                #print(domain + "\n" + operation)
                specifics = self.operation_specifics(domain, operation)
-               #print(specifics)
+               print(specifics)
+               params_text = input("""Please provide smaple input, e.g. for
+               'I want a program to add two numbers togther.'
+                the input would be '1, 2'. Use comma (,) to denote each input. \n
+                Enter input samples: """ )
+               params_split = params_text.split(",")
+               sample_param = []
+               for param in params_split:
+                  sample_param.append(param)
+               params = []
+               for i in range(len(sample_param)):
+                  param = "param_"+str(i)
+                  params.append(param)
+               print(params)
+               if len(params) > 0:
+                  
+                  self.domain_analysis(specifics, params)
+               #print(sample_param)
+               #domain_analysis()
                # Ask user for sample input, 'No Input' for no perameters
-               sample_input = []
+               #sample_input = []
             elif len(possible_operations) > 2:
+               pass
                #Ask user to chose between possible soloutions
                #Potential automation of similarity between sentences
             else:
+               pass
                #Tell user we are not sure what they want,
                #Ask to rephrase or look at operation list
       else:
@@ -50,7 +70,15 @@ class Rules():
    def operation_specifics(self, domain, operation):
       operation = self.reader.getData(domain, operation)
       return operation
-      
+
+   def code_search(self, text):
+      hold = self.reader.getData("py", "functions")
+      match = []
+      for key in hold:
+         if key in text:
+            match.append(key)
+      return match
+   
    def domain_search(self, text):
       domains = self.reader.getData("domains", "domains")
       match = []
@@ -61,9 +89,26 @@ class Rules():
             if key in text:
                match.append((domain, key))
       return match
+
+   def domain_analysis(self, text, params):
+      clean_text = self.text_analysis.lower_capital(text)
+      depunctuated_text = self.text_analysis.remove_punctuation(clean_text)#
+      operation = self.code_search(depunctuated_text)
+      print("Here 1")
+      print(operation)
+      if len(operation) > 0 and len(operation) < 2: #Temp till multi operations supported
+         print("Here 2")
+         print(depunctuated_text)
+         if "function" in depunctuated_text:
+            file = input("What do you want to call the program? \n Enter name: ")
+            #Lower name from capitals
+            self.generate_function_code(file, params, operation[0], (file+".py"))
+            #ask user for file name
    
-   def generate_code(self, text):
-      pass
+   def generate_function_code(self, name, params, operation, file):
+      #Create funciton using the operation found in the domain description
+      #Ask user for function name
+      self.wirte.create_function(name, params, operation, file)
       
 
 if __name__ == '__main__':

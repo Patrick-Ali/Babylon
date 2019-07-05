@@ -38,32 +38,35 @@
 
 	"run": "if __name__ == '__main__':",
 
-	"add":{
-		"name": "op_add",
-		"vars": 2,
-		"code": "op_add = <var1> + <var2>",
-		"return": "return op_add"
-	},
+	"functions":{
+		
+		"add":{
+			"name": "op_add",
+			"vars": 2,
+			"code": "op_add = <var1> + <var2>",
+			"return": "return op_add"
+		},
 
-	"subtract":{
-		"name": "op_sub",
-		"vars": 2,
-		"code": "op_sub = <var1> - <var2>",
-		"return": "return op_sub"
-	},
+		"subtract":{
+			"name": "op_sub",
+			"vars": 2,
+			"code": "op_sub = <var1> - <var2>",
+			"return": "return op_sub"
+		},
 
-	"divide":{
-		"name": "op_div",
-		"vars": 2,
-		"code": "op_div = <var1> / <var2>",
-		"return": "return op_div"
-	},
+		"divide":{
+			"name": "op_div",
+			"vars": 2,
+			"code": "op_div = <var1> / <var2>",
+			"return": "return op_div"
+		},
 
-	"multiply":{
-		"name": "op_mul",
-		"vars": 2,
-		"code": "op_mul = <var1> * <var2>",
-		"return": "return op_mul"
+		"multiply":{
+			"name": "op_mul",
+			"vars": 2,
+			"code": "op_mul = <var1> * <var2>",
+			"return": "return op_mul"
+		}
 	}
 
 }
