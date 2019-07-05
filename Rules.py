@@ -9,7 +9,7 @@ from Py_Write import PyCreate as PC
 
 class Rules():
 
-   json = JSON()
+   reader = JSON()
    text_analysis = TA()
    wirte = PC()
 
@@ -28,14 +28,46 @@ class Rules():
             #print(tokens_two)
             combine_text = self.text_analysis.combine_text(tokens_one, tokens_two)
             #print(combine_text)
+            possible_operations = self.domain_search(combine_text)
+            #print(possible_operations)
+            if len(possible_operations) > 0 and len(possible_operations) < 2:
+               domain = possible_operations[0][0]
+               operation = possible_operations[0][1]
+               #print(domain + "\n" + operation)
+               specifics = self.operation_specifics(domain, operation)
+               #print(specifics)
+               # Ask user for sample input, 'No Input' for no perameters
+               sample_input = []
+            elif len(possible_operations) > 2:
+               #Ask user to chose between possible soloutions
+               #Potential automation of similarity between sentences
+            else:
+               #Tell user we are not sure what they want,
+               #Ask to rephrase or look at operation list
       else:
          return "No text"
 
-   def domain_search(text):
+   def operation_specifics(self, domain, operation):
+      operation = self.reader.getData(domain, operation)
+      return operation
       
+   def domain_search(self, text):
+      domains = self.reader.getData("domains", "domains")
+      match = []
+      for domain in domains:
+         hold = self.reader.loadData(domain)
+         for key in hold:
+            #print(hold)
+            if key in text:
+               match.append((domain, key))
+      return match
+   
+   def generate_code(self, text):
+      pass
       
 
 if __name__ == '__main__':
-    rules = Rules()
-    test = rules.analyse("I want a program to add two numbers togther.")
-    #print(test)
+   #Testing
+   rules = Rules()
+   test = rules.analyse("I want a program to add two numbers togther.")
+   #print(test)
