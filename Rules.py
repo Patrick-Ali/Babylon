@@ -11,7 +11,7 @@ class Rules():
 
    reader = JSON()
    text_analysis = TA()
-   wirte = PC()
+   write = PC()
 
    def analyse(self, text):
       sentences = self.text_analysis.tokenize_text(text)
@@ -51,7 +51,8 @@ class Rules():
                print(params)
                if len(params) > 0:
                   
-                  self.domain_analysis(specifics, params, sentence)
+                  self.domain_analysis(specifics, params, sentence, sample_param)
+                  
                #print(sample_param)
                #domain_analysis()
                # Ask user for sample input, 'No Input' for no perameters
@@ -90,7 +91,7 @@ class Rules():
                match.append((domain, key))
       return match
 
-   def domain_analysis(self, text, params, description):
+   def domain_analysis(self, text, params, description, sample_param):
       clean_text = self.text_analysis.lower_capital(text)
       depunctuated_text = self.text_analysis.remove_punctuation(clean_text)#
       operation = self.code_search(depunctuated_text)
@@ -102,32 +103,47 @@ class Rules():
          if "function" in depunctuated_text:
             file = input("What do you want to call the program? \n Enter name: ")
             file = self.text_analysis.lower_capital(file)
-            add_program(file, description)
+            self.add_program(file, description)
             #Lower name from capitals
             self.generate_function_code(file, params, operation[0], (file+".py"))
+            self.run_program(file, sample_param)
+            self.run_pro("run_pro.py")
             #ask user for file name
    
    def generate_function_code(self, name, params, operation, file):
       #Create funciton using the operation found in the domain description
       #Ask user for function name
-      self.wirte.create_function(name, params, operation, file)
+      self.write.create_function(name, params, operation, file)
 
    def get_data(self):
-      data = self.reader.getData("programs", "programs")
-      return data
+      try:
+         data = self.reader.getData("programs", "programs")
+         return data
+      except:
+         return {}
    
    def run_program(self, name, params):
-      imp = self.write.create_import()
-      run = self.wirte.create_app_run_multi()
-      call = self.wirte.create_call(name, params)
-      prin = self.write.create_print(call)
+      imp = self.write.create_import(name)
+      run = self.write.create_app_run_multi()
+      clas = name+"."
+      call = self.write.create_call(name, params)
+      prin = self.write.create_print((clas+call))
       indent = self.write.get_indent()
-      new_line = self.write.new_line()
+      new_line = self.write.get_new_line()
+      
+      line = imp + new_line + run + new_line + indent + prin
+
+      self.write.write_line("run_pro.py", line)
       
    def add_program(self, name, description):
       data = self.get_data()
       data[name] = description
       self.reader.addData("programs", data)
+      
+   def run_pro(self, file):
+      result = self.write.call_py(file)
+      print(result)
+      return result
       
 
 if __name__ == '__main__':
