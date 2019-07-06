@@ -64,8 +64,28 @@ class PyCreate():
         line = self.reader.getData("py", "functions", operation)
         line = line["return"]
         return line
+    
+    def get_indent(self):
+        indent = "   "
+        return indent
 
-    def create_app_run(self, call, params, file):
+    def get_new_line(self):
+        new_line = "\n"
+        return new_line
+    
+    def create_print(self, text):
+        print_b = self.reader.getData("py", "print", "beginning")
+        print_e = self.reader.getData("py", "print", "end")
+
+        line = print_b + text + print_e
+
+        return line
+    
+    def create_app_run_multi(self):
+        line = self.reader.getData("py", "run")
+        return line
+    
+    def create_app_run_single(self, call, params, file):
         indent = "   "
         new_line = "\n"
         line = self.reader.getData("py", "run")
@@ -87,6 +107,24 @@ class PyCreate():
             f.write(text)
         #f.write('print("Hello World")')
             
+    def create_import(self, name):
+        line = self.reader.getData("py", "import")
+        line = line.replace("<name>", name)
+        return line
+    
+    def create_call(self, name, params):
+        line = self.reader.getData("py", "call", "beginning")
+        line = line.replace("<name>", name)
+        count = 0
+        for param in params:
+            count += 1
+            if count < len(params):
+                line += (param + ",")
+            else:
+                line += param
+        line += self.reader.getData("py", "call", "end")
+        return line
+        
     def call_py(self, file):
         #**kwargs, args for input variables
         test = subprocess.run("python " + file,

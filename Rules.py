@@ -51,7 +51,7 @@ class Rules():
                print(params)
                if len(params) > 0:
                   
-                  self.domain_analysis(specifics, params)
+                  self.domain_analysis(specifics, params, sentence)
                #print(sample_param)
                #domain_analysis()
                # Ask user for sample input, 'No Input' for no perameters
@@ -90,7 +90,7 @@ class Rules():
                match.append((domain, key))
       return match
 
-   def domain_analysis(self, text, params):
+   def domain_analysis(self, text, params, description):
       clean_text = self.text_analysis.lower_capital(text)
       depunctuated_text = self.text_analysis.remove_punctuation(clean_text)#
       operation = self.code_search(depunctuated_text)
@@ -101,6 +101,8 @@ class Rules():
          print(depunctuated_text)
          if "function" in depunctuated_text:
             file = input("What do you want to call the program? \n Enter name: ")
+            file = self.text_analysis.lower_capital(file)
+            add_program(file, description)
             #Lower name from capitals
             self.generate_function_code(file, params, operation[0], (file+".py"))
             #ask user for file name
@@ -109,6 +111,23 @@ class Rules():
       #Create funciton using the operation found in the domain description
       #Ask user for function name
       self.wirte.create_function(name, params, operation, file)
+
+   def get_data(self):
+      data = self.reader.getData("programs", "programs")
+      return data
+   
+   def run_program(self, name, params):
+      imp = self.write.create_import()
+      run = self.wirte.create_app_run_multi()
+      call = self.wirte.create_call(name, params)
+      prin = self.write.create_print(call)
+      indent = self.write.get_indent()
+      new_line = self.write.new_line()
+      
+   def add_program(self, name, description):
+      data = self.get_data()
+      data[name] = description
+      self.reader.addData("programs", data)
       
 
 if __name__ == '__main__':

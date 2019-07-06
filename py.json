@@ -17,6 +17,10 @@
 		"beginning": "print(",
 		"end": ")"
 	},
+	"call":{
+		"beginning":"<name>(",
+		"end":")"
+	},
 	"return": "return <name>",
 
 	"if": {
@@ -38,8 +42,14 @@
 
 	"run": "if __name__ == '__main__':",
 
+	"import": "import <name>",
+
+	"import_from": "from <name> import <name2>",
+
+	"import_everything": "from <name> import *",
+
 	"functions":{
-		
+
 		"add":{
 			"name": "op_add",
 			"vars": 2,
