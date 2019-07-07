@@ -1,4 +1,22 @@
 {
+	"class_non_inherit":"class <name>():",
+
+	"class_inherit":"class <name>(<inherit>):",
+
+	"init":{
+		"beginning": "def __init__(",
+		"end": ")"
+	},
+
+	"super":{
+		"beginning":"super(",
+		"end":")"
+	},
+
+	"self_clean":"self",
+
+	"self_call":"self.",
+
 	"function": {
 		"code": "def <name>(<param>):",
 		"connect": {
@@ -36,9 +54,33 @@
 		"equal": " == ",
 		"in": " in ",
 		"not": " not ",
-
+		"not_eq": "!=",
 		"end": ":"
 	},
+
+	"elif":"elif <condition>:",
+
+	"else": "else",
+
+	"pass": "pass",
+
+	"try_block":{
+		"try":"try:",
+		"except_condition":"except <exception>:",
+		"except":"except:",
+		"finally":"finally:"
+	},
+
+	"len": {
+		"beginning":"len(",
+		"end":")"
+	},
+
+	"while_loop": "while <bool>:",
+
+	"for_loop_in": "for <element> in <list>:",
+
+	"for_loop_range": "for <param> in <range>:",
 
 	"run": "if __name__ == '__main__':",
 

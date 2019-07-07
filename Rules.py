@@ -1,5 +1,6 @@
 #Part 1 - Look through domains for matching operation, e.g. add in math domain
 #Part 2 - Look for potential perameters, ask user for sample input
+
 #Part 3 - Consider if there is an extension, e.g. add then mulitply
 #Part 4 - Consider if the user wants more than one program, e.g. add two numbers and multiply two numbers
 
@@ -14,28 +15,33 @@ class Rules():
    write = PC()
 
    def analyse(self, text):
+
+      '''Takes the user input and breaks it down to find matching operations that can be
+         used to generate code. 
+      '''
+      
       sentences = self.text_analysis.tokenize_text(text)
       
       if len(sentences) > 0:
          for sentence in sentences:
             clean_text = self.text_analysis.lower_capital(sentence)
-            #print(clean_text)
+            
             depunctuated_text = self.text_analysis.remove_punctuation(clean_text) # For synonyms
-            #print(depunctuated_text)
+            
             tokens_one = self.text_analysis.tokenize_sentence(clean_text)
-            #print(tokens_one)
+            
             tokens_two = self.text_analysis.tokenize_sentence(depunctuated_text)
-            #print(tokens_two)
+            
             combine_text = self.text_analysis.combine_text(tokens_one, tokens_two)
-            #print(combine_text)
+            
             possible_operations = self.domain_search(combine_text)
-            #print(possible_operations)
+            
             if len(possible_operations) > 0 and len(possible_operations) < 2:
                domain = possible_operations[0][0]
                operation = possible_operations[0][1]
-               #print(domain + "\n" + operation)
+               
                specifics = self.operation_specifics(domain, operation)
-               print(specifics)
+               
                params_text = input("""Please provide smaple input, e.g. for
                'I want a program to add two numbers togther.'
                 the input would be '1, 2'. Use comma (,) to denote each input. \n
@@ -48,25 +54,33 @@ class Rules():
                for i in range(len(sample_param)):
                   param = "param_"+str(i)
                   params.append(param)
-               print(params)
+               
                if len(params) > 0:
                   
                   self.domain_analysis(specifics, params, sentence, sample_param)
                   
-               #print(sample_param)
-               #domain_analysis()
-               # Ask user for sample input, 'No Input' for no perameters
-               #sample_input = []
             elif len(possible_operations) > 2:
-               pass
+               line_one = "I found a list of potential operations that may fit your needs: \n"
+               count = 0
+               for operation in possible_operations:
+                  count += 1
+                  domain = possible_operations[0][0]
+                  operation = possible_operations[0][1]
+                  specifics = self.operation_specifics(domain, operation)
+                  line_one += (str(count) + ") " + specifics + " \n")
+               line_two = "\n If any operation meets your requirements enter its number."
+               return line_one + line_two
+               #pass
                #Ask user to chose between possible soloutions
                #Potential automation of similarity between sentences
             else:
-               pass
+               line_one = "I do not understand the request, perhaps try rephrasing or look at operations I can do. "
+               line_two = "To view available operations enter show operations."
+               return line_one + line_two
                #Tell user we are not sure what they want,
                #Ask to rephrase or look at operation list
       else:
-         return "No text"
+         return "No input detected"
 
    def operation_specifics(self, domain, operation):
       operation = self.reader.getData(domain, operation)
@@ -86,7 +100,6 @@ class Rules():
       for domain in domains:
          hold = self.reader.loadData(domain)
          for key in hold:
-            #print(hold)
             if key in text:
                match.append((domain, key))
       return match
@@ -95,11 +108,7 @@ class Rules():
       clean_text = self.text_analysis.lower_capital(text)
       depunctuated_text = self.text_analysis.remove_punctuation(clean_text)#
       operation = self.code_search(depunctuated_text)
-      print("Here 1")
-      print(operation)
       if len(operation) > 0 and len(operation) < 2: #Temp till multi operations supported
-         print("Here 2")
-         print(depunctuated_text)
          if "function" in depunctuated_text:
             file = input("What do you want to call the program? \n Enter name: ")
             file = self.text_analysis.lower_capital(file)
@@ -142,7 +151,7 @@ class Rules():
       
    def run_pro(self, file):
       result = self.write.call_py(file)
-      print(result)
+      #print(result)
       return result
       
 

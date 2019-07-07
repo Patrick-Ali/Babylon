@@ -326,6 +326,38 @@
 ##test.addData(file, z)
 ##print(test.getData(file, "Test"))
 
+#print(name)
+#print(param_name)
+#print(operation)
+#print(file)
+# Suggestion - variables, values, operations, return
+#print(line)
+#print("Here")
+#print(line)
+#line = self.reader.getData("py", operation, "return")
+#f.write('print("Hello World")')
+#**kwargs, args for input variables
+#print(test.stdout)
+
+    #indent = "   "
+    #new_line = "\n"
+    #test_call()
+    #reader = JSON()
+    #line = reader.getData("py", "run")
+    #test("test2.py", line + new_line)
+    #line1 = reader.getData("py", "print", "beginning")
+    #line2 = '"Hello World"'
+    #line3 = reader.getData("py", "print", "end")
+    #sentence = indent + line1 + line2 + line3 + new_line
+    #test("test2.py", sentence)
+    #test("test2.py")
+
+'''Testing py write'''
+##    test = PyCreate()
+##    test.create_function("add", ["num1", "num2"], "add", "test.py")
+##    test.create_app_run("add(", ["1", "2"], "test.py")
+##    print(test.call_py("test.py"))
+
 '''Testing text analysis'''
 ##test = TextAnalysis()
 ##word = 'Dog,'
@@ -355,3 +387,23 @@
 ##print(test.synonym(word2))
 ##print(test.similarity(word, word2))
 
+'''Testing rules'''
+#print(clean_text)
+#print(depunctuated_text)
+#print(tokens_one)
+#print(tokens_two)
+#print(combine_text)
+#print(possible_operations)
+#print(domain + "\n" + operation)
+#print(specifics)
+               #print(sample_param)
+               #domain_analysis()
+               # Ask user for sample input, 'No Input' for no perameters
+               #sample_input = []
+#print(params)
+#print(domain + "\n" + operation)
+      #print("Here 1")
+      #print(operation)
+         #print("Here 2")
+         #print(depunctuated_text)
+#print(hold)

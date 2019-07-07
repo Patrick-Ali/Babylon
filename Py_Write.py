@@ -12,10 +12,6 @@ class PyCreate():
     reader = JSON()
     
     def create_function(self, name, param_name, operation, file):
-        print(name)
-        print(param_name)
-        print(operation)
-        print(file)
         indent = "   "
         new_line = "\n"
         line = self.reader.getData("py", "function", "code")
@@ -47,20 +43,15 @@ class PyCreate():
         return param
             
     def create_body(self, operation, variables):
-        # Suggestion - variables, values, operations, return
         line = self.reader.getData("py", "functions", operation)
         line = line["code"]
-        print(line)
         count = 0
         for var in variables:
             count += 1
-            #print("Here")
             line = line.replace("<var" + str(count) + ">", var)
-        #print(line)
         return line
     
     def create_return(self, operation):
-        #line = self.reader.getData("py", operation, "return")
         line = self.reader.getData("py", "functions", operation)
         line = line["return"]
         return line
@@ -105,7 +96,6 @@ class PyCreate():
     def write_line(self, file, text):
         with open(file, 'a') as f:
             f.write(text)
-        #f.write('print("Hello World")')
             
     def create_import(self, name):
         line = self.reader.getData("py", "import")
@@ -126,29 +116,12 @@ class PyCreate():
         return line
         
     def call_py(self, file):
-        #**kwargs, args for input variables
         test = subprocess.run("python " + file,
                               stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                               check=True,
                               text=True,
                               shell=True)
-        #print(test.stdout)
         return test.stdout
 
 if __name__ == '__main__':
-    test = PyCreate()
-    test.create_function("add", ["num1", "num2"], "add", "test.py")
-    test.create_app_run("add(", ["1", "2"], "test.py")
-    print(test.call_py("test.py"))
-    #indent = "   "
-    #new_line = "\n"
-    #test_call()
-    #reader = JSON()
-    #line = reader.getData("py", "run")
-    #test("test2.py", line + new_line)
-    #line1 = reader.getData("py", "print", "beginning")
-    #line2 = '"Hello World"'
-    #line3 = reader.getData("py", "print", "end")
-    #sentence = indent + line1 + line2 + line3 + new_line
-    #test("test2.py", sentence)
-    #test("test2.py")
+    pass
