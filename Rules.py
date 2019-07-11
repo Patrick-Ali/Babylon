@@ -7,6 +7,7 @@
 from TextAnalysis import TextAnalysis as TA
 from JSON import JSON
 from Py_Write import PyCreate as PC
+from pathlib import Path
 
 class Rules():
 
@@ -104,6 +105,15 @@ class Rules():
                match.append((domain, key))
       return match
 
+   def create_function_code(self, file, description, params, operation, sample_param):
+      self.add_program(file, description)
+      #Lower name from capitals
+      self.generate_function_code(file, params, operation[0], (file+".py"))
+      self.run_program(file, sample_param)
+      self.run_pro("run_pro.py")
+      #ask user for file name
+      
+
    def domain_analysis(self, text, params, description, sample_param):
       clean_text = self.text_analysis.lower_capital(text)
       depunctuated_text = self.text_analysis.remove_punctuation(clean_text)#
@@ -112,12 +122,33 @@ class Rules():
          if "function" in depunctuated_text:
             file = input("What do you want to call the program? \n Enter name: ")
             file = self.text_analysis.lower_capital(file)
-            self.add_program(file, description)
-            #Lower name from capitals
-            self.generate_function_code(file, params, operation[0], (file+".py"))
-            self.run_program(file, sample_param)
-            self.run_pro("run_pro.py")
-            #ask user for file name
+            check = self.checkFile("./"+file+".py", False)
+            if check == 0:
+               self.create_function_code(file, description, params, operation, sample_param)
+               #self.add_program(file, description)
+               #Lower name from capitals
+               #self.generate_function_code(file, params, operation[0], (file+".py"))
+               #self.run_program(file, sample_param)
+               #self.run_pro("run_pro.py")
+               #ask user for file name
+            elif check == 1:
+               while check == 1:
+                  confirm = self.text_analysis.lower_capital(input("The file already exists, do you want to overwrite it. \n Y for yes and N for no, or E to exit: "))
+                  if confirm == 'y':
+                     check = 0
+                     con = self.checkFile("./"+file+".py", True)
+                     print(con)
+                     self.create_function_code(file, description, params, operation, sample_param)
+                  elif confirm == 'e':
+                     check = 0
+                     break
+                  else:
+                     file = input("What do you want to call the program? \n Enter name: ")
+                     file = self.text_analysis.lower_capital(file)
+                     check = self.checkFile("./"+file+".py", False)
+                     if check == 0:
+                        self.create_function_code(file, description, params, operation, sample_param)
+               
    
    def generate_function_code(self, name, params, operation, file):
       #Create funciton using the operation found in the domain description
@@ -142,6 +173,10 @@ class Rules():
       
       line = imp + new_line + run + new_line + indent + prin
 
+      confirm = self.checkFile("./run_pro.py", True)
+
+      print(confirm)
+      
       self.write.write_line("run_pro.py", line)
       
    def add_program(self, name, description):
@@ -151,12 +186,30 @@ class Rules():
       
    def run_pro(self, file):
       result = self.write.call_py(file)
-      #print(result)
+      print(result)
       return result
-      
+
+   def checkFile(self, path, remove):
+      try:
+         file = Path(path)
+         if file.is_file():
+            if remove == True:
+               print("Here")
+               file.unlink()
+               return 12
+            elif remove == False:
+               return 1 #"File already exists"
+         else:
+            return 0
+      except Exception as e:
+         raise ValueError(e.message) 
 
 if __name__ == '__main__':
    #Testing
    rules = Rules()
    test = rules.analyse("I want a program to add two numbers togther.")
+   #print(test)
+   #test = rules.checkFile("./run_pro.py", True)
+   #test = rules.checkFile("./testing3.py", False)
+   #test = rules.checkFile("./testing4.py", False)
    #print(test)

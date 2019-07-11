@@ -5,3 +5,5 @@ nltk_test/
 .pytest_cache/
 htmlcov/
 Testing/
+testing*
+test*
