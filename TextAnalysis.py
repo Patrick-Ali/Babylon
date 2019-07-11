@@ -66,33 +66,13 @@ class TextAnalysis():
         text = text.lower()
         return text
     
+    def combine_text(self, tokens_one, tokens_two):
+        for token in tokens_one:
+            if token not in tokens_two:
+                tokens_two.append(token)
+        return tokens_two
+    
     
 if __name__ == '__main__':
-    test = TextAnalysis()
-    word = 'Dog,'
-    word = test.lower_capital(word)
-    word = test.remove_punctuation(word)
-    word2 = 'red'
-    sentence = "Hello Mr. Smith, how are you doing today?"
-    sentence2 = "The sky is pinkish-blue"
-    para = sentence + ' ' + sentence2
-    para_tokens = test.tokenize_text(para)
-    sentence = test.lower_capital(sentence)
-    sentence = test.remove_punctuation(sentence)
-    sentence2 = test.lower_capital(sentence2)
-    tokens1 = test.tokenize_sentence(sentence2)
-    sentence2 = test.remove_punctuation(sentence2)
-    tokens2 = test.tokenize_sentence(sentence2)
-    print(tokens2)
-    for token in tokens1:
-        if token not in tokens2:
-            tokens2.append(token)
-    print(tokens1)
-    print(tokens2)
-    print(para_tokens)
-    print(sentence)
-    print(word)
-    print(test.synonym(word))
-    print(test.synonym(word2))
-    print(test.similarity(word, word2))
+    pass
     
