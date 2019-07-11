@@ -1,3 +1,3 @@
-import testing6
+import test2
 if __name__ == '__main__':
-   print(testing6.testing6(1,2))
+   print(test2.test2(1,2))

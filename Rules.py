@@ -137,7 +137,7 @@ class Rules():
                   if confirm == 'y':
                      check = 0
                      con = self.checkFile("./"+file+".py", True)
-                     print(con)
+                     #print(con)
                      self.create_function_code(file, description, params, operation, sample_param)
                   elif confirm == 'e':
                      check = 0
@@ -175,7 +175,7 @@ class Rules():
 
       confirm = self.checkFile("./run_pro.py", True)
 
-      print(confirm)
+      #print(confirm)
       
       self.write.write_line("run_pro.py", line)
       
@@ -194,7 +194,7 @@ class Rules():
          file = Path(path)
          if file.is_file():
             if remove == True:
-               print("Here")
+               #print("Here")
                file.unlink()
                return 12
             elif remove == False:
