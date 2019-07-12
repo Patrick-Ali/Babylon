@@ -351,12 +351,17 @@
     #sentence = indent + line1 + line2 + line3 + new_line
     #test("test2.py", sentence)
     #test("test2.py")
+        #print(len(test.stdout))
+        #print(test.stdout[7])
 
 '''Testing py write'''
 ##    test = PyCreate()
 ##    test.create_function("add", ["num1", "num2"], "add", "test.py")
 ##    test.create_app_run("add(", ["1", "2"], "test.py")
 ##    print(test.call_py("test.py"))
+##  test = PyCreate()
+##  print(test.py_version())
+
 
 '''Testing text analysis'''
 ##test = TextAnalysis()

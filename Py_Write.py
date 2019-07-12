@@ -114,14 +114,40 @@ class PyCreate():
                 line += param
         line += self.reader.getData("py", "call", "end")
         return line
-        
-    def call_py(self, file):
-        test = subprocess.run("python " + file,
+    
+    def py_version(self):
+        test = subprocess.run("python --version",
                               stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                               check=True,
                               text=True,
                               shell=True)
-        return test.stdout
+
+        ver = 7
+        if len(test.stdout) == 13:
+            ver = 7
+        elif len(test.stdout) == 11:
+            ver = 6
+        elif len(test.stdout) == 9:
+            ver = 5
+        return test.stdout[ver] 
+        
+    def call_py(self, file):
+        version = self.py_version()
+        if version == '3':
+            test = subprocess.run("python " + file,
+                              stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                              check=True,
+                              text=True,
+                              shell=True)
+            return test.stdout
+        
+        else:
+            test = subprocess.run("python3 " + file,
+                                  stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                  check=True,
+                                  text=True,
+                                  shell=True)
+            return test.stdout
 
 if __name__ == '__main__':
     pass
