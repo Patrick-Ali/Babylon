@@ -15,34 +15,81 @@ class Rules():
    text_analysis = TA()
    write = PC()
 
+   #Step 1
    def analyse(self, text):
 
       '''Takes the user input and breaks it down to find matching operations that can be
          used to generate code. 
       '''
       
+      #Break the user input into tokens
       sentences = self.text_analysis.tokenize_text(text)
-      
+
+      #If the text is not empty
       if len(sentences) > 0:
+
+         #For each sentence in the user input
          for sentence in sentences:
+
+            #Lower capitals
             clean_text = self.text_analysis.lower_capital(sentence)
-            
+
+            #Remove punctuation
             depunctuated_text = self.text_analysis.remove_punctuation(clean_text) # For synonyms
-            
+
+            #Break a sentence into words with punctuation
             tokens_one = self.text_analysis.tokenize_sentence(clean_text)
-            
+
+            #Break a sentence into words without punctuation
             tokens_two = self.text_analysis.tokenize_sentence(depunctuated_text)
-            
+
+            #Get unique words from both sets, e.g. from tokens_1 user-test and from tokens_2 (user, test)
             combine_text = self.text_analysis.combine_text(tokens_one, tokens_two)
-            
+
+            #Check if the user refrences any available functions
             possible_operations = self.domain_search(combine_text)
-            
+
+            #Check if there is any operations and begin analysing them
+            ## Break into generate code function
             if len(possible_operations) > 0 and len(possible_operations) < 2:
+               ## Rework for multiple operations
                domain = possible_operations[0][0]
                operation = possible_operations[0][1]
                
                specifics = self.operation_specifics(domain, operation)
+
+               '''
+                  hold =  sentence
+                  split_and = hold.split("and")
+                  program = ''
+                  if len(split_and) > 1:
+                     for part in split_and:
+                        split_then = hold.split("then")
+                        if len(split_then) > 1:
+                           for bit in split_then:
+                              temp = self.generate_code(bit)
+                              program += temp
+                        else:
+                           temp = self.generate_code(bit)
+                           program += temp
+                  else:
+                     split_then = hold.split("then")
+                     if len(split_then) > 1:
+                        for bit in split_then:
+                           temp = self.generate_code(bit)
+                           program += temp
+                     else:
+                        temp = self.generate_code(bit)
+                        program += temp
+                  
+                  #for part in split_then 
+                  #if answer in text after then:
+                     #get answer
+                     #create function with answer as a param
+               '''
                
+               #If the user has asked for the answer from previous function they only need
+               #add the next parameter
                params_text = input("""Please provide smaple input, e.g. for
                'I want a program to add two numbers togther.'
                 the input would be '1, 2'. Use comma (,) to denote each input. \n
@@ -52,6 +99,8 @@ class Rules():
                for param in params_split:
                   sample_param.append(param)
                params = []
+               
+               ##Check operations requirements match user input
                for i in range(len(sample_param)):
                   param = "param_"+str(i)
                   params.append(param)
@@ -82,6 +131,9 @@ class Rules():
                #Ask to rephrase or look at operation list
       else:
          return "No input detected"
+      
+   def generate_code(self, user_input):
+      pass
 
    def operation_specifics(self, domain, operation):
       operation = self.reader.getData(domain, operation)

@@ -31,6 +31,7 @@ class PyCreate():
             
         line = line.replace("<param>", param)
         line_two = self.create_body(operation, params)
+        ##If answer == True get_answer else get_return
         line_three = self.create_return(operation)
         text = line + new_line + indent + line_two + new_line + indent + line_three
 
@@ -50,6 +51,13 @@ class PyCreate():
             count += 1
             line = line.replace("<var" + str(count) + ">", var)
         return line
+    '''
+        def get_answer(self, operation):
+            line = self.reader.getData("py", "functions", operation)
+            line = line["name"]
+            return line
+            
+    '''
     
     def create_return(self, operation):
         line = self.reader.getData("py", "functions", operation)
