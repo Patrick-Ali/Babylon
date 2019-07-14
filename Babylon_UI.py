@@ -16,9 +16,11 @@ from ChatHistory import ChatHistory as ch
 
 
 class ChatPageMain(GridLayout):
-    '''Create the layout for the app,
-    constructor takes the number of columns (cols) and rows (rows)
-    the app should be. Class inherits from Kivy's GridLayout class '''
+    '''
+        Create the layout for the app,
+        constructor takes the number of columns (cols) and rows (rows)
+        the app should be. Class inherits from Kivy's GridLayout class
+    '''
     
     def __init__(self, cols, rows, **kwargs):
         
@@ -28,9 +30,11 @@ class ChatPageMain(GridLayout):
         
         
 class ChatPannel(ScrollView):
-    '''Create the scrollable area for the chat,
-    set the scrollable area to be operable on desktop and mobile (scroll_type).
-    Class inherits from Kivy's ScrollView class.'''
+    '''
+        Create the scrollable area for the chat,
+        set the scrollable area to be operable on desktop and mobile (scroll_type).
+        Class inherits from Kivy's ScrollView class.
+    '''
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -44,9 +48,11 @@ class ChatPannel(ScrollView):
 
 class message(AnchorLayout):
 
-    '''Create a section for the message to be placed in which can be placed in the
-    scrollable area. Constructor takes the side of the anchor the message should
-    be attached to (anchor). Class inherits from Kivy's AnchorLayout class.'''
+    '''
+        Create a section for the message to be placed in which can be placed in the
+        scrollable area. Constructor takes the side of the anchor the message should
+        be attached to (anchor). Class inherits from Kivy's AnchorLayout class.
+    '''
     
     def __init__(self, anchor, **kwargs):
         super().__init__(**kwargs)
@@ -65,6 +71,8 @@ class ChatPage(BoxLayout):
         
         super().__init__(**kwargs)
 
+        # Test for the begining of the message and
+        #if the message is empty
         test = ["b ", "b", "u ", "u"]
         
         #Create a scrollable area
@@ -126,7 +134,10 @@ class ChatPage(BoxLayout):
             
                         
     def display_msg(self, msg):
-        
+        """
+            Method manages displaying a message on screen
+            and determing whether it is Babylon or the User. 
+        """
         if msg[0] == 'b':
             msge = message("left")
             botHold = Lab(msg[1:], 0.40,[25,181,254,0.50], 10)
@@ -142,6 +153,13 @@ class ChatPage(BoxLayout):
 
 
 class Lab(Label):
+    """
+        Creates a label for the text to be displayed in.
+        Inherits from Kivy's Label class.
+        Initialisation method takes the text to display, width
+        of the label, colour of the label, and the roundness of
+        the label.
+    """
     colour = [0,0,0,0.25]
     corner = 0
     def __init__(self, text, width, RGBA, corner, **kwargs):
@@ -154,6 +172,10 @@ class Lab(Label):
         self.size = self.texture_size
 
     def on_size(self, *args):
+        """
+            When the canvas is resized this method is called and adpats the
+            rectangles that sit behined the labels to give them their colours.
+        """
         self.canvas.before.clear()
         with self.canvas.before:
             Color(self.colour[0], self.colour[1], self.colour[2], self.colour[3])
@@ -167,7 +189,8 @@ class Lab(Label):
 
 
 class UserIn(TextInput):
-    '''Create the area for the user to enter their information.
+    '''
+        Create the area for the user to enter their information.
         Constructor takes the example input as an argument (text).
         Allows for multiline input and sets focus onto area when app is run.
         Class inherits from Kivy's TextInput.

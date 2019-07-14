@@ -8,6 +8,11 @@ from ChatHistory import ChatHistory as ch
 
 
 class BabylonApp(App):
+
+    """
+        Class for building the user interface for the Babylon application,
+        inherits from Kivy's App class.
+    """
     
     userInput = UserIn("Example: I want a program to add two numbers.")
     chat = ChatPage()# Container for adding messages
@@ -15,6 +20,11 @@ class BabylonApp(App):
     chatPannel = ChatPannel()# Container for scrolling
     
     def build(self):
+
+        """
+            Method that is called when the class is initalised. Handels building
+            the user interface for the app.
+        """
 
         #Create the base sections for the app
         grid = ChatPageMain(1,3)
@@ -47,8 +57,8 @@ class BabylonApp(App):
 
         #Submit button set to 10% width of the footer  
         submit = Button(text="Submit", size_hint_x = 0.10)
-        #On clicking submit call send_message function
-        submit.bind(on_press=self.send_message)
+        #On clicking submit call user_submit function
+        submit.bind(on_press=self.user_submit)
 
         #Add user input and submit button to the app
         footer.add_widget(self.userInput)
@@ -78,16 +88,26 @@ class BabylonApp(App):
 
     #Reset user input to original state
     def focus_text_input(self, _):
+        """
+            Mehtod returns focus to the user input section once the user has
+            submited text
+        """
         self.userInput.focus = True
         self.userInput.do_backspace(from_undo=False, mode='bkspc')
 
     def botResponse(self, userInput):
-        #print("Hello")
+        """
+            Method handles getting the response from the bot based on its
+            response. Takes the input from the user and calls method to analyse. it
+        """
+        
         chatLog = self.hold.writeFile("./chat.csv", ("bParoting: " + userInput))
 
         
-    def send_message(self, _):
-        
+    def user_submit(self, _):
+        """
+            Method manages handeling the user input.
+        """
         #Refresh the chat
         chatLog = self.hold.writeFile("./chat.csv", ('u' + self.userInput.text))
         self.botResponse(self.userInput.text)
@@ -101,10 +121,14 @@ class BabylonApp(App):
         Clock.schedule_once(self.focus_text_input, 0.1)
         
     def on_key_down(self, instance, keyboard, keycode, text, modifiers):
+        """
+            Method is activated when the user press down a key. It listens for
+            when the user presses enter and submits the user input for analysis.
+        """
 
         #Allows the user to press enter to submit input
         if keycode == 40:
-            self.send_message(None)
+            self.user_submit(None)
   
 
 if __name__ == '__main__':

@@ -1,7 +1,10 @@
 import json
 
 class JSON():
-    
+    """
+        Class handels JSON files and data. Capable of reading, writing, and
+        getting specific pieces of data from the JSON file.
+    """
     def addData(self, file, data):
         '''Add data to a specific file'''
         end = '.json'

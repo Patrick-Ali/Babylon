@@ -412,3 +412,19 @@
          #print("Here 2")
          #print(depunctuated_text)
 #print(hold)
+
+##print("Hello")
+
+'''Testing Chat History'''
+
+##    #checkFile("./user.csv")
+##    hold = ChatHistory()
+##    if(hold.checkFile("./bot.csv")):
+##        hold.writeFile("./bot.csv", "Hello")
+##        chat = hold.readFile("./bot.csv")
+##        for msg in chat:
+##            print(msg)
+
+##    def __init__(self):
+##        pass
+              
