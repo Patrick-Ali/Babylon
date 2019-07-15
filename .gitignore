@@ -4,7 +4,7 @@ Images/
 nltk_test/
 .pytest_cache/
 htmlcov/
-Testing/
+#Testing/
 testing*
 test*
 run_pro.py
