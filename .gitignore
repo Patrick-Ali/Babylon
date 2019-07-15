@@ -5,6 +5,4 @@ nltk_test/
 .pytest_cache/
 htmlcov/
 
-testing*
-test*
 run_pro.py
