@@ -97,8 +97,9 @@ def getNum(num, last_num, cur_num, extra, last, next_num):
 
 def regexe(text):
     x = re.findall("[1-9]x+", text)
-    y = re.findall("\d+\sx{1}", text) 
-    return (x, y)
+    y = re.findall("\d+\sx{1}", text)
+    z = re.findall("\d+\sv{1}", text) 
+    return (x, y, z)
 
 if __name__ == "__main__":
     hold = ta()
@@ -106,8 +107,8 @@ if __name__ == "__main__":
     #1,234,567,890
     #1,234,567,890
     #1,234,567,891,234
-    #temp = hold.tokenize_sentence("I want a program to add one million two hundred thousand thirty thousand four thousand five hundred sixty seven numbers togther.")
-    temp = hold.tokenize_sentence("I want a program to add one trillion trillion trillion two hundred billion thirty four billion five hundred million sixty seven million eight hundred thousand ninety one thousand two hundred thirty four numbers togther.")
+    temp = hold.tokenize_sentence("one I want a program to add one million two hundred thousand thirty thousand four thousand five hundred sixty seven variables togther.")
+    #temp = hold.tokenize_sentence("I want a program to add one trillion trillion trillion two hundred billion thirty four billion five hundred million sixty seven million eight hundred thousand ninety one thousand two hundred thirty four numbers togther.")
     #temp = hold.tokenize_sentence("I want a program to add one hundred thousand three numbers togther.")
     #temp = hold.tokenize_sentence("I want a program to add one trillion")
     last_num = False
@@ -118,6 +119,8 @@ if __name__ == "__main__":
     words = ["hundred","thousand","million","billion","trillion"]
     jump = False
     count = 0
+    start_num = -1
+    final = 0
     for word in temp:
         if count+1 < len(temp):
             next_word = temp[count+1]
@@ -129,6 +132,7 @@ if __name__ == "__main__":
             #jump = False
         num = getNum(word,last_num,cur_num, extra, last, next_word)
         if num != "Unkown Number":
+            start_num += 1
             #last_word = word
             last_num = True
             extra_true = num[1]
@@ -145,12 +149,29 @@ if __name__ == "__main__":
             else:
                 cur_num = num[0]
             
-            print(num)
+            print("Number final: " + str(num))
             count += 1
+            final = num[0]
             continue
         elif num == "Unkown Number":
             last_num = False
             cur_num = 0
             count += 1
+            if start_num != -1:
+                temp[count - (start_num+2)] = final
+                if (count - (start_num+2)) + 1 < len(temp):
+                    print(count - (start_num+2)+1)
+                    print((count-2))
+                    print(start_num+2)
+                    print(len(temp))
+                    del temp[(count - (start_num+2)+1):(count-2)]
+                    start_num = -1
+    print(temp)
+
+    holding = " ".join(str(e) for e in temp)
+
+    print(holding)
             
-    print(regexe("I want a program to add 12345 x numbers togther."))
+    #print(regexe("I want a program to add 12345 x numbers togther."))
+
+    print(regexe(holding))
