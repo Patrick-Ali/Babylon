@@ -428,3 +428,57 @@
 ##    def __init__(self):
 ##        pass
               
+"""Conv Numbers"""
+###print(num.lower())
+##print("Add " + str(num1))
+##    print("Add " + str(num2))
+##print("Multi " + str(num1))
+##    print("Multi " + str(num2))
+##print("Extra: " + str(extra))
+###print(element)
+##        #print(element == num)
+##            #print("Working")
+##            #print(nums[element])
+##print("Original " + element)
+##           print("Cur " + str(cur_num))
+##            #last = 0
+##print("Last: " + str(last))
+###and jump == False:
+##                    print("Hello " + str(numb))
+                    #last = numb
+                    #if jump == False:
+                    print("Num " + num)
+                    print("Next Word " + next_word)
+print("Cur num " + str(cur_num))
+#elif multi_now == False:
+#and extra != cur_num: #: #and multi_now == False
+#print("Cur " + str(cur_num))
+            #multis = ["000","0000","000000","000000000","000000000000"]
+##            if str(cur_num) in multis:
+##                if cur_num == 000:
+##                    numb = multi(numb, 100)
+##                elif cur_num == 0000:
+##                    numb = multi(numb, 10000)
+##                elif cur_num == 000000:
+##                    numb = multi(numb, 1000000)
+##                elif cur_num == 000000000:
+##                    numb = multi(numb, 1000000000)
+##                elif cur_num == 000000000000:
+##                    numb = multi(numb, 1000000000000)
+##                last_num = False
+##            print("Before " + str(num))
+##            print("After " + str(numb))
+##    #Track sequence
+##    #1,234,567,890
+##    #1,234,567,890
+##    #1,234,567,891,234
+##        #if word in words and next_word in words:
+##            #jump = True
+##        #elif next_word not in words:
+##            #jump = False
+###last_word = word
+##            print("Number final: " + str(num))
+##                    print(count - (start_num+2)+1)
+##                    print((count-2))
+##                    print(start_num+2)
+##                    print(len(temp))        
