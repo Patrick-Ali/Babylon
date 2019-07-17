@@ -1,3 +1,4 @@
 {
-	"add": "a function that adds two numbers togther and returns the sum"
+	"add": "a function that adds two numbers togther and returns the sum",
+	"subtract": "a function subtracts two numbers and returns the sum"
 }
