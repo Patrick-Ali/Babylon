@@ -37,7 +37,7 @@ class PyCreate():
             line = line.replace("<param>", param)
         
         else:
-            print("Here 50")
+            #print("Here 50")
             #print("Vars " + str(var_count))
             #print("Start " + str(var_count - para_count))
             start = var_count - para_count
@@ -57,24 +57,24 @@ class PyCreate():
             #Temp test
             #params.append("param_2")
             #params.append("extra"+str((count-1)))
-        print("Line 1 " + line)
+        #print("Line 1 " + line)
         line_two = self.create_body(operation, params)
         ##If answer == True get_answer else get_return
         line_three = ''
-        print("Line 2 " + line_two)
-        print(ret)
+        #print("Line 2 " + line_two)
+        #print(ret)
         if ret == True:
-            print("Here 40")
+            #print("Here 40")
             line_three = self.create_return(operation)
-            print("Line 3 " + line_three)
+            #print("Line 3 " + line_three)
             #text = line + new_line + indent + line_two + new_line + indent + line_three
             text = ""
             if extra_text != "":
-                print("File " + file)
-                text = extra_text + line + new_line + indent + line_two + new_line + indent + line_three
+                #print("File " + file)
+                text = extra_text + line + new_line + indent + line_two + new_line + indent + line_three + new_line + new_line#"#New Line Test"
             else:
-                print("File " + file)
-                text = line + new_line + indent + line_two + new_line + indent + line_three
+                #print("File " + file)
+                text = line + new_line + indent + line_two + new_line + indent + line_three + new_line + new_line#"#New Line Test"
             self.write_line(file, text)
             print("Text " + text)
             return "Done"
@@ -83,7 +83,7 @@ class PyCreate():
             #print("No Return")
             line_three = self.get_answer(operation, count)
             text = ""
-            print("Line 3 " + line_three)
+            #print("Line 3 " + line_three)
             if extra_text != "":
                 #print("File " + file)
                 text = extra_text + line + new_line + indent + line_two + new_line + indent + line_three

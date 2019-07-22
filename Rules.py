@@ -21,9 +21,12 @@ class Rules():
         count = 0
         if len(split_and) > 1:
             for part in split_and:
-                split_then = hold.split("then")
+                print("And around: ", self.params_func)
+                print("Sample params: ", self.sample_param)
+                split_then = part.split("then")
                 if len(split_then) > 1:
                     for bit in split_then:
+                        #self.params_func = []
                         count += 1
                         if count < len(split_then):
                             temp = self.generate_code(bit, count, False, program)
@@ -32,9 +35,18 @@ class Rules():
                         else:
                             temp = self.generate_code(bit, count, True, program)
                         #program += temp
+            
                 else:
-                    temp = self.generate_code(part)
+                    count += 1
+                    temp = self.generate_code(part, count, True, program)
                     #program += temp
+                count = 0#
+                program = ''#
+                self.var_count = 0
+                self.sample_param = []
+                self.params_func = []
+                self.param_count = 0
+                print("Here 101")
         else:
             print("Here 5")
             split_then = hold.split("then")
@@ -103,29 +115,30 @@ class Rules():
         #Check if there is any operations and begin analysing them
         ## Break into generate code function
         print("Here 3")
-        print(possible_operations)
+        #print(possible_operations)
         if len(possible_operations) > 0 and len(possible_operations) < 2:
             print("Here 60")
             ## Rework for multiple operations
             domain = possible_operations[0][0]
             operation = possible_operations[0][1]
             specifics = self.operation_specifics(domain, operation)
-            print(count)
+            #print(count)
             #If the user has asked for the answer from previous function they only need add the next parameter
             if count == 1:
+                #self.params_func = []
                 print("Here 45")
                 params_text = input("""Please provide smaple input, e.g. for
                         'I want a program to add two numbers togther.'
                         the input would be '1, 2'. Use comma (,) to denote each input. \n
                         Enter input samples: """ )
                 params_split = params_text.split(",")
-                #print("Param split")
-                #print(params_split)
+                print("Param split")
+                print(params_split)
                 #sample_param = []
                 for param in params_split:
                     self.sample_param.append(param)
                 #params = []
-                #print("Params")  
+                print("Params")  
                 ##Check operations requirements match user input
                 for i in range(len(self.sample_param)):
                     if self.sample_param[i] != 'ans':
@@ -135,7 +148,7 @@ class Rules():
                         param = "param_empty"
                         self.params_func.append(param)
                         
-            #print(self.params_func)       
+            print(self.params_func)       
             if len(self.params_func) > 0:
                 #print("Count " + str(count))
                 hold = self.domain_analysis(specifics, self.params_func, text, self.sample_param, count, ret, program)
@@ -243,6 +256,7 @@ class Rules():
         #print("Test " + str(count))
         #print(depunctuated_text)
         #print(operation)
+        print("Params: ", params)
         if len(operation) > 0 and len(operation) < 2: #Temp till multi operations supported
             #print(operation)
             self.param_count = self.code_search_params(operation[0])
@@ -350,7 +364,7 @@ class Rules():
 if __name__ == '__main__':
    #Testing
    rules = Rules()
-   test = rules.sentence_break("I want a program to add two numbers then multiply then subtract") #then multiply then subtract
+   test = rules.sentence_break("I want a program to add two numbers then multiply and subtract then multiply") #then multiply then subtract
 
 
                
