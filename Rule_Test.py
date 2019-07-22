@@ -8,30 +8,54 @@ class Rules():
     reader = JSON()
     text_analysis = TA()
     write = PC()
+    sample_param = []
+    params_func = []
+    param_count = 0
+    var_count = 0
+    file = ""
 
     def rule_test(self, sentence):
         hold =  sentence
         split_and = hold.split("and")
         program = ''
+        count = 0
         if len(split_and) > 1:
             for part in split_and:
                 split_then = hold.split("then")
                 if len(split_then) > 1:
                     for bit in split_then:
-                        temp = self.generate_code(bit)
+                        count += 1
+                        if count < len(split_then):
+                            temp = self.generate_code(bit, count, False, program)
+                            program = temp
+                            print(program)
+                        else:
+                            temp = self.generate_code(bit, count, True, program)
                         #program += temp
                 else:
                     temp = self.generate_code(part)
                     #program += temp
         else:
+            print("Here 5")
             split_then = hold.split("then")
             if len(split_then) > 1:
+                print("Here 6")
                 for bit in split_then:
-                    temp = self.generate_code(bit)
+                    count += 1
+                    print(count, len(split_then))
+                    if count < len(split_then):
+                        print("Here 4")
+                        print(count)
+                        temp = self.generate_code(bit, count, False, program)
+                        program = temp
+                        print(program)
+                    else:
+                        temp = self.generate_code(bit, count, True, program)
                     #program += temp
             else:
                 print("Here 2")
-                temp = self.generate_code(split_then[0])
+                count += 1
+                temp = self.generate_code(split_then[0], count, False, program)
                 #program += temp
                 
     def sentence_break(self, text):
@@ -47,10 +71,19 @@ class Rules():
 
 
 
-    def generate_code(self, text):
+    def generate_code(self, text, count, ret, program):
         #print(text)
         #Lower capitals
         clean_text = self.text_analysis.lower_capital(text)
+
+        count_text = 0
+        extra_p = ""
+        ##Replace with regex check
+        for text in clean_text:
+            if text == "by":
+                extra_p = clean_text[count_text+1]
+            count_text += 1
+                
 
         #Remove punctuation
         depunctuated_text = self.text_analysis.remove_punctuation(clean_text) # For synonyms
@@ -63,66 +96,80 @@ class Rules():
 
         #Get unique words from both sets, e.g. from tokens_1 user-test and from tokens_2 (user, test)
         combine_text = self.text_analysis.combine_text(tokens_one, tokens_two)
-        print(combine_text)
+        #print(combine_text)
         #Check if the user refrences any available functions
         possible_operations = self.domain_search(combine_text)
 
         #Check if there is any operations and begin analysing them
         ## Break into generate code function
         print("Here 3")
+        print(possible_operations)
         if len(possible_operations) > 0 and len(possible_operations) < 2:
+            print("Here 60")
             ## Rework for multiple operations
             domain = possible_operations[0][0]
             operation = possible_operations[0][1]
             specifics = self.operation_specifics(domain, operation)
-            
+            print(count)
             #If the user has asked for the answer from previous function they only need add the next parameter
-            params_text = input("""Please provide smaple input, e.g. for
-                    'I want a program to add two numbers togther.'
-                    the input would be '1, 2'. Use comma (,) to denote each input. \n
-                    Enter input samples: """ )
-            params_split = params_text.split(",")
-            sample_param = []
-            for param in params_split:
-                sample_param.append(param)
-            params = []
-                   
-            ##Check operations requirements match user input
-            for i in range(len(sample_param)):
-                param = "param_"+str(i)
-                params.append(param)
-                   
-            if len(params) > 0:
-                self.domain_analysis(specifics, params, text, sample_param)
+            if count == 1:
+                print("Here 45")
+                params_text = input("""Please provide smaple input, e.g. for
+                        'I want a program to add two numbers togther.'
+                        the input would be '1, 2'. Use comma (,) to denote each input. \n
+                        Enter input samples: """ )
+                params_split = params_text.split(",")
+                #print("Param split")
+                #print(params_split)
+                #sample_param = []
+                for param in params_split:
+                    self.sample_param.append(param)
+                #params = []
+                #print("Params")  
+                ##Check operations requirements match user input
+                for i in range(len(self.sample_param)):
+                    if self.sample_param[i] != 'ans':
+                        param = "param_"+str(i)
+                        self.params_func.append(param)
+                    else:
+                        param = "param_empty"
+                        self.params_func.append(param)
+                        
+            #print(self.params_func)       
+            if len(self.params_func) > 0:
+                #print("Count " + str(count))
+                hold = self.domain_analysis(specifics, self.params_func, text, self.sample_param, count, ret, program)
+                #print("Hold 1 " + hold)
+                return hold
                       
         elif len(possible_operations) >= 2:
             print("Here 4")
             line_one = "I found a list of potential operations that may fit your needs: \n"
-            count = 0
+            count_param = 0
             operations = []
             for operation in possible_operations:
-                count += 1
+                count_param += 1
                 domain = operation[0]
                 operation = operation[1]
                 operations.append(operation)
                 specifics = self.operation_specifics(domain, operation)
-                line_three = (str(count) + ") " + specifics + " \n")
+                line_three = (str(count_param) + ") " + specifics + " \n")
                 print(line_three)
             line_two = int(input("\n If any operation meets your requirements enter its number: "))
             #print(clean_text)
             #print(operations)
             #print(line_two)
-            count = 0
+            count_param = 0
             for op in operations:
                 #print(op)
                 #print(count)
                 #print((count + 1) != line_two)
-                if (count + 1) != line_two:
+                if (count_param + 1) != line_two:
                     clean_text = clean_text.replace(op, "")
-                count += 1
+                count_param += 1
             print(clean_text)
-            
-            self.generate_code(clean_text)
+            #print("Count 1 " + str(count))
+            self.generate_code(clean_text, count, ret, program)
             #return line_one + line_two
                 #pass
                 #Ask user to chose between possible soloutions
@@ -149,12 +196,21 @@ class Rules():
     def operation_specifics(self, domain, operation):
         operation = self.reader.getData(domain, operation)
         return operation
+    
+    def code_search_params(self, text):
+        hold = self.reader.getData("py", "functions")
+        #print(text)
+        temp = hold[text]['vars']
+        return temp
+        
 
     def code_search(self, text):
        hold = self.reader.getData("py", "functions")
+       #print(hold)
        match = []
        for key in hold:
            if key in text:
+               #print("Key " + key)
                match.append(key)
        return match
     
@@ -168,25 +224,40 @@ class Rules():
                     match.append((domain, key))
         return match
     
-    def create_function_code(self, file, description, params, operation, sample_param):
-        self.add_program(file, description)
+    def create_function_code(self, file, description, params, operation, sample_param, count, ret, program):
+        #print("Count 2 " + str(count))
+        hold = self.generate_function_code(file, params, operation[0], (file+".py"), count, ret, program, sample_param)
+        if hold == "Done":
+            self.add_program(file, description)
+        return hold
         #Lower name from capitals
-        self.generate_function_code(file, params, operation[0], (file+".py"))
+        
         ##self.run_program(file, sample_param)
         ##self.run_pro("run_pro.py")
         #ask user for file name
 
-    def domain_analysis(self, text, params, description, sample_param):
+    def domain_analysis(self, text, params, description, sample_param, count, ret, program):
         clean_text = self.text_analysis.lower_capital(text)
         depunctuated_text = self.text_analysis.remove_punctuation(clean_text)#
         operation = self.code_search(depunctuated_text)
+        #print("Test " + str(count))
+        #print(depunctuated_text)
+        #print(operation)
         if len(operation) > 0 and len(operation) < 2: #Temp till multi operations supported
+            #print(operation)
+            self.param_count = self.code_search_params(operation[0])
+            self.var_count += self.param_count#self.code_search_params(operation[0])
             if "function" in depunctuated_text:
-                file = input("What do you want to call the program? \n Enter name: ")
-                file = self.text_analysis.lower_capital(file)
-                check = self.checkFile("./"+file+".py", False)
+                #file = ''
+                check = 0
+                if count == 1:
+                    self.file = input("What do you want to call the program? \n Enter name: ")
+                    self.file = self.text_analysis.lower_capital(self.file)
+                    check = self.checkFile("./"+self.file+".py", False)
                 if check == 0:
-                    self.create_function_code(file, description, params, operation, sample_param)
+                    #print("Count 3 " + str(count))
+                    hold = self.create_function_code(self.file, description, params, operation, sample_param, count, ret, program)
+                    return hold
                     #self.add_program(file, description)
                     #Lower name from capitals
                     #self.generate_function_code(file, params, operation[0], (file+".py"))
@@ -199,23 +270,30 @@ class Rules():
                         #Overwrite file with new function
                         if confirm == 'y':
                             check = 0
-                            con = self.checkFile("./"+file+".py", True)
+                            con = self.checkFile("./"+self.file+".py", True)
                             #print(con)
-                            self.create_function_code(file, description, params, operation, sample_param)
+                            #print("Count 4 " + str(count))
+                            hold = self.create_function_code(self.file, description, params, operation, sample_param, count, ret, program)
+                            return hold
                         #Exit from code generation
                         elif confirm == 'e':
                             check = 0
                             break
                         #Try a different file name
                         else:
-                            file = input("What do you want to call the program? \n Enter name: ")
-                            file = self.text_analysis.lower_capital(file)
-                            check = self.checkFile("./"+file+".py", False)
+                            self.file = input("What do you want to call the program? \n Enter name: ")
+                            self.file = self.text_analysis.lower_capital(self.file)
+                            check = self.checkFile("./"+self.file+".py", False)
                             if check == 0:
-                                self.create_function_code(file, description, params, operation, sample_param)
-    def generate_function_code(self, name, params, operation, file):
+                                #print("Count 5 " + str(count))
+                                hold = self.create_function_code(self.file, description, params, operation, sample_param, count, ret, program)
+                                
+                                return hold
+                                
+    def generate_function_code(self, name, params, operation, file, count, ret, program, sample_params):
         #Create funciton using the operation found in the domain description
-        self.write.create_function(name, params, operation, file)
+        print("Count 6 " + str(count))
+        return self.write.create_function(name, params, operation, file, count, ret, program, sample_params, self.var_count, self.param_count)
         
     def get_data(self):
         try:
@@ -272,7 +350,7 @@ class Rules():
 if __name__ == '__main__':
    #Testing
    rules = Rules()
-   test = rules.sentence_break("i")
+   test = rules.sentence_break("I want a program to add two numbers") #then multiply then subtract
 
 
                

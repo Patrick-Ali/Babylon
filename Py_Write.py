@@ -11,31 +11,90 @@ class PyCreate():
 
     reader = JSON()
     
-    def create_function(self, name, param_name, operation, file):
+    def create_function(self, name, param_name, operation, file, count, ret, extra_text, sample_params, var_count, para_count): #, extra
         indent = "   "
         new_line = "\n"
-        line = self.reader.getData("py", "function", "code")
-        line = line.replace("<name>", name)
+        line = ""
         params = []
-        for p_name in param_name:
-            param = self.create_param(True, p_name)
-            params.append(param)
-        param = ''
-        count = 0
-        for p in params:
-            count += 1
-            if count < len(params):
-                param += (p + ", ")
-            else:
-                param += (p)
+        #print(sample_params)
+        if count == 1:
+            line = self.reader.getData("py", "function", "code")
+            line = line.replace("<name>", name)
+            #print("param name: ")
+            #print(param_name)
+            for p_name in param_name:
+                if p_name != "param_empty":
+                    param = self.create_param(True, p_name)
+                    params.append(param)
+            param = ''
+            count_param = 0
+            for p in params:
+                count_param += 1
+                if count_param < len(params):
+                    param += (p + ", ")
+                else:
+                    param += (p)
+            line = line.replace("<param>", param)
+        
+        else:
+            print("Here 50")
+            #print("Vars " + str(var_count))
+            #print("Start " + str(var_count - para_count))
+            start = var_count - para_count
+            count_param = 1
+            line = new_line + indent
+            while count_param <= para_count:
+                if start < len(sample_params):
+                    temp = sample_params[start]
+                    if temp == 'ans':
+                        params.append("hold"+str((count-1)))
+                    else:
+                        params.append(param_name[start])
+                    start += 1
+                    count_param += 1
             
-        line = line.replace("<param>", param)
+            #params.append("hold"+str((count-1)))
+            #Temp test
+            #params.append("param_2")
+            #params.append("extra"+str((count-1)))
+        print("Line 1 " + line)
         line_two = self.create_body(operation, params)
         ##If answer == True get_answer else get_return
-        line_three = self.create_return(operation)
-        text = line + new_line + indent + line_two + new_line + indent + line_three
+        line_three = ''
+        print("Line 2 " + line_two)
+        print(ret)
+        if ret == True:
+            print("Here 40")
+            line_three = self.create_return(operation)
+            print("Line 3 " + line_three)
+            #text = line + new_line + indent + line_two + new_line + indent + line_three
+            text = ""
+            if extra_text != "":
+                print("File " + file)
+                text = extra_text + line + new_line + indent + line_two + new_line + indent + line_three
+            else:
+                print("File " + file)
+                text = line + new_line + indent + line_two + new_line + indent + line_three
+            self.write_line(file, text)
+            print("Text " + text)
+            return "Done"
+        else:
+            #print(count)
+            #print("No Return")
+            line_three = self.get_answer(operation, count)
+            text = ""
+            print("Line 3 " + line_three)
+            if extra_text != "":
+                #print("File " + file)
+                text = extra_text + line + new_line + indent + line_two + new_line + indent + line_three
+            else:
+                text = line + new_line + indent + line_two + new_line + indent + line_three
+            print("Text No Return " + text)
+            return text
+        
+        #text = line + new_line + indent + line_two + new_line + indent + line_three
 
-        self.write_line(file, text)
+        #self.write_line(file, text)
         
     def create_param(self, func_param, name, value = "[]"):
         param = name
@@ -51,13 +110,11 @@ class PyCreate():
             count += 1
             line = line.replace("<var" + str(count) + ">", var)
         return line
-    '''
-        def get_answer(self, operation):
-            line = self.reader.getData("py", "functions", operation)
-            line = line["name"]
-            return line
-            
-    '''
+    
+    def get_answer(self, operation, count):
+        line = self.reader.getData("py", "functions", operation)
+        line = "hold"+str(count)+" = "+line["name"]
+        return line
     
     def create_return(self, operation):
         line = self.reader.getData("py", "functions", operation)
