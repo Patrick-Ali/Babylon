@@ -14,6 +14,8 @@ class Rules():
     var_count = 0
     file = ""
 
+    #If user input after then split includes 'create API call' call API_Rules 
+
     def rule_test(self, sentence):
         hold =  sentence
         split_and = hold.split("and")
