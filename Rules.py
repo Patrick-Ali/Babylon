@@ -21,8 +21,8 @@ class Rules():
         count = 0
         if len(split_and) > 1:
             for part in split_and:
-                print("And around: ", self.params_func)
-                print("Sample params: ", self.sample_param)
+                #print("And around: ", self.params_func)
+                #print("Sample params: ", self.sample_param)
                 split_then = part.split("then")
                 if len(split_then) > 1:
                     for bit in split_then:
@@ -46,26 +46,26 @@ class Rules():
                 self.sample_param = []
                 self.params_func = []
                 self.param_count = 0
-                print("Here 101")
+                #print("Here 101")
         else:
-            print("Here 5")
+            #print("Here 5")
             split_then = hold.split("then")
             if len(split_then) > 1:
-                print("Here 6")
+                #print("Here 6")
                 for bit in split_then:
                     count += 1
-                    print(count, len(split_then))
+                    #print(count, len(split_then))
                     if count < len(split_then):
-                        print("Here 4")
-                        print(count)
+                       # print("Here 4")
+                        #print(count)
                         temp = self.generate_code(bit, count, False, program)
                         program = temp
-                        print(program)
+                        #print(program)
                     else:
                         temp = self.generate_code(bit, count, True, program)
                     #program += temp
             else:
-                print("Here 2")
+                #print("Here 2")
                 count += 1
                 temp = self.generate_code(split_then[0], count, True, program)
                 #program += temp
@@ -76,7 +76,7 @@ class Rules():
 
         #If the text is not empty
         if len(sentences) > 0:
-            print("Here 1")
+            #print("Here 1")
             #For each sentence in the user input
             for sentence in sentences:
                 hold = self.rule_test(sentence)
@@ -86,6 +86,7 @@ class Rules():
     def generate_code(self, text, count, ret, program):
         #print(text)
         #Lower capitals
+        print("Test: ", text)
         clean_text = self.text_analysis.lower_capital(text)
 
         count_text = 0
@@ -114,10 +115,10 @@ class Rules():
 
         #Check if there is any operations and begin analysing them
         ## Break into generate code function
-        print("Here 3")
+        #print("Here 3")
         #print(possible_operations)
         if len(possible_operations) > 0 and len(possible_operations) < 2:
-            print("Here 60")
+            #print("Here 60")
             ## Rework for multiple operations
             domain = possible_operations[0][0]
             operation = possible_operations[0][1]
@@ -126,19 +127,19 @@ class Rules():
             #If the user has asked for the answer from previous function they only need add the next parameter
             if count == 1:
                 #self.params_func = []
-                print("Here 45")
+                #print("Here 45")
                 params_text = input("""Please provide smaple input, e.g. for
                         'I want a program to add two numbers togther.'
                         the input would be '1, 2'. Use comma (,) to denote each input. \n
                         Enter input samples: """ )
                 params_split = params_text.split(",")
-                print("Param split")
-                print(params_split)
+                #print("Param split")
+                #print(params_split)
                 #sample_param = []
                 for param in params_split:
                     self.sample_param.append(param)
                 #params = []
-                print("Params")  
+                #print("Params")  
                 ##Check operations requirements match user input
                 for i in range(len(self.sample_param)):
                     if self.sample_param[i] != 'ans':
@@ -148,15 +149,16 @@ class Rules():
                         param = "param_empty"
                         self.params_func.append(param)
                         
-            print(self.params_func)       
+            #print(self.params_func)       
             if len(self.params_func) > 0:
                 #print("Count " + str(count))
+                print("text " + text)
                 hold = self.domain_analysis(specifics, self.params_func, text, self.sample_param, count, ret, program)
                 #print("Hold 1 " + hold)
                 return hold
                       
         elif len(possible_operations) >= 2:
-            print("Here 4")
+            #print("Here 4")
             line_one = "I found a list of potential operations that may fit your needs: \n"
             count_param = 0
             operations = []
@@ -306,7 +308,7 @@ class Rules():
                                 
     def generate_function_code(self, name, params, operation, file, count, ret, program, sample_params):
         #Create funciton using the operation found in the domain description
-        print("Count 6 " + str(count))
+        #print("Count 6 " + str(count))
         return self.write.create_function(name, params, operation, file, count, ret, program, sample_params, self.var_count, self.param_count)
         
     def get_data(self):
