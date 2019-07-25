@@ -9,3 +9,4 @@ Test*
 Testing/
 run_pro.py
 nltk_test*
+.pytest_cache/
