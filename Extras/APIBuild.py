@@ -84,4 +84,4 @@ if __name__ == "__main__":
     #"b2": "response = requests.put(<url>, params = query, data = data)",
     #"b3": "response = requests.put(<url>, headers = head, data = data)",
     #"b4": "response = requests.put(<url>, params = query, headers = head, data = data)",
-        
+    #https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY    

@@ -482,3 +482,29 @@ print("Cur num " + str(cur_num))
 ##                    print((count-2))
 ##                    print(start_num+2)
 ##                    print(len(temp))        
+
+
+
+
+##API
+##Recursive list
+            #What do you want to call the function#
+            #Get address#
+            #Get list of query strings#
+            #Get header key, value list#
+            #Auth#
+            #If post, put, or patch get data and is it JSON data
+            #Verify
+            #Timeout
+            #Return function type (JSON or text), specific data from request
+                    #For each input create a variable
+                    #Convert dictionairies to strings
+                    #To add post, put, patch check for data
+                    #Get creation from PY JSON
+                    #Create program
+
+        #What functoion(s) would you like to create, e.g. get, post, put...
+        #List functions e.g. get, post, pacth
+#What do you want to call file
+#API json file create name, list of functions
+

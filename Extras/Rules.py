@@ -324,6 +324,7 @@ class Rules():
         imp = self.write.create_import(name)
         run = self.write.create_app_run_multi()
         clas = name+"."
+        #call = self.write.create_call(name, params)
         call = ""
         if func_name is None:
             call = self.write.create_call(name, params)
