@@ -1,6 +1,7 @@
 from TextAnalysis import TextAnalysis as TA
 from JSON import JSON
 from Py_Write import PyCreate as PC
+from Expand import Expand
 from pathlib import Path
 
 
@@ -8,6 +9,7 @@ class Rules():
     reader = JSON()
     text_analysis = TA()
     write = PC()
+    exp = Expand()
     sample_param = []
     params_func = []
     param_count = 0
@@ -20,6 +22,7 @@ class Rules():
         hold =  sentence
         split_and = hold.split("and")
         program = ''
+        master_program = ''
         count = 0
         if len(split_and) > 1:
             for part in split_and:
@@ -195,13 +198,15 @@ class Rules():
             again = True
             while again == True:
                 print("I do not understand the request, perhaps try rephrasing or look at operations I can do. ")
-                test = input("To try again enter T or to exit enter E: ")
+                test = input("To try again enter T, to expand the knowledge base enter A, or to exit enter E: ")
                 test = self.text_analysis.lower_capital(test)
                 if test == 't':
                     again = False
                     hold = input("Enter whole text: \n")
                     self.sentence_break(hold)
                     break
+                elif test == 'a':
+                    self.expand()
                 else:
                     again = False
                     print("Exiting...")
@@ -209,7 +214,17 @@ class Rules():
                 ##line_two = "To view available operations enter show operations."
             #return line_one + line_two
         #Tell user we are not sure what they want,
-            
+    def expand(self):
+        dom = input("Do you want to add a new domain? \n Y for yes or N for No: ")
+        if dom.lower() == "y":
+            self.exp.domain()
+        op = input("Do you want to add a new operation? \n Y for yes or N for No: ")
+        if op.lower() == "y":
+            self.exp.operation()
+        func input("Do you want to add a new function? \n Y for yes or N for No: ")
+        if func.lower() == "y":
+            self.exp.program_function()
+    
     def operation_specifics(self, domain, operation):
         operation = self.reader.getData(domain, operation)
         return operation
