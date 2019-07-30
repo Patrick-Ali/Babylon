@@ -508,3 +508,81 @@ print("Cur num " + str(cur_num))
 #What do you want to call file
 #API json file create name, list of functions
 
+#Clean up
+#Ask to rephrase or look at operation list
+#print("Here")
+#print(result)
+#        #print(confirm)
+#print("Count 6 " + str(count))
+#print("Count 5 " + str(count))
+#print(con)
+#print("Count 4 " + str(count))
+#self.add_program(file, description)
+#Lower name from capitals
+#self.generate_function_code(file, params, operation[0], (file+".py"))
+#self.run_program(file, sample_param)
+#self.run_pro("run_pro.py")
+#ask user for file name
+##print("Count 3 " + str(count))
+##file = ''
+##self.code_search_params(operation[0])
+#print(operation)
+#Temp till multi operations supported
+#print("Test " + str(count))
+#print(depunctuated_text)
+#print(operation)
+#print("Params: ", params)
+##ask user for file name
+#Lower name from capitals
+#print("Count 2 " + str(count))
+##print("Key " + key)
+##print(hold)
+##print(text)
+##line_two = "To view available operations enter show operations."
+#return line_one + line_two
+#Tell user we are not sure what they want,
+#return line_one + line_two
+#pass
+#Ask user to chose between possible soloutions
+#Potential automation of similarity between sentences
+#print("Count 1 " + str(count))
+#print(op)
+#print(count)
+#print((count + 1) != line_two)
+#print(clean_text)
+#print(operations)
+#print(line_two)
+#print("Here 4")
+#print("Hold 1 " + hold)
+#print("Count " + str(count))
+#print(self.params_func)
+#params = []
+#print("Params")
+#print("Param split")
+#print(params_split)
+#sample_param = []
+#self.params_func = []
+#print("Here 45")
+#print(count)
+#print("Here 60")
+## Rework for multiple operations
+#print("Here 3")
+#print(possible_operations)
+## Break into generate code function
+#print(combine_text)
+#print("Test: ", text)
+##print(text)
+#print("Here 1")
+#print("Here 2")
+#print(program)
+# print("Here 4")
+#print(count)
+#print(count, len(split_then))
+#print("Here 6")
+#print("Here 5")
+#print("Here 101")
+#master_program += program
+#print("And around: ", self.params_func)
+#print("Sample params: ", self.sample_param)
+#self.params_func = []
+
