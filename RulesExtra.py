@@ -1,7 +1,6 @@
 from TextAnalysis import TextAnalysis as TA
 from JSON import JSON
 from Py_Write import PyCreate as PC
-from Expanding import Expands
 from pathlib import Path
 
 
@@ -9,7 +8,6 @@ class Rules():
     reader = JSON()
     text_analysis = TA()
     write = PC()
-    exp = Expands()
     sample_param = []
     params_func = []
     param_count = 0
@@ -22,7 +20,6 @@ class Rules():
         hold =  sentence
         split_and = hold.split("and")
         program = ''
-        master_program = ''
         count = 0
         if len(split_and) > 1:
             for part in split_and:
@@ -39,14 +36,13 @@ class Rules():
                             print(program)
                         else:
                             temp = self.generate_code(bit, count, True, program)
-                            master_program += temp
+                        #program += temp
             
                 else:
                     count += 1
                     temp = self.generate_code(part, count, True, program)
-                    master_program += temp
+                    #program += temp
                 count = 0#
-                #master_program += program
                 program = ''#
                 self.var_count = 0
                 self.sample_param = []
@@ -69,18 +65,12 @@ class Rules():
                         #print(program)
                     else:
                         temp = self.generate_code(bit, count, True, program)
-                        master_program += temp
+                    #program += temp
             else:
                 #print("Here 2")
                 count += 1
                 temp = self.generate_code(split_then[0], count, True, program)
-                master_program += temp
-                
-        write_conf = input("Do you want to write the program to file? \n Yes or No: ")
-        print(master_program)
-        if write_conf.lower() == "yes":
-            self.write.write_line(self.file+".py", master_program)
-
+                #program += temp
                 
     def sentence_break(self, text):
         #Break the user input into tokens
@@ -205,15 +195,13 @@ class Rules():
             again = True
             while again == True:
                 print("I do not understand the request, perhaps try rephrasing or look at operations I can do. ")
-                test = input("To try again enter T, to expand the knowledge base enter A, or to exit enter E: ")
+                test = input("To try again enter T or to exit enter E: ")
                 test = self.text_analysis.lower_capital(test)
                 if test == 't':
                     again = False
                     hold = input("Enter whole text: \n")
                     self.sentence_break(hold)
                     break
-                elif test == 'a':
-                    self.expand()
                 else:
                     again = False
                     print("Exiting...")
@@ -221,17 +209,7 @@ class Rules():
                 ##line_two = "To view available operations enter show operations."
             #return line_one + line_two
         #Tell user we are not sure what they want,
-    def expand(self):
-        dom = input("Do you want to add a new domain? \n Y for yes or N for No: ")
-        if dom.lower() == "y":
-            self.exp.domain()
-        op = input("Do you want to add a new operation? \n Y for yes or N for No: ")
-        if op.lower() == "y":
-            self.exp.operation()
-        func = input("Do you want to add a new function? \n Y for yes or N for No: ")
-        if func.lower() == "y":
-            self.exp.program_function()
-    
+            
     def operation_specifics(self, domain, operation):
         operation = self.reader.getData(domain, operation)
         return operation
@@ -263,9 +241,9 @@ class Rules():
                     match.append((domain, key))
         return match
     
-    def create_function_code(self, file, func_name, description, params, operation, sample_param, count, ret, program):
+    def create_function_code(self, file, description, params, operation, sample_param, count, ret, program):
         #print("Count 2 " + str(count))
-        hold = self.generate_function_code(func_name, params, operation[0], (file+".py"), count, ret, program, sample_param)
+        hold = self.generate_function_code(file, params, operation[0], (file+".py"), count, ret, program, sample_param)
         if hold == "Done":
             self.add_program(file, description)
         return hold
@@ -290,17 +268,13 @@ class Rules():
             if "function" in depunctuated_text:
                 #file = ''
                 check = 0
-                func_name = ''
                 if count == 1:
-                    if self.file == '':
-                        self.file = input("What do you want to call the program? \n Enter name: ")
-                        self.file = self.text_analysis.lower_capital(self.file)
-                        check = self.checkFile("./"+self.file+".py", False)
-                    func_name = input("What do you want to call the function? \n Enter name: ")
-                    func_name = self.text_analysis.lower_capital(func_name)
+                    self.file = input("What do you want to call the program? \n Enter name: ")
+                    self.file = self.text_analysis.lower_capital(self.file)
+                    check = self.checkFile("./"+self.file+".py", False)
                 if check == 0:
                     #print("Count 3 " + str(count))
-                    hold = self.create_function_code(self.file, func_name, description, params, operation, sample_param, count, ret, program)
+                    hold = self.create_function_code(self.file, description, params, operation, sample_param, count, ret, program)
                     return hold
                     #self.add_program(file, description)
                     #Lower name from capitals
@@ -317,7 +291,7 @@ class Rules():
                             con = self.checkFile("./"+self.file+".py", True)
                             #print(con)
                             #print("Count 4 " + str(count))
-                            hold = self.create_function_code(self.file, func_name, description, params, operation, sample_param, count, ret, program)
+                            hold = self.create_function_code(self.file, description, params, operation, sample_param, count, ret, program)
                             return hold
                         #Exit from code generation
                         elif confirm == 'e':
@@ -330,7 +304,7 @@ class Rules():
                             check = self.checkFile("./"+self.file+".py", False)
                             if check == 0:
                                 #print("Count 5 " + str(count))
-                                hold = self.create_function_code(self.file, func_name, description, params, operation, sample_param, count, ret, program)
+                                hold = self.create_function_code(self.file, description, params, operation, sample_param, count, ret, program)
                                 
                                 return hold
                                 
@@ -350,6 +324,7 @@ class Rules():
         imp = self.write.create_import(name)
         run = self.write.create_app_run_multi()
         clas = name+"."
+        #call = self.write.create_call(name, params)
         call = ""
         if func_name is None:
             call = self.write.create_call(name, params)
@@ -398,7 +373,7 @@ class Rules():
 if __name__ == '__main__':
    #Testing
    rules = Rules()
-   test = rules.sentence_break("I want a program to add two numbers") #then multiply then subtract and subtract then multiply then multiply 
+   test = rules.sentence_break("I want a program to add two numbers then multiply and subtract then multiply") #then multiply then subtract
 
 
                

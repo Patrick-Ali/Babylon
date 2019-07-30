@@ -1,7 +1,7 @@
 from JSON import JSON
-from Rules import Rules
+from RulesExtra import Rules
 
-class Expand():
+class Expands():
     reader = JSON()
     rules = Rules()
     
@@ -10,7 +10,7 @@ class Expand():
         hold = self.reader.loadData("domains")
         domains = hold["domains"]
         domains.append(dom)
-        new_doms = {"domains":str(domains)}
+        new_doms = {"domains":domains}
         self.reader.addData("domains", new_doms)
     def operation(self):
         dom_name = input("What is the domain name? \n Domain Name: ")
@@ -48,6 +48,7 @@ class Expand():
         self.reader.addData("py", hold)
 
 if __name__ == "__main__":
+    
     test = Expand()
     test.domain()
     test.operation()

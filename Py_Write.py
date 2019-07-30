@@ -75,9 +75,9 @@ class PyCreate():
             else:
                 #print("File " + file)
                 text = line + new_line + indent + line_two + new_line + indent + line_three + new_line + new_line#"#New Line Test"
-            self.write_line(file, text)
-            print("Text " + text)
-            return "Done"
+            #self.write_line(file, text)
+            #print("Text " + text)
+            return text
         else:
             #print(count)
             #print("No Return")
@@ -89,7 +89,7 @@ class PyCreate():
                 text = extra_text + line + new_line + indent + line_two + new_line + indent + line_three
             else:
                 text = line + new_line + indent + line_two + new_line + indent + line_three
-            print("Text No Return " + text)
+            #print("Text No Return " + text)
             return text
         
         #text = line + new_line + indent + line_two + new_line + indent + line_three
