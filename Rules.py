@@ -15,6 +15,7 @@ class Rules():
     param_count = 0
     var_count = 0
     file = ""
+    mp = ""
 
     #If user input after then split includes 'create API call' call API_Rules 
 
@@ -32,16 +33,18 @@ class Rules():
                         count += 1
                         if count < len(split_then):
                             temp = self.generate_code(bit, count, False, program)
-                            program = temp
-                            print(program)
+                            if temp is not None:
+                                program = temp
                         else:
                             temp = self.generate_code(bit, count, True, program)
-                            master_program += temp
+                            if temp is not None:
+                                master_program += temp
             
                 else:
                     count += 1
                     temp = self.generate_code(part, count, True, program)
-                    master_program += temp
+                    if temp is not None:
+                        master_program += temp
                 count = 0
                 program = ''
                 self.var_count = 0
@@ -55,21 +58,26 @@ class Rules():
                     count += 1
                     if count < len(split_then):
                         temp = self.generate_code(bit, count, False, program)
-                        program = temp
+                        if temp is not None:
+                            program = temp
                         
                     else:
                         temp = self.generate_code(bit, count, True, program)
-                        master_program += temp
+                        if temp is not None:
+                            master_program += temp
             else:
-                
                 count += 1
                 temp = self.generate_code(split_then[0], count, True, program)
-                master_program += temp
+                if temp is not None:
+                    master_program += temp
                 
         write_conf = input("Do you want to write the program to file? \n Yes or No: ")
         #print(master_program)
         if write_conf.lower() == "yes":
             self.write.write_line(self.file+".py", master_program)
+        else:
+            self.mp = master_program
+            return master_program
 
                 
     def sentence_break(self, text):
@@ -135,10 +143,10 @@ class Rules():
                     else:
                         param = "param_empty"
                         self.params_func.append(param)
-                              
+            print("Params ",  self.params_func)          
             if len(self.params_func) > 0:
-                print("text " + text)
                 hold = self.domain_analysis(specifics, self.params_func, text, self.sample_param, count, ret, program)
+                print(hold)
                 return hold
                       
         elif len(possible_operations) >= 2:
@@ -176,6 +184,8 @@ class Rules():
                     break
                 elif test == 'a':
                     self.expand()
+                    again = False
+                    self.generate_code(text, count, ret, program)
                 else:
                     again = False
                     print("Exiting...")
@@ -205,7 +215,9 @@ class Rules():
     def code_search(self, text):
        hold = self.reader.getData("py", "functions")
        match = []
+       print("Text ", text)
        for key in hold:
+           print("Key ", key)
            if key in text:
                match.append(key)
        return match
@@ -235,9 +247,10 @@ class Rules():
         clean_text = self.text_analysis.lower_capital(text)
         depunctuated_text = self.text_analysis.remove_punctuation(clean_text)
         operation = self.code_search(depunctuated_text)
+        print(len(operation))
         if len(operation) > 0 and len(operation) < 2: 
             self.param_count = self.code_search_params(operation[0])
-            self.var_count += self.param_count
+            self.var_count += int(self.param_count)
             if "function" in depunctuated_text:
                 check = 0
                 func_name = ''
@@ -331,7 +344,7 @@ class Rules():
 if __name__ == '__main__':
    #Testing
    rules = Rules()
-   test = rules.sentence_break("I want a program to add two numbers") #then multiply then subtract and subtract then multiply then multiply 
+   test = rules.sentence_break("I want a program to determine the greater of two objects") #add two numbers then multiply and subtract then multiply#then multiply then subtract and subtract then multiply then multiply 
 
 
                

@@ -9,7 +9,7 @@ class Expands():
         dom = input("What domain would you like to add? \n Domain Name: ")
         hold = self.reader.loadData("domains")
         domains = hold["domains"]
-        domains.append(dom)
+        domains.append(dom.lower())
         new_doms = {"domains":domains}
         self.reader.addData("domains", new_doms)
     def operation(self):
@@ -18,11 +18,11 @@ class Expands():
         op = input("What is the operation assembly instruction? Instructions: ")
         dom_check = self.rules.checkFile(dom_name, False)
         if dom_check == 0:
-            data = {op_name:op}
-            self.reader.addData(dom_name, data)
+            data = {op_name.lower():op.lower()}
+            self.reader.addData(dom_name.lower(), data)
         else:
             hold = self.reader.loadData(dom_name)
-            hold[op_name] = op
+            hold[op_name.lower()] = op.lower()
             self.reader.addData(dom_name, hold)
             
     def program_function(self):
@@ -37,10 +37,10 @@ class Expands():
                 d = False
             else:
                 key_value = key_value.replace(":", ",")
-                key_value = key_value.replace(" ", "")
+                #key_value = key_value.replace(" ", "")
                 temp = key_value.split(",")
             if len(temp) == 2:
-                data[temp[0]] = temp[1]
+                data[temp[0].lower()] = temp[1].lower()
             else:
                 print("Not recognised")
         funcs[func_name] = data
