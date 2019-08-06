@@ -16,27 +16,27 @@ import Rules #from Rules
 ##
 ##    assert chat2 == (chat+1)
 
-##def test_pro_write(capsys):
-##    short = '''def trial6(param_0, param_1):
-##   op_add = param_0 + param_1
-##   return op_add'''
-##    rules = Rules.Rules()
-##    input_values = ["1,2", "Test789", "trial6", "No"]
-##    def mock_input(s):
-##        return input_values.pop(0)
-##    Rules.input = mock_input
-##    out, err = capsys.readouterr()
-##    test = Rules.Rules.sentence_break(rules, "I want a program to add two numbers") #then multiply then subtract and subtract then multiply then multiply
-##    print("MP ", rules.mp)
-##    mp = rules.mp
-##    mp = mp.replace(" ", "")
-##    mp = mp.replace("\n", "")
-##    short = short.replace(" ", "")
-##    short = short.replace("\n", "")
-##    print(mp == short)
-##    assert mp == short
+def test_pro_write(capsys):
+   short = '''def trial6(param_0, param_1):
+  op_add = param_0 + param_1
+  return op_add'''
+   rules = Rules.Rules()
+   input_values = ["1,2", "Test749", "trial6", "Yes"]
+   def mock_input(s):
+       return input_values.pop(0)
+   Rules.input = mock_input
+   out, err = capsys.readouterr()
+   test = Rules.Rules.sentence_break(rules, "I want a program to add two numbers") #then multiply then subtract and subtract then multiply then multiply
+   print("MP ", rules.mp)
+   mp = rules.mp
+   mp = mp.replace(" ", "")
+   mp = mp.replace("\n", "")
+   short = short.replace(" ", "")
+   short = short.replace("\n", "")
+   print(mp == short)
+   assert mp == short
     
-def test_pro_wirte_then(capsys):
+""" def test_pro_wirte_then(capsys):
     medium = '''def trial7(param_0, param_1, param_3):
    op_add = param_0 + param_1
    hold1 = op_add
@@ -87,7 +87,7 @@ def trial89(param_0, param_1, param_3):
     large = large.replace(" ", "")
     large = large.replace("\n", "")
     print(large)
-    assert mp == large
+    assert mp == large """
 
 
 

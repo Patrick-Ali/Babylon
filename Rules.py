@@ -16,6 +16,7 @@ class Rules():
     var_count = 0
     file = ""
     mp = ""
+    file_add = {}
 
     #If user input after then split includes 'create API call' call API_Rules 
 
@@ -74,7 +75,10 @@ class Rules():
         write_conf = input("Do you want to write the program to file? \n Yes or No: ")
         #print(master_program)
         if write_conf.lower() == "yes":
+            self.add_program("test", "test")
             self.write.write_line(self.file+".py", master_program)
+            self.mp = master_program
+            return master_program
         else:
             self.mp = master_program
             return master_program
@@ -236,8 +240,8 @@ class Rules():
         
         hold = self.generate_function_code(func_name, params, operation[0], (file+".py"), count, ret, program, sample_param)
         #Work needed on program directory
-        if hold == "Done":
-            self.add_program(file, description)
+        #if hold == "Done":
+            #self.add_program(file, description)
         return hold
         '''Allow the user to run the program and get sample output'''        
         ##self.run_program(file, sample_param)
@@ -259,9 +263,14 @@ class Rules():
                         self.file = input("What do you want to call the program? \n Enter name: ")
                         self.file = self.text_analysis.lower_capital(self.file)
                         check = self.checkFile("./"+self.file+".py", False)
+                        if check == 0:
+                            self.file_add = {self.file:{"functions":[]}}
                     func_name = input("What do you want to call the function? \n Enter name: ")
                     func_name = self.text_analysis.lower_capital(func_name)
                 if check == 0:
+                    temp_func = self.file_add[self.file]["functions"]
+                    temp_func.append(func_name)
+                    self.file_add[self.file]["functions"] = temp_func
                     hold = self.create_function_code(self.file, func_name, description, params, operation, sample_param, count, ret, program)
                     return hold
                 elif check == 1:
@@ -293,7 +302,7 @@ class Rules():
         
     def get_data(self):
         try:
-            data = self.reader.getData("programs", "programs")
+            data = self.reader.loadData("programs")
             return data
         except:
             return {}
@@ -319,7 +328,8 @@ class Rules():
         
     def add_program(self, name, description):
       data = self.get_data()
-      data[name] = description
+      #data[name] = description
+      data[self.file] = self.file_add[self.file]
       self.reader.addData("programs", data)
       
     def run_pro(self, file):
