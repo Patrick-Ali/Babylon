@@ -2,20 +2,10 @@ from TextAnalysis import TextAnalysis as TA
 from JSON import JSON
 from Py_Write import PyCreate as PC
 from Expanding import Expands
-
-from kivy.app import App
-from kivy.uix.button import Button
-from kivy.core.window import Window
 from pathlib import Path
-from kivy.clock import Clock
-from pynput.keyboard import Key, Controller
-import time
 
-from Babylon_UI import ChatPageMain, ChatPannel, message, ChatPage, Lab, UserIn
 
-from ChatHistory import ChatHistory as ch
-
-class Rules(App):
+class Rules():
     reader = JSON()
     text_analysis = TA()
     write = PC()
@@ -27,142 +17,16 @@ class Rules(App):
     file = ""
     mp = ""
     file_add = {}
-    userInput = UserIn("Example: I want a program to add two numbers.")
-    chat = ChatPage()# Container for adding messages
-    hold = ch()
-    chatPannel = ChatPannel()# Container for scrolling
-    resp = ''
-    keyboard = Controller()
-    trig = False
-    hp = ''
-    c = 0
-    s = ""
-    t = ""
-    r = False
-    p = ""
-
-    def build(self):
-
-        """
-            Method that is called when the class is initalised. Handels building
-            the user interface for the app.
-        """
-
-        #Create the base sections for the app
-        grid = ChatPageMain(1,3)
-
-        #Create the header section which contains the
-        #App title and settings button
-        header = ChatPageMain(2,1)
-        
-        #Set the header to fill 10% of the app height 
-        header.size_hint_y = 0.10
-
-        #App title set to 80% width of the header 
-        title = Lab("Babylon", 0.80, [255,0,0,0.25], 0)
-        #title.size_hint_x = 0.80
-
-        #Settings button set to 10% width of the header  
-        settings = Button(text="Settings", size_hint_x = 0.10)
-
-        #Add title and settings button to the app 
-        header.add_widget(title)
-        header.add_widget(settings)
-
-        #Create the footer section which contains the
-        #User input and submit button
-        footer = ChatPageMain(2,1)
-        footer.size_hint_y = 0.10
-
-        #User input set to 80% width of the footer
-        self.userInput.size_hint_x = 0.80
-
-        #Submit button set to 10% width of the footer  
-        submit = Button(text="Submit", size_hint_x = 0.10)
-        #On clicking submit call user_submit function
-        submit.bind(on_press=self.user_submit)
-
-        #Add user input and submit button to the app
-        footer.add_widget(self.userInput)
-        footer.add_widget(submit)
-
-        #Add header section to the app
-        grid.add_widget(header)
-
-        #Create the section where the chat will appear
-        
-        
-
-        #Allow the chat to be scrollable
-        self.chat.bind(minimum_height=self.chat.setter('height'))
-
-        #Add chat section to the app
-        self.chatPannel.add_widget(self.chat)
-        grid.add_widget(self.chatPannel)
-
-        #Add footer section to the app
-        grid.add_widget(footer)
-
-        #When user presses key call the on_key_down function 
-        Window.bind(on_key_down=self.on_key_down)
-        
-        return grid
-    
-    def on_key_down(self, instance, keyboard, keycode, text, modifiers):
-        """
-            Method is activated when the user press down a key. It listens for
-            when the user presses enter and submits the user input for analysis.
-        """
-
-        #Allows the user to press enter to submit input
-        if keycode == 40:
-            self.user_submit(None)
-
-    def focus_text_input(self, _):
-        """
-            Mehtod returns focus to the user input section once the user has
-            submited text
-        """
-        self.userInput.focus = True
-        self.userInput.do_backspace(from_undo=False, mode='bkspc')
-
-    def botResponse(self, userInput):
-        """
-            Method handles getting the response from the bot based on its
-            response. Takes the input from the user and calls method to analyse. it
-        """
-        
-        chatLog = self.hold.writeFile("./chat.csv", ("b" + userInput))
-        self.rewrite()
-
-    def rewrite(self):
-        self.chatPannel.remove_widget(self.chat)
-        self.chat = ChatPage()
-        self.chat.bind(minimum_height=self.chat.setter('height'))
-        self.chatPannel.add_widget(self.chat)
-
-    def user_submit(self, _):
-        """
-            Method manages handeling the user input.
-        """
-        if self.userInput.text != "":
-            #Refresh the chat
-            chatLog = self.hold.writeFile("./chat.csv", ('u' + self.userInput.text))
-            self.resp = self.userInput.text
-            #self.botResponse(self.userInput.text)
-            self.rewrite()       
-            #Set the user input to original state
-            self.userInput.text = ''
-            Clock.schedule_once(self.focus_text_input, 0.1)
-            self.keyboard.press(Key.enter)
-            self.keyboard.release(Key.enter)
-            if self.trig == False:
-                self.sentence_break(self.resp)
+    func_count = 0
+    funcs = [""]
+    write_file = "No"
+    f_name = "Test46"
+    trial = True
 
     #If user input after then split includes 'create API call' call API_Rules 
 
     def rule_test(self, sentence):
-        self.trig = True
+        print("Here 1")
         hold =  sentence
         split_and = hold.split("and")
         program = ''
@@ -210,47 +74,42 @@ class Rules(App):
                             master_program += temp
             else:
                 count += 1
-                #temp = self.generate_code(split_then[0], count, True, program)
-                self.generate_code(split_then[0], count, True, program)
-                temp = self.hp
+                temp = self.generate_code(split_then[0], count, True, program)
                 if temp is not None:
                     master_program += temp
-        self.mp = master_program
-        Clock.schedule_once(self.to_file, 30)         
-        # #write_conf = input("Do you want to write the program to file? \n Yes or No: ")
-        # write_text = "Do you want to write the program to file?"
-        # self.botResponse(write_text)
-        # #time.sleep(30)
-        # #input("Press enter to continue")
-        # write_conf = self.resp
-        # #print(master_program)
-        # if write_conf.lower() == "yes":
-        #     self.add_program("test", "test")
-        #     self.write.write_line(self.file+".py", master_program)
-        #     self.mp = master_program
-        #     return master_program
-        # else:
-        #     self.mp = master_program
-        #     return master_program
-
-    def to_file(self, _):
-        #write_conf = input("Do you want to write the program to file? \n Yes or No: ")
-        write_text = "Do you want to write the program to file?"
-        self.botResponse(write_text)
-        #time.sleep(30)
-        #input("Press enter to continue")
-        write_conf = self.resp
+                
+        write_conf = self.write_file#"No"#input("Do you want to write the program to file? \n Yes or No: ")
         #print(master_program)
+        print(write_conf)
+        print("File ", self.file)
+        print("File ", self.f_name)
         if write_conf.lower() == "yes":
             self.add_program("test", "test")
-            self.write.write_line(self.file+".py", self.mp)
-            #self.mp = master_program
-            return self.mp
+            self.write.write_line(self.f_name+".py", master_program)
+            self.mp = master_program
+            #self.reset()
+            return master_program
         else:
-            #self.mp = master_program
-            print("MP: ", self.mp)
-            return self.mp
-    
+            print(self.func_count)
+            self.mp = master_program
+            print(master_program)
+            #self.reset()
+            return master_program
+
+    def reset(self):
+        self.var_count = 0
+        self.sample_param = []
+        self.params_func = []
+        self.param_count = 0
+        self.file = ""
+        self.mp = ""
+        self.file_add = {}
+        self.func_count = 0
+        self.funcs = [""]
+        self.write_file = "No"
+        self.f_name = "Test46"
+        self.trial = True
+                
     def sentence_break(self, text):
         #Break the user input into tokens
         sentences = self.text_analysis.tokenize_text(text)
@@ -262,28 +121,10 @@ class Rules(App):
             for sentence in sentences:
                 hold = self.rule_test(sentence)
 
-    def test_extra_time(self, _):
-        if self.c == 1:
-            print("Here")
-            params_split = self.resp.split(",")
-            print("Param Split: ", params_split)
-            for param in params_split:
-                self.sample_param.append(param)  
-                ##Check operations requirements match user input
-                for i in range(len(self.sample_param)):
-                    if self.sample_param[i] != 'ans':
-                        param = "param_"+str(i)
-                        self.params_func.append(param)
-                    else:
-                        param = "param_empty"
-                        self.params_func.append(param)
-            print("Params ",  self.params_func)          
-            if len(self.params_func) > 0:
-                hold = self.domain_analysis(self.s, self.params_func, self.t, self.sample_param, self.c, self.r, self.p)
-                print(hold)
-                self.hp = hold
+
 
     def generate_code(self, text, count, ret, program):
+        print("Here 1.5")
         #Lower capitals
         clean_text = self.text_analysis.lower_capital(text)
 
@@ -318,40 +159,28 @@ class Rules(App):
             specifics = self.operation_specifics(domain, operation)
             #If the user has asked for the answer from previous function they only need add the next parameter
             if count == 1:
-                #params_text = input("""Please provide smaple input, e.g. for
+                #params_text = "1,2"#input("""Please provide smaple input, e.g. for
                         #'I want a program to add two numbers togther.'
                         #the input would be '1, 2'. Use comma (,) to denote each input. \n
-                       # Enter input samples: """ )
-                params_text_one = "Please provide smaple input, e.g. for: "
-                params_text_two = "'I want a program to add two numbers togther.'"
-                params_text_three ="the input would be '1, 2'. Use comma (,) to denote each input. "
-                self.botResponse(params_text_one)
-                self.botResponse(params_text_two)
-                self.botResponse(params_text_three)
-                self.c = count
-                self.s = specifics
-                self.t = text
-                self.r = ret
-                self.p = program
-                Clock.schedule_once(self.test_extra_time, 30)
-                #time.sleep(30)
-                #input("Press Enter to continue...")
-            #     params_split = self.resp.split(",")
-            #     for param in params_split:
-            #         self.sample_param.append(param)  
-            #     ##Check operations requirements match user input
-            #     for i in range(len(self.sample_param)):
-            #         if self.sample_param[i] != 'ans':
-            #             param = "param_"+str(i)
-            #             self.params_func.append(param)
-            #         else:
-            #             param = "param_empty"
-            #             self.params_func.append(param)
-            # print("Params ",  self.params_func)          
-            # if len(self.params_func) > 0:
-            #     hold = self.domain_analysis(specifics, self.params_func, text, self.sample_param, count, ret, program)
-            #     print(hold)
-            #     return hold
+                        #Enter input samples: """ )
+                #params_split = params_text.split(",")
+                #for param in params_split:
+                    #self.sample_param.append(param)  
+                ##Check operations requirements match user input
+                if self.trial == True:
+                    self.sample_param = [1,2]
+                for i in range(len(self.sample_param)):
+                    if self.sample_param[i] != 'ans':
+                        param = "param_"+str(i)
+                        self.params_func.append(param)
+                    else:
+                        param = "param_empty"
+                        self.params_func.append(param)
+            print("Params ",  self.params_func)          
+            if len(self.params_func) > 0:
+                hold = self.domain_analysis(specifics, self.params_func, text, self.sample_param, count, ret, program)
+                print(hold)
+                return hold
                       
         elif len(possible_operations) >= 2:
             line_one = "I found a list of potential operations that may fit your needs: \n"
@@ -448,6 +277,7 @@ class Rules(App):
         ##self.run_pro("run_pro.py")
 
     def domain_analysis(self, text, params, description, sample_param, count, ret, program):
+        print("Here 16")
         clean_text = self.text_analysis.lower_capital(text)
         depunctuated_text = self.text_analysis.remove_punctuation(clean_text)
         operation = self.code_search(depunctuated_text)
@@ -458,25 +288,23 @@ class Rules(App):
             if "function" in depunctuated_text:
                 check = 0
                 func_name = ''
+                print("Count ", count)
                 if count == 1:
                     if self.file == '':
-                        #self.file = input("What do you want to call the program? \n Enter name: ")
-                        file_text = "What do you want to call the program?"
-                        self.botResponse(file_text)
-                        #time.sleep(30)
-                        #input("Press Enter to continue...")
-                        self.file = self.resp
+                        print("Here 55")
+                        self.file = self.f_name#"Test12"#input("What do you want to call the program? \n Enter name: ")
                         self.file = self.text_analysis.lower_capital(self.file)
                         check = self.checkFile("./"+self.file+".py", False)
                         if check == 0:
                             self.file_add = {self.file:{"functions":[]}}
-                    #func_name = input("What do you want to call the function? \n Enter name: ")
-                    func_text = "What do you want to call the function?"
-                    self.botResponse(func_text)
-                    #time.sleep(30)
-                    #input("Press Enter to continue...")
-                    func_name = self.resp
+                    #func_name = ""
+                    print("Trial ", self.trial)
+                    if self.trial == True:
+                        func_name = "Test12"#input("What do you want to call the function? \n Enter name: ")
+                    else:
+                        func_name = self.funcs[self.func_count]
                     func_name = self.text_analysis.lower_capital(func_name)
+                    self.func_count += 1 
                 if check == 0:
                     temp_func = self.file_add[self.file]["functions"]
                     temp_func.append(func_name)
@@ -562,7 +390,9 @@ class Rules(App):
 
 
 if __name__ == '__main__':
-    Rules().run()
-    #Testing
-    # #rules = Rules()
-    # #test = rules.sentence_break("I want a program to determine the greater of two objects") #add two numbers then multiply and subtract then multiply#then multiply then subtract and subtract then multiply then multiply 
+   #Testing
+   rules = Rules()
+   test = rules.sentence_break("I want a program to determine the greater of two objects") #add two numbers then multiply and subtract then multiply#then multiply then subtract and subtract then multiply then multiply 
+
+
+               
