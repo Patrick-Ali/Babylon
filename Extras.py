@@ -447,9 +447,9 @@
 ##                    print("Hello " + str(numb))
                     #last = numb
                     #if jump == False:
-                    print("Num " + num)
-                    print("Next Word " + next_word)
-print("Cur num " + str(cur_num))
+                    #print("Num " + num)
+                    #print("Next Word " + next_word)
+#print("Cur num " + str(cur_num))
 #elif multi_now == False:
 #and extra != cur_num: #: #and multi_now == False
 #print("Cur " + str(cur_num))

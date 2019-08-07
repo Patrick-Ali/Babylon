@@ -1,6 +1,8 @@
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.core.window import Window
+from kivy.clock import Clock
+from Rules import Rules
 
 from Babylon_UI import ChatPageMain, ChatPannel, message, ChatPage, Lab, UserIn
 
@@ -18,6 +20,7 @@ class BabylonApp(App):
     chat = ChatPage()# Container for adding messages
     hold = ch()
     chatPannel = ChatPannel()# Container for scrolling
+    rules = Rules()
     
     def build(self):
 
@@ -110,15 +113,17 @@ class BabylonApp(App):
         """
         #Refresh the chat
         chatLog = self.hold.writeFile("./chat.csv", ('u' + self.userInput.text))
-        self.botResponse(self.userInput.text)
-        self.chatPannel.remove_widget(self.chat)
-        self.chat = ChatPage()
-        self.chat.bind(minimum_height=self.chat.setter('height'))
-        self.chatPannel.add_widget(self.chat)
+        rules.rewrite()
+        rules.sentence_break(self.userInput.text)
+        # self.botResponse(self.userInput.text)
+        # self.chatPannel.remove_widget(self.chat)
+        # self.chat = ChatPage()
+        # self.chat.bind(minimum_height=self.chat.setter('height'))
+        # self.chatPannel.add_widget(self.chat)
         
-        #Set the user input to original state
-        self.userInput.text = ''
-        Clock.schedule_once(self.focus_text_input, 0.1)
+        # #Set the user input to original state
+        # self.userInput.text = ''
+        # Clock.schedule_once(self.focus_text_input, 0.1)
         
     def on_key_down(self, instance, keyboard, keycode, text, modifiers):
         """
