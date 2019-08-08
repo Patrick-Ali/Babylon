@@ -39,19 +39,37 @@ class Rules():
                     for bit in split_then:
                         count += 1
                         if count < len(split_then):
+                            print(bit)
                             temp = self.generate_code(bit, count, False, program)
-                            if temp is not None:
-                                program = temp
+                            print("Temp1 ", temp)
+                            if temp[0] == 1:
+                                temp2 = temp[1]
+                                if temp2 is not None:
+                                    master_program += temp2
+                            else:
+                                return temp
                         else:
                             temp = self.generate_code(bit, count, True, program)
-                            if temp is not None:
-                                master_program += temp
+                            temp2 = ""
+                            print("Temp2 ", temp)
+                            if temp[0] == 1:
+                                temp2 = temp[1]
+                                if temp2 is not None:
+                                    master_program += temp2
+                            else:
+                                return temp
             
                 else:
                     count += 1
                     temp = self.generate_code(part, count, True, program)
-                    if temp is not None:
-                        master_program += temp
+                    temp2 = ""
+                    print("Temp3 ", temp)
+                    if temp[0] == 1:
+                        temp2 = temp[1]
+                        if temp2 is not None:
+                            master_program += temp2
+                    else:
+                        return temp
                 count = 0
                 program = ''
                 self.var_count = 0
@@ -65,36 +83,53 @@ class Rules():
                     count += 1
                     if count < len(split_then):
                         temp = self.generate_code(bit, count, False, program)
-                        if temp is not None:
-                            program = temp
+                        temp2 = ""
+                        print("Temp4 ", temp)
+                        if temp[0] == 1:
+                            temp2 = temp[1]
+                            if temp2 is not None:
+                                master_program += temp2
+                        else:
+                            return temp
                         
                     else:
                         temp = self.generate_code(bit, count, True, program)
-                        if temp is not None:
-                            master_program += temp
+                        temp2 = ""
+                        print("Temp5 ", temp)
+                        if temp[0] == 1:
+                            temp2 = temp[1]
+                            if temp2 is not None:
+                                master_program += temp2
+                        else:
+                            return temp
             else:
                 count += 1
                 temp = self.generate_code(split_then[0], count, True, program)
-                if temp is not None:
-                    master_program += temp
+                if temp[0] == 1:
+                    temp2 = temp[1]
+                    if temp2 is not None:
+                        master_program += temp2
+                else:
+                    return temp
                 
         write_conf = self.write_file#"No"#input("Do you want to write the program to file? \n Yes or No: ")
         #print(master_program)
-        print(write_conf)
-        print("File ", self.file)
-        print("File ", self.f_name)
+        #print(write_conf)
+        #print("File ", self.file)
+        #print("File ", self.f_name)
         if write_conf.lower() == "yes":
             self.add_program("test", "test")
             self.write.write_line(self.f_name+".py", master_program)
             self.mp = master_program
+            print(master_program)
             #self.reset()
-            return master_program
+            return (1, master_program)
         else:
-            print(self.func_count)
+            #print(self.func_count)
             self.mp = master_program
             print(master_program)
             #self.reset()
-            return master_program
+            return (1, master_program)
 
     def reset(self):
         self.var_count = 0
@@ -120,6 +155,7 @@ class Rules():
             #For each sentence in the user input
             for sentence in sentences:
                 hold = self.rule_test(sentence)
+                return hold
 
 
 
@@ -154,6 +190,7 @@ class Rules():
 
         #Check if there is any operations and begin analysing them
         if len(possible_operations) > 0 and len(possible_operations) < 2:
+            print("Here 2.5")
             domain = possible_operations[0][0]
             operation = possible_operations[0][1]
             specifics = self.operation_specifics(domain, operation)
@@ -167,8 +204,9 @@ class Rules():
                 #for param in params_split:
                     #self.sample_param.append(param)  
                 ##Check operations requirements match user input
-                if self.trial == True:
-                    self.sample_param = [1,2]
+                #if self.trial == True:
+                    #self.sample_param = [1,2]
+                print(self.sample_param)
                 for i in range(len(self.sample_param)):
                     if self.sample_param[i] != 'ans':
                         param = "param_"+str(i)
@@ -176,16 +214,22 @@ class Rules():
                     else:
                         param = "param_empty"
                         self.params_func.append(param)
-            print("Params ",  self.params_func)          
+            #print("Params ",  self.params_func)
+            print(self.params_func)          
             if len(self.params_func) > 0:
+                print("Here 2")
                 hold = self.domain_analysis(specifics, self.params_func, text, self.sample_param, count, ret, program)
-                print(hold)
-                return hold
+                #print(hold)
+                if hold[0] == 1:
+                    return (1, hold[1])
+                else:
+                    return hold
                       
         elif len(possible_operations) >= 2:
-            line_one = "I found a list of potential operations that may fit your needs: \n"
+            #line_one = "I found a list of potential operations that may fit your needs: \n"
             count_param = 0
             operations = []
+            line_three = ""
             for operation in possible_operations:
                 count_param += 1
                 domain = operation[0]
@@ -193,36 +237,40 @@ class Rules():
                 operations.append(operation)
                 specifics = self.operation_specifics(domain, operation)
                 line_three = (str(count_param) + ") " + specifics + " \n")
-                print(line_three)
-            line_two = int(input("\n If any operation meets your requirements enter its number: "))
-            count_param = 0
-            for op in operations:
-                if (count_param + 1) != line_two:
-                    clean_text = clean_text.replace(op, "")
-                count_param += 1
-            print(clean_text)
+                #print(line_three)
+            print("Fail ", 2)
+            return (2, line_three)
+            #line_two = int(input("\n If any operation meets your requirements enter its number: "))
+            #count_param = 0
+            #for op in operations:
+                #if (count_param + 1) != line_two:
+                    #clean_text = clean_text.replace(op, "")
+                #count_param += 1
+            #print(clean_text)
             
-            self.generate_code(clean_text, count, ret, program)
+            #self.generate_code(clean_text, count, ret, program)
 
         else:
-            again = True
-            while again == True:
-                print("I do not understand the request, perhaps try rephrasing or look at operations I can do. ")
-                test = input("To try again enter T, to expand the knowledge base enter A, or to exit enter E: ")
-                test = self.text_analysis.lower_capital(test)
-                if test == 't':
-                    again = False
-                    hold = input("Enter whole text: \n")
-                    self.sentence_break(hold)
-                    break
-                elif test == 'a':
-                    self.expand()
-                    again = False
-                    self.generate_code(text, count, ret, program)
-                else:
-                    again = False
-                    print("Exiting...")
-                    break
+            print("Fail ", 3)
+            return(3, "Fail")
+            #again = True
+            #while again == True:
+                #print("I do not understand the request, perhaps try rephrasing or look at operations I can do. ")
+                #test = input("To try again enter T, to expand the knowledge base enter A, or to exit enter E: ")
+                #test = self.text_analysis.lower_capital(test)
+                #if test == 't':
+                    #again = False
+                    #hold = input("Enter whole text: \n")
+                    #self.sentence_break(hold)
+                    #break
+               # elif test == 'a':
+                    #self.expand()
+                    #again = False
+                    #self.generate_code(text, count, ret, program)
+                #else:
+                    #again = False
+                    #print("Exiting...")
+                    #break
 
     def expand(self):
         dom = input("Do you want to add a new domain? \n Y for yes or N for No: ")
@@ -248,9 +296,9 @@ class Rules():
     def code_search(self, text):
        hold = self.reader.getData("py", "functions")
        match = []
-       print("Text ", text)
+       #print("Text ", text)
        for key in hold:
-           print("Key ", key)
+           #print("Key ", key)
            if key in text:
                match.append(key)
        return match
@@ -263,10 +311,11 @@ class Rules():
             for key in hold:
                 if key in text:
                     match.append((domain, key))
+        print("Match ", match)
         return match
     
     def create_function_code(self, file, func_name, description, params, operation, sample_param, count, ret, program):
-        
+        print("Here 7")
         hold = self.generate_function_code(func_name, params, operation[0], (file+".py"), count, ret, program, sample_param)
         #Work needed on program directory
         #if hold == "Done":
@@ -277,18 +326,20 @@ class Rules():
         ##self.run_pro("run_pro.py")
 
     def domain_analysis(self, text, params, description, sample_param, count, ret, program):
-        print("Here 16")
+        #print("Here 16")
+        print("Here 3")
         clean_text = self.text_analysis.lower_capital(text)
         depunctuated_text = self.text_analysis.remove_punctuation(clean_text)
         operation = self.code_search(depunctuated_text)
-        print(len(operation))
-        if len(operation) > 0 and len(operation) < 2: 
+        #print(len(operation))
+        if len(operation) > 0 and len(operation) < 2:
+            print("Here 4") 
             self.param_count = self.code_search_params(operation[0])
             self.var_count += int(self.param_count)
             if "function" in depunctuated_text:
                 check = 0
                 func_name = ''
-                print("Count ", count)
+                #print("Count ", count)
                 if count == 1:
                     if self.file == '':
                         print("Here 55")
@@ -298,7 +349,7 @@ class Rules():
                         if check == 0:
                             self.file_add = {self.file:{"functions":[]}}
                     #func_name = ""
-                    print("Trial ", self.trial)
+                    #print("Trial ", self.trial)
                     if self.trial == True:
                         func_name = "Test12"#input("What do you want to call the function? \n Enter name: ")
                     else:
@@ -306,36 +357,41 @@ class Rules():
                     func_name = self.text_analysis.lower_capital(func_name)
                     self.func_count += 1 
                 if check == 0:
+                    print("Here 6")
                     temp_func = self.file_add[self.file]["functions"]
                     temp_func.append(func_name)
                     self.file_add[self.file]["functions"] = temp_func
                     hold = self.create_function_code(self.file, func_name, description, params, operation, sample_param, count, ret, program)
-                    return hold
+                    return (1, hold)
                 elif check == 1:
-                    while check == 1:
-                        confirm = self.text_analysis.lower_capital(input("The file already exists, do you want to overwrite it. \n Y for yes and N for no, or E to exit: "))
-                        #Overwrite file with new function
-                        if confirm == 'y':
-                            check = 0
-                            con = self.checkFile("./"+self.file+".py", True)
+                    print("Fail ", 3)
+                    return(4, "File name already used")
+                    # while check == 1:
+                    #     confirm = self.text_analysis.lower_capital(input("The file already exists, do you want to overwrite it. \n Y for yes and N for no, or E to exit: "))
+                    #     #Overwrite file with new function
+                    #     if confirm == 'y':
+                    #         check = 0
+                    #         con = self.checkFile("./"+self.file+".py", True)
                             
-                            hold = self.create_function_code(self.file, func_name, description, params, operation, sample_param, count, ret, program)
-                            return hold
-                        #Exit from code generation
-                        elif confirm == 'e':
-                            check = 0
-                            break
-                        #Try a different file name
-                        else:
-                            self.file = input("What do you want to call the program? \n Enter name: ")
-                            self.file = self.text_analysis.lower_capital(self.file)
-                            check = self.checkFile("./"+self.file+".py", False)
-                            if check == 0:
-                                hold = self.create_function_code(self.file, func_name, description, params, operation, sample_param, count, ret, program)
-                                return hold
+                    #         hold = self.create_function_code(self.file, func_name, description, params, operation, sample_param, count, ret, program)
+                    #         return hold
+                    #     #Exit from code generation
+                    #     elif confirm == 'e':
+                    #         check = 0
+                    #         break
+                    #     #Try a different file name
+                    #     else:
+                    #         self.file = input("What do you want to call the program? \n Enter name: ")
+                    #         self.file = self.text_analysis.lower_capital(self.file)
+                    #         check = self.checkFile("./"+self.file+".py", False)
+                    #         if check == 0:
+                    #             hold = self.create_function_code(self.file, func_name, description, params, operation, sample_param, count, ret, program)
+                    #             return hold
                                 
     def generate_function_code(self, name, params, operation, file, count, ret, program, sample_params):
+        print("Here 9")
         #Create funciton using the operation found in the domain description
+        print(name, params, operation, file, count, ret, program, sample_params)
         return self.write.create_function(name, params, operation, file, count, ret, program, sample_params, self.var_count, self.param_count)
         
     def get_data(self):

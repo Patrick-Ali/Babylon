@@ -6,3 +6,18 @@
 "bWhat do you want to call the program?"
 "bWhat do you want to call the function?"
 "bDo you want to write the program to file?"
+
+Return 1, code = Success
+Erros
+line_one = "I found a list of potential operations that may fit your needs: \n"
+            count_param = 0
+            for op in operations:
+                if (count_param + 1) != line_two:
+                    clean_text = clean_text.replace(op, "")
+                count_param += 1
+Return 2, Error mulit operations, operation seletion
+
+1 == Success
+2 == Multi operations detected, 
+3 == Does not understand the user, I do not understand the request, perhaps try rephrasing
+4 == File name already in use, The file already exists

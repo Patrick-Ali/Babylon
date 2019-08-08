@@ -17,11 +17,13 @@ class PyCreate():
         line = ""
         params = []
         #print(sample_params)
+        print("Here 10")
         if count == 1:
             line = self.reader.getData("py", "function", "code")
             line = line.replace("<name>", name)
             #print("param name: ")
             #print(param_name)
+            print("Here 11")
             for p_name in param_name:
                 if p_name != "param_empty":
                     param = self.create_param(True, p_name)
@@ -34,6 +36,7 @@ class PyCreate():
                     param += (p + ", ")
                 else:
                     param += (p)
+            print("Here 12")
             line = line.replace("<param>", param)
         
         else:
@@ -43,7 +46,10 @@ class PyCreate():
             start = var_count - para_count
             count_param = 1
             line = new_line + indent
+            print("Here 13")
             while count_param <= para_count:
+                print("loop ", count_param, " ", para_count)
+
                 if start < len(sample_params):
                     temp = sample_params[start]
                     if temp == 'ans':
@@ -52,7 +58,7 @@ class PyCreate():
                         params.append(param_name[start])
                     start += 1
                     count_param += 1
-            
+            print("Here 14")
             #params.append("hold"+str((count-1)))
             #Temp test
             #params.append("param_2")
@@ -64,7 +70,7 @@ class PyCreate():
         #print("Line 2 " + line_two)
         #print(ret)
         if ret == True:
-            #print("Here 40")
+            print("Here 40")
             line_three = self.create_return(operation)
             #print("Line 3 " + line_three)
             #text = line + new_line + indent + line_two + new_line + indent + line_three

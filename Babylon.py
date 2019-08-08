@@ -26,6 +26,7 @@ class BabylonApp(App):
     file_name = ""
     funcs = []
     func_counting = 0
+    temp_block = ChatPageMain(1,1)
     
     def build(self):
 
@@ -84,10 +85,13 @@ class BabylonApp(App):
 
         #Add chat section to the app
         self.chatPannel.add_widget(self.chat)
+        #self.chatPannel.add_widget(self.temp_block)
         grid.add_widget(self.chatPannel)
 
         #Add footer section to the app
         grid.add_widget(footer)
+
+        #self.chatPannel.scroll_to(self.temp_block)
 
         #When user presses key call the on_key_down function 
         Window.bind(on_key_down=self.on_key_down)
@@ -139,16 +143,24 @@ class BabylonApp(App):
             chatLog = self.hold.writeFile("./chat.csv", write)
             self.refresh_chat()
             self.count_pro += 1
+        else:
+            test = userInput.split("\n")
+            print(test)
+            chatLog = self.hold.writeFile("./chat.csv", ("b" + userInput))
+            self.refresh_chat()
 
         #chatLog = self.hold.writeFile("./chat.csv", ("bParoting: " + userInput))
         # temp_count = 0
         #while temp_count < rules.func_count:
 
     def refresh_chat(self):
+        #self.chatPannel.remove_widget(self.temp_block)
         self.chatPannel.remove_widget(self.chat)
         self.chat = ChatPage()
         self.chat.bind(minimum_height=self.chat.setter('height'))
         self.chatPannel.add_widget(self.chat)
+        #self.chatPannel.add_widget(self.temp_block)
+        #self.chatPannel.scroll_to(self.temp_block)
 
     def user_submit(self, _):
         """
@@ -157,12 +169,12 @@ class BabylonApp(App):
         #Refresh the chat
         chatLog = self.hold.writeFile("./chat.csv", ('u' + self.userInput.text))
         if self.count_pro == 1:
-            self.rules.sentence_break(self.userInput.text)
-            self.req = self.userInput.text
             self.count_pro += 1
             self.refresh_chat()
+            #self.rules.sentence_break(self.userInput.text)
+            self.req = self.userInput.text
             self.botResponse(self.userInput.text)
-            print("Func count ", self.rules.func_count)
+            #print("Func count ", self.rules.func_count)
         elif self.count_pro == 3:
             params_split = self.userInput.text.split(",")
             self.rules.sample_param = []
@@ -172,6 +184,8 @@ class BabylonApp(App):
             print("Params ", self.rules.sample_param)
             self.count_pro += 1
             self.refresh_chat()
+            self.rules.sentence_break(self.req)
+            print("Func count ", self.rules.func_count)
             self.botResponse(self.userInput.text)
         elif self.count_pro == 5:
             if self.file_name == "":
@@ -205,12 +219,22 @@ class BabylonApp(App):
                 self.botResponse(self.userInput.text)
         elif self.count_pro == 9:
             self.rules.write_file = self.userInput.text
-            print(self.rules.write_file)
+            #print(self.rules.write_file)
             self.refresh_chat()
             self.rules.trial = False
             self.rules.func_count = 0
             self.rules.file = ""
-            self.rules.sentence_break(self.req)
+            res = self.rules.sentence_break(self.req)
+            print("Result ", res)
+            print(res[0])
+            if res[0] == 1:
+                self.botResponse(res[1])
+            if res[0] == 2:
+                self.botResponse("There was too many operations in the input, chose between " + res[1])
+            elif res[0] == 3:
+                self.botResponse("I do not understand the request, perhaps try rephrasing.")
+            elif res[0] == 4:
+                self.botResponse("The file already exists, choose a different name.")
             self.count_pro = 1
             self.func_counting = 0
             self.file_name = ""
@@ -233,6 +257,13 @@ class BabylonApp(App):
         #Set the user input to original state
         self.userInput.text = ''
         Clock.schedule_once(self.focus_text_input, 0.1)
+
+    def multi_op_error(self, operations, line_two):
+        count_param = 0
+        for op in operations:
+            if (count_param + 1) != line_two:
+                clean_text = clean_text.replace(op, "")
+            count_param += 1
         
     def on_key_down(self, instance, keyboard, keycode, text, modifiers):
         """
