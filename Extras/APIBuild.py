@@ -9,6 +9,8 @@ Delete
 """
 
 import requests
+import base64
+import json
 
 class API_Call_Builder():
 
@@ -44,8 +46,11 @@ class API_Call_Builder():
         response = requests.post(url, data=data)
         return response
         
-    def put(self, url, data, auth=None, ver=None, retry=None, timeout=None):
-        response = requests.put(url, data=data)
+    def put(self, url, head, data=None, auth=None, ver=None, retry=None, timeout=None):
+        #data["content"] = data["content"].decode()
+        response = requests.put(url, headers = head, data = json.dumps(data)) #data=data
+        print(response.headers)
+        return response.json()
         
     def del_http(self, url, auth=None, ver=None, retry=None, timeout=None):
         response = requests.delete(url)
@@ -67,11 +72,38 @@ class API_Call_Builder():
         header = self.get_head(url)
         return header[value]
 
+    def enc_b64(self, file):
+        data = open(file, "rb").read()
+        print(data)
+        #temp = str.encode(data)
+        #print(temp)
+        encoded = base64.b64encode(data)
+        print(encoded)
+        send = encoded.decode('utf-8')
+        print(send)
+        return send
+
+
 if __name__ == "__main__":
     hold = API_Call_Builder()
     #print(hold.get("https://httpbin.org/get", {}, {}, True))
     #print(hold.post("https://httpbin.org/post", {"key":"value"}).json())
-    print(hold.get("https://api.github.com/repos/Patrick-Ali/Babylon/contents",{},{"Authorization": "token b2d2d0744ed81e3d7ec3ddf5075dfa4978a41990"}, True))
+    #print(hold.get("https://api.github.com/repos/Patrick-Ali/Babylon/contents",{},{"Authorization": "token b2d2d0744ed81e3d7ec3ddf5075dfa4978a41990"}, True))
+    #data = {
+        #"Authorization": "token b2d2d0744ed81e3d7ec3ddf5075dfa4978a41990",
+        #"message": "Testing API",
+        #"content": "bIkhlbGxvIFdvcmxkIg=="#hold.enc_b64("test.txt")
+    #}
+    #print(data)
+    #, "Authorization": "token 70db72fa32faa470e3c4a6bac9a00ba2c4437dff" #b2d2d0744ed81e3d7ec3ddf5075dfa4978a41990"
+    #'{"Content-Type" : "application/vnd.github.v3+json", "Authorization": "token b2d2d0744ed81e3d7ec3ddf5075dfa4978a41990"}' -d '{"message": "Testing", "committer": {"name": "Patrick Ali", "email": "alip@uni.coventry.ack.uk"}, "content": "bIkhlbGxvIFdvcmxkIg==", "branch": "master"}' https://api.github.com/repos/Patrick-Ali/TestAPI/contents/test.txt
+    url = "https://api.github.com/repos/Patrick-Ali/TestAPI/contents/test4.txt"
+    head ={"Content-Type" : "application/vnd.github.v3+json", "Authorization": "token 70db72fa32faa470e3c4a6bac9a00ba2c4437dff"}
+    data = {"message": "Testing Auth", "committer": {"name": "Patrick Ali", "email": "alip@uni.coventry.ack.uk"}, "content": hold.enc_b64("test2.txt")}#"bIkhlbGxvIFdvcmxkIg=="}
+    #print(data)
+    print(hold.put(url,head,data))
+    #print(hold.put("https://api.github.com/repos/Patrick-Ali/TestAPI/contents/hello.txt", {"Authorization": "token b2d2d0744ed81e3d7ec3ddf5075dfa4978a41990", "multipart":"true", "accept":"application/json;version=2", "content_type":"multipart/form-data"}, {'"message":"Testing","content" : "bIkhlbGxvIFdvcmxkIg=="'}))
+    #print(hold.put("https://api.github.com/repos/Patrick-Ali/TestAPI/contents/hello.txt", {"Authorization": "token b2d2d0744ed81e3d7ec3ddf5075dfa4978a41990", "message":"Testing API", "committer":"{ \"name\": \"Patrick Ali\", \"email\": \"alip@uni.coventry.ac.uk\" }", "content":"bIkhlbGxvIFdvcmxkIg=="}))
     ##Make a paste
     #4ca487b2ef36f16057c593ebf7ea68dd
     #print(hold.post("https://pastebin.com/api/api_post.php",) 

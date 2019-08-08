@@ -3,6 +3,7 @@ from JSON import JSON
 from Py_Write import PyCreate as PC
 from Rules import Rules 
 from pathlib import Path
+import json
 
 
 class API_Rules():
@@ -78,15 +79,15 @@ class API_Rules():
                             d = False
                         else:
                             key_value = key_value.replace(":", ",")
-                            key_value = key_value.replace(" ", "")
+                            #key_value = key_value.replace(" ", "")
                             temp = key_value.split(",")
                         if len(temp) == 2:
-                            querys[temp[0]] = temp[1]
+                            data[temp[0]] = temp[1]
                         else:
                             print("Not recognised")
                     if len(data) > 0:
                         temp_hold = func["data_json"]
-                        temp_hold = temp_hold.replace("<data>", str(querys))
+                        temp_hold = temp_hold.replace("<data>", str(json.dumps(data)))
                         line_three += temp_hold + ", "
                         print("Line three ", line_three)
                         params.append(data)
@@ -108,7 +109,7 @@ class API_Rules():
                         q = False
                     else:
                         key_value = key_value.replace(":", ",")
-                        key_value = key_value.replace(" ", "")
+                        #key_value = key_value.replace(" ", "")
                         temp = key_value.split(",")
                         if len(temp) == 2:
                             querys[temp[0]] = temp[1]
@@ -140,7 +141,7 @@ class API_Rules():
                         h = False
                     else:
                         key_value = key_value.replace(":", ",")
-                        key_value = key_value.replace(" ", "")
+                        #key_value = key_value.replace(" ", "")
                         temp = key_value.split(",")
                         if len(temp) == 2:
                             headers[temp[0]] = temp[1]
@@ -300,7 +301,7 @@ class API_Rules():
                     
 if __name__ == "__main__":
     temp = API_Rules()
-    temp.api_rule_test("Get API")
+    temp.api_rule_test("Put API")
     temp.call_api()
                
                     
