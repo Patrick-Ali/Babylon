@@ -97,7 +97,7 @@ if __name__ == "__main__":
     #print(data)
     #, "Authorization": "token 70db72fa32faa470e3c4a6bac9a00ba2c4437dff" #b2d2d0744ed81e3d7ec3ddf5075dfa4978a41990"
     #'{"Content-Type" : "application/vnd.github.v3+json", "Authorization": "token b2d2d0744ed81e3d7ec3ddf5075dfa4978a41990"}' -d '{"message": "Testing", "committer": {"name": "Patrick Ali", "email": "alip@uni.coventry.ack.uk"}, "content": "bIkhlbGxvIFdvcmxkIg==", "branch": "master"}' https://api.github.com/repos/Patrick-Ali/TestAPI/contents/test.txt
-    url = "https://api.github.com/repos/Patrick-Ali/TestAPI/contents/test4.txt"
+    url = "https://api.github.com/repos/Patrick-Ali/TestAPI/contents/test5.txt"
     head ={"Content-Type" : "application/vnd.github.v3+json", "Authorization": "token 70db72fa32faa470e3c4a6bac9a00ba2c4437dff"}
     data = {"message": "Testing Auth", "committer": {"name": "Patrick Ali", "email": "alip@uni.coventry.ack.uk"}, "content": hold.enc_b64("test2.txt")}#"bIkhlbGxvIFdvcmxkIg=="}
     #print(data)
