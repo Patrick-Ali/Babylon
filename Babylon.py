@@ -25,7 +25,7 @@ class BabylonApp(App):
     def build(self):
 
         """
-            Method that is called when the class is initalised. Handels building
+            Method that is called when the class is initialised. Handels building
             the user interface for the app.
         """
 
@@ -93,7 +93,7 @@ class BabylonApp(App):
     def focus_text_input(self, _):
         """
             Mehtod returns focus to the user input section once the user has
-            submited text
+            submitted text
         """
         self.userInput.focus = True
         self.userInput.do_backspace(from_undo=False, mode='bkspc')
@@ -104,7 +104,7 @@ class BabylonApp(App):
             response. Takes the input from the user and calls method to analyse. it
         """
         
-        chatLog = self.hold.writeFile("./chat.csv", ("bParoting: " + userInput))
+        chatLog = self.hold.writeFile("./chat.csv", ("bParroting: " + userInput))
 
         
     def user_submit(self, _):

@@ -36,16 +36,22 @@ class Rules():
                             temp = self.generate_code(bit, count, False, program)
                             if temp is not None:
                                 program = temp
+                            else:
+                                master_program += ""
                         else:
                             temp = self.generate_code(bit, count, True, program)
                             if temp is not None:
                                 master_program += temp
+                            else:
+                                master_program += ""
             
                 else:
                     count += 1
                     temp = self.generate_code(part, count, True, program)
                     if temp is not None:
                         master_program += temp
+                    else:
+                        master_program += ""
                 count = 0
                 program = ''
                 self.var_count = 0
@@ -61,16 +67,22 @@ class Rules():
                         temp = self.generate_code(bit, count, False, program)
                         if temp is not None:
                             program = temp
+                        else:
+                            master_program += ""
                         
                     else:
                         temp = self.generate_code(bit, count, True, program)
                         if temp is not None:
                             master_program += temp
+                        else:
+                            master_program += ""
             else:
                 count += 1
                 temp = self.generate_code(split_then[0], count, True, program)
                 if temp is not None:
                     master_program += temp
+                else:
+                    master_program += ""
                 
         write_conf = input("Do you want to write the program to file? \n Yes or No: ")
         #print(master_program)
@@ -354,23 +366,26 @@ class Rules():
       self.reader.addData("programs", data)
     
     def call_pro(self):
-        data = self.reader.loadData("apis")
+        data = self.reader.loadData("programs")
         for key in data:
             print(key)
-            temp_hold = self.reader.getData("apis", key)
+            temp_hold = self.reader.getData("programs", key)
             print(temp_hold["functions"])
         select = input("Enter file and function. e.g. Test, test_get. \n Pair: ")
         select = select.replace(":", ",")
-        select = select.replace(" ", "")
+        #select = select.replace(" ", "")
         temp = select.split(",")
+        params_test = input("Enter paramters split with , . e.g. 1,2. \n Parameters: ")
+        params_test = params_test.split(",")
         if len(temp) == 2:
-            self.run_program(temp[0], {}, temp[1])
+            self.run_program(temp[0], params_test, temp[1])
             self.run_pro("run_pro.py")
         else:
             print("I can not handle that")
     
     def run_pro(self, file):
         result = self.write.call_py(file)
+        print(result)
         return result
     
     def checkFile(self, path, remove):
@@ -391,7 +406,8 @@ class Rules():
 if __name__ == '__main__':
    #Testing
    rules = Rules()
-   test = rules.sentence_break("I want a program to determine the greater of two objects") #add two numbers then multiply and subtract then multiply#then multiply then subtract and subtract then multiply then multiply 
+   #test = rules.sentence_break("I want a program to add two numbers then multiply and subtract then multiply") # determine the greater of two objects add two numbers then multiply and subtract then multiply#then multiply then subtract and subtract then multiply then multiply 
+   rules.call_pro()
 
 
                
