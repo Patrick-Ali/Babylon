@@ -586,3 +586,14 @@
 #print("Sample params: ", self.sample_param)
 #self.params_func = []
 
+
+
+'''"lesser": {
+    "name": "op_lesser",
+    "vars": "2",
+    "code": "op_lesser = <var1> < <var2>",
+    "return": "return op_lesser"
+}
+
+"lesser": "function determines the lesser of two objects"'''
+

@@ -54,7 +54,7 @@ def getNum(num, last_num, cur_num, extra, last, next_num):
                 if extra != 0: 
                     if extra == cur_num:
                         numb = numb
-                    elif (num in words and next_word not in words or num not in words and next_word not in words or num not in words and next_word in words):
+                    elif (num in words and next_num not in words or num not in words and next_num not in words or num not in words and next_num in words):
                         
                         numb = add(numb, extra)
                     
@@ -68,7 +68,7 @@ def getNum(num, last_num, cur_num, extra, last, next_num):
             return (numb, 0)
     if extra > 0:
         return (extra + cur_num, 3)
-    return "Unkown Number"
+    return "Unknown Number"
 
 def regexe(text):
     #x = re.findall("[1-9]x+", text)

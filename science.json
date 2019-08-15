@@ -1,1 +1,4 @@
-{"greater": "a function that compares two objects size and returns if the former is the greater"}
+{
+    "greater": "a function that compares two objects size and returns if the former is the greater",
+    "lesser": "function determines the lesser of two objects"
+}

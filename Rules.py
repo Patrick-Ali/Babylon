@@ -79,13 +79,17 @@ class Rules():
             else:
                 count += 1
                 temp = self.generate_code(split_then[0], count, True, program)
+                print(temp)
                 if temp is not None:
                     master_program += temp
+                    print("1 ", master_program)
                 else:
                     master_program += ""
+                    print("2 ", master_program)
                 
         write_conf = input("Do you want to write the program to file? \n Yes or No: ")
-        #print(master_program)
+        print("In 5 ", write_conf)
+        print(master_program)
         if write_conf.lower() == "yes":
             self.add_program("test", "test")
             self.write.write_line(self.file+".py", master_program)
@@ -110,16 +114,18 @@ class Rules():
 
 
     def generate_code(self, text, count, ret, program):
+
+        original_text = text
         #Lower capitals
         clean_text = self.text_analysis.lower_capital(text)
 
-        count_text = 0
-        extra_p = ""
+        #count_text = 0
+        #extra_p = ""
         ##Replace with regex check
-        for text in clean_text:
-            if text == "by":
-                extra_p = clean_text[count_text+1]
-            count_text += 1
+        #for text in clean_text:
+            #if text == "by":
+                #extra_p = clean_text[count_text+1]
+            #count_text += 1
                 
 
         #Remove punctuation
@@ -134,9 +140,9 @@ class Rules():
         #Get unique words from both sets, e.g. from tokens_1 user-test and from tokens_2 (user, test)
         combine_text = self.text_analysis.combine_text(tokens_one, tokens_two)
         
-        #Check if the user refrences any available functions
+        #Check if the user references any available functions
         possible_operations = self.domain_search(combine_text)
-
+        print(possible_operations)
         #Check if there is any operations and begin analysing them
         if len(possible_operations) > 0 and len(possible_operations) < 2:
             domain = possible_operations[0][0]
@@ -144,10 +150,11 @@ class Rules():
             specifics = self.operation_specifics(domain, operation)
             #If the user has asked for the answer from previous function they only need add the next parameter
             if count == 1:
-                params_text = input("""Please provide smaple input, e.g. for
-                        'I want a program to add two numbers togther.'
+                params_text = input("""Please provide sample input, e.g. for
+                        'I want a program to add two numbers together.'
                         the input would be '1, 2'. Use comma (,) to denote each input. \n
                         Enter input samples: """ )
+                print("In 2 ", params_text)
                 params_split = params_text.split(",")
                 for param in params_split:
                     self.sample_param.append(param)  
@@ -179,13 +186,15 @@ class Rules():
                 print(line_three)
             line_two = int(input("\n If any operation meets your requirements enter its number: "))
             count_param = 0
+            print("In 1 ", line_two)
             for op in operations:
                 if (count_param + 1) != line_two:
                     clean_text = clean_text.replace(op, "")
                 count_param += 1
             print(clean_text)
             
-            self.generate_code(clean_text, count, ret, program)
+            holding = self.generate_code(clean_text, count, ret, program)
+            return holding
 
         else:
             again = True
@@ -196,12 +205,15 @@ class Rules():
                 if test == 't':
                     again = False
                     hold = input("Enter whole text: \n")
-                    self.sentence_break(hold)
-                    break
+                    holding = self.sentence_break(hold)
+                    return holding
                 elif test == 'a':
+                    print(test)
+                    print(original_text)
                     self.expand()
                     again = False
-                    self.generate_code(text, count, ret, program)
+                    holding = self.generate_code(original_text, count, ret, program)
+                    return holding
                 else:
                     again = False
                     print("Exiting...")
@@ -209,12 +221,15 @@ class Rules():
 
     def expand(self):
         dom = input("Do you want to add a new domain? \n Y for yes or N for No: ")
+        print(dom)
         if dom.lower() == "y":
             self.exp.domain()
         op = input("Do you want to add a new operation? \n Y for yes or N for No: ")
+        print(op)
         if op.lower() == "y":
             self.exp.operation()
         func = input("Do you want to add a new function? \n Y for yes or N for No: ")
+        print(func)
         if func.lower() == "y":
             self.exp.program_function()
     
@@ -244,6 +259,7 @@ class Rules():
         for domain in domains:
             hold = self.reader.loadData(domain)
             for key in hold:
+                print("Hold key ", key)
                 if key in text:
                     match.append((domain, key))
         return match
@@ -273,11 +289,13 @@ class Rules():
                 if count == 1:
                     if self.file == '':
                         self.file = input("What do you want to call the program? \n Enter name: ")
+                        print("In 3 ", self.file)
                         self.file = self.text_analysis.lower_capital(self.file)
                         check = self.checkFile("./"+self.file+".py", False)
                         if check == 0:
                             self.file_add = {self.file:{"functions":[]}}
                     func_name = input("What do you want to call the function? \n Enter name: ")
+                    print("In 4 ", func_name)
                     func_name = self.text_analysis.lower_capital(func_name)
                 if check == 0:
                     temp_func = self.file_add[self.file]["functions"]
@@ -406,8 +424,8 @@ class Rules():
 if __name__ == '__main__':
    #Testing
    rules = Rules()
-   #test = rules.sentence_break("I want a program to add two numbers then multiply and subtract then multiply") # determine the greater of two objects add two numbers then multiply and subtract then multiply#then multiply then subtract and subtract then multiply then multiply 
-   rules.call_pro()
+   test = rules.sentence_break("I want a program to determine the lesser of two objects")#I want a program to add two numbers then multiply and subtract then multiply") # determine the greater of two objects add two numbers then multiply and subtract then multiply#then multiply then subtract and subtract then multiply then multiply 
+   #rules.call_pro()
 
 
                
