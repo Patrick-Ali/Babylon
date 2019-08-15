@@ -17,6 +17,7 @@ class Rules():
     file = ""
     mp = ""
     file_add = {}
+    res = ""
 
     #If user input after then split includes 'create API call' call API_Rules 
 
@@ -404,6 +405,7 @@ class Rules():
     def run_pro(self, file):
         result = self.write.call_py(file)
         print(result)
+        self.res = str(result)
         return result
     
     def checkFile(self, path, remove):

@@ -283,5 +283,23 @@ from TextAnalysis import TextAnalysis as ta
 #    test = "I want a program to add 1234567 variables together"
 #    assert holding == test
 
-
+# def test_call_pro(capsys):
+#    code = "3"
+#    test_call_input = [
+#       "test15,trial16",
+#       "1,2"
+#    ]
+#    rules9 = Rules.Rules()
+#    def mock_input_8(s):
+#       return test_call_input.pop(0)
+#    Rules.input = mock_input_8
+#    out, err = capsys.readouterr()
+#    test = Rules.Rules.call_pro(rules9)#sentence_break(rules5, "")
+#    res = rules9.res
+#    res = res.replace(" ", "")
+#    res = res.replace("\n", "")
+#    #print(mp)
+#    large = code.replace(" ", "")
+#    large = large.replace("\n", "")
+#    assert res == large
     
