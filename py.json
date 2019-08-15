@@ -256,9 +256,6 @@
             "return_response": "return response",
             "return_json": "return response.json()"
         },
-        "testing": {
-            "op": "test"
-        },
         "greater": {
             "name": "op_greater",
             "vars": "2",

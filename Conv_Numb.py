@@ -71,9 +71,6 @@ def getNum(num, last_num, cur_num, extra, last, next_num):
     return "Unknown Number"
 
 def regexe(text):
-    #x = re.findall("[1-9]x+", text)
-    #y = re.findall("\d+\sx{1}", text)
-    #hold = Conv_Numb.regexe("I want a program to add 12345 variables together.")
     z = re.findall("\d+\svariables{1}", text) 
     return z
 

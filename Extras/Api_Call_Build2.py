@@ -45,6 +45,8 @@ class API_Rules():
         program = ""
         for key in hold:
             if key in func_list:
+                print(key)
+                print(hold)
                 func = hold[key]
                 imp = func["import"]
                 if imp not in self.imports:
@@ -62,7 +64,7 @@ class API_Rules():
                 line_two = func["body"]
                 line_three = '"' + address + '"' + ", "
                 alt_three = "\"" + "url" + "\"" + ", "
-                
+                print("Alt_three ", alt_three)
 
                 if key in data_funcs:
                     data_query = input("This function can pass data as JSON, do you wish to pass data. \n Yes or No ")
@@ -88,6 +90,7 @@ class API_Rules():
                         temp_hold = func["data_json"]
                         temp_hold = temp_hold.replace("<data>", str(json.dumps(data)))
                         line_three += temp_hold + ", "
+                        print("Line three ", line_three)
                         params.append(data)
                         user_input.append("data")
                         temp_hold = func["data_json"]
@@ -115,9 +118,11 @@ class API_Rules():
                             print("Not recognised")
                             
                 if len(querys) > 0:
+                    print("Here q")
                     temp_hold = func["params"]
                     temp_hold = temp_hold.replace("<query>", str(querys))
                     line_three += temp_hold + ", "
+                    print("Line three ", line_three)
                     params.append(querys)
                     user_input.append("query")
                     temp_hold = func["params"]
@@ -144,10 +149,12 @@ class API_Rules():
                         else:
                             print("Not recognised")
                 if len(headers) > 0:
+                    print("Here h")
                     temp_hold = func["headers"]
                     temp_hold = temp_hold.replace("<head>", str(headers))
                     line_three += temp_hold + ", "
                     params.append(headers)
+                    print("Line three ", line_three)
                     user_input.append("head")
                     temp_hold = func["headers"]
                     temp_hold = temp_hold.replace("<head>", "head")
@@ -221,6 +228,8 @@ class API_Rules():
                     
                 line_param.strip()
                 line_three.strip()
+
+                print("Line three ", line_three)
                 
                 end_start = func["end"]
                 body_end = func["bod_end"]
@@ -246,10 +255,17 @@ class API_Rules():
                        + self.new_line + self.indent + self.indent + line_seven
                 
                 program += start + body + self.new_line + self.new_line 
-
+                #print("Line Param: " + line_param)
+                #print("Line 1: " + line_one)
+                #print("Line 2: " + line_two)
+                #print("Line 3: " + line_three)
+                #print("Line 4: " + line_four)
+                #print("Line 5: " + line_five)
+                #print("Line 6: " + line_six)
+                #print("Line 7: " + line_seven)
                 
         line_zero = ""
-
+        #count = 0
         imp_code = self.reader.getData("py", "import")
         for imp in self.imports:
             line_zero_hold = imp_code
@@ -262,7 +278,9 @@ class API_Rules():
 
         if write_conf.lower() == "yes":
             data = self.reader.loadData("apis")
+            #programs{"test":{"function":[]}}
             data[file] = file_add[file]
+            print(data)
             self.reader.addData("apis", data)
             self.write.write_line(file+".py", (line_zero + program))
             self.pro = line_zero + program 

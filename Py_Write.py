@@ -1,12 +1,6 @@
 from JSON import JSON
 
 import subprocess
-
-#Create function
-#Create variables
-#Create ability to perform operation
-#Create return statement
-
 class PyCreate():
 
     reader = JSON()
@@ -16,12 +10,10 @@ class PyCreate():
         new_line = "\n"
         line = ""
         params = []
-        #print(sample_params)
+        
         if count == 1:
             line = self.reader.getData("py", "function", "code")
             line = line.replace("<name>", name)
-            #print("param name: ")
-            #print(param_name)
             for p_name in param_name:
                 if p_name != "param_empty":
                     param = self.create_param(True, p_name)
@@ -37,9 +29,6 @@ class PyCreate():
             line = line.replace("<param>", param)
         
         else:
-            #print("Here 50")
-            #print("Vars " + str(var_count))
-            #print("Start " + str(var_count - para_count))
             start = var_count - para_count
             count_param = 1
             line = new_line + indent
@@ -52,50 +41,25 @@ class PyCreate():
                         params.append(param_name[start])
                     start += 1
                     count_param += 1
-            
-            #params.append("hold"+str((count-1)))
-            #Temp test
-            #params.append("param_2")
-            #params.append("extra"+str((count-1)))
-        #print("Line 1 " + line)
         line_two = self.create_body(operation, params)
-        ##If answer == True get_answer else get_return
         line_three = ''
-        #print("Line 2 " + line_two)
-        #print(ret)
         if ret == True:
-            #print("Here 40")
             line_three = self.create_return(operation)
-            #print("Line 3 " + line_three)
-            #text = line + new_line + indent + line_two + new_line + indent + line_three
             text = ""
             if extra_text != "":
-                #print("File " + file)
                 text = extra_text + line + new_line + indent + line_two + new_line + indent + line_three + new_line + new_line#"#New Line Test"
             else:
-                #print("File " + file)
                 text = line + new_line + indent + line_two + new_line + indent + line_three + new_line + new_line#"#New Line Test"
-            #self.write_line(file, text)
-            #print("Text " + text)
             return text
         else:
-            #print(count)
-            #print("No Return")
             line_three = self.get_answer(operation, count)
             text = ""
-            #print("Line 3 " + line_three)
             if extra_text != "":
-                #print("File " + file)
                 text = extra_text + line + new_line + indent + line_two + new_line + indent + line_three
             else:
                 text = line + new_line + indent + line_two + new_line + indent + line_three
-            #print("Text No Return " + text)
             return text
-        
-        #text = line + new_line + indent + line_two + new_line + indent + line_three
-
-        #self.write_line(file, text)
-        
+                
     def create_param(self, func_param, name, value = "[]"):
         param = name
         if not func_param:

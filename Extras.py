@@ -597,3 +597,122 @@
 
 "lesser": "function determines the lesser of two objects"'''
 
+'''
+
+print(temp)
+print("2 ", master_program)
+print("1 ", master_program)
+print("In 5 ", write_conf)
+print(master_program)
+
+
+#count_text = 0
+#extra_p = ""
+##Replace with regex check
+#for text in clean_text:
+    #if text == "by":
+        #extra_p = clean_text[count_text+1]
+    #count_text += 1
+
+print(possible_operations)
+print("In 2 ", params_text)
+print("Params ",  self.params_func)
+print("In 1 ", line_two)
+print(test)
+print(original_text)
+print(dom)
+print(op)
+print(func)
+print("Text ", text)
+print("Key ", key)
+print("Hold key ", key)
+print(len(operation))
+print("In 3 ", self.file)
+print("In 4 ", func_name)
+#print(confirm)
+#data[name] = description
+
+#x = re.findall("[1-9]x+", text)
+#y = re.findall("\d+\sx{1}", text)
+#hold = Conv_Numb.regexe("I want a program to add 12345 variables together.")
+
+print(dom_check)
+
+print(key)
+print(hold)
+print("Alt_three ", alt_three)
+print("Line three ", line_three)
+print("Here q")
+print("Line three ", line_three)
+print("Here h")
+print("Line three ", line_three)
+print("Line three ", line_three)
+#print("Line Param: " + line_param)
+#print("Line 1: " + line_one)
+#print("Line 2: " + line_two)
+#print("Line 3: " + line_three)
+#print("Line 4: " + line_four)
+#print("Line 5: " + line_five)
+#print("Line 6: " + line_six)
+#print("Line 7: " + line_seven)
+#count = 0
+#programs{"test":{"function":[]}}
+print(data)
+
+#print(sample_params)
+#print("param name: ")
+#print(param_name)
+#print("Here 50")
+#print("Vars " + str(var_count))
+#print("Start " + str(var_count - para_count))
+            
+#params.append("hold"+str((count-1)))
+#Temp test
+#params.append("param_2")
+#params.append("extra"+str((count-1)))
+#print("Line 1 " + line)
+#print("Line 2 " + line_two)
+#print(ret)
+#print("Line 3 " + line_three)
+#text = line + new_line + indent + line_two + new_line + indent + line_three
+#print("Here 40")
+#print("File " + file)
+#print("File " + file)
+#self.write_line(file, text)
+#print("Text " + text)
+#print(count)
+#print("No Return")
+#print("Line 3 " + line_three)
+#print("File " + file)
+#print("Text No Return " + text)
+#text = line + new_line + indent + line_two + new_line + indent + line_three
+
+#self.write_line(file, text)
+##If answer == True get_answer else get_return
+#Create function
+#Create variables
+#Create ability to perform operation
+#Create return statement
+
+
+
+'''
+
+# def run_program(self, name, params, func_name=None):
+    #     imp = self.write.create_import(name)
+    #     run = self.write.create_app_run_multi()
+    #     clas = name+"."
+    #     call = ""
+    #     if func_name is None:
+    #         call = self.write.create_call(name, params)
+    #     else:
+    #         call = self.write.create_call(func_name, params)
+    #     prin = self.write.create_print((clas+call))
+    #     indent = self.write.get_indent()
+    #     new_line = self.write.get_new_line()
+
+    #     line = imp + new_line + run + new_line + indent + prin
+
+    #     confirm = self.checkFile("./run_pro.py", True)
+
+    #     self.write.write_line("run_pro.py", line)

@@ -18,7 +18,6 @@ class Expands():
         op_name = input("What is the operation name? \n Name: ")
         op = input("What is the operation assembly instruction? Instructions: ")
         dom_check = self.rules.checkFile((dom_name + ".json"), False)
-        print(dom_check)
         if dom_check == 0:
             data = {op_name.lower():op.lower()}
             self.reader.addData(dom_name.lower(), data)
