@@ -15,17 +15,6 @@ class API_Rules():
     imports = []
     test_r = Rules()
     pro = ""
-    #sample_param = []
-    #params_func = []
-    #param_count = 0
-    #var_count = 0
-    #file = ""
-
-    #Import statements
-    #Get end for begining
-    #List of params for function
-    #Combine line 2 and 3 with line 2 ending
-    #Specifics
 
     def api_rule_test(self, sentence):
         hold =  sentence

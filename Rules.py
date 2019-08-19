@@ -89,7 +89,8 @@ class Rules():
                 
         write_conf = input("Do you want to write the program to file? \n Yes or No: ")
         
-        
+        print(master_program)
+
         if write_conf.lower() == "yes":
             self.add_program("test", "test")
             self.write.write_line(self.file+".py", master_program)
@@ -158,7 +159,7 @@ class Rules():
                         self.params_func.append(param)          
             if len(self.params_func) > 0:
                 hold = self.domain_analysis(specifics, self.params_func, text, self.sample_param, count, ret, program)
-                print(hold)
+                #print(hold)
                 return hold
                       
         elif len(possible_operations) >= 2:
@@ -382,7 +383,7 @@ class Rules():
 if __name__ == '__main__':
    #Testing
    rules = Rules()
-   test = rules.sentence_break("I want a program to determine the lesser of two objects")#I want a program to add two numbers then multiply and subtract then multiply") # determine the greater of two objects add two numbers then multiply and subtract then multiply#then multiply then subtract and subtract then multiply then multiply 
+   test = rules.sentence_break("I want a program to add two numbers together") #determine the equality of two objects")#"I want a program to add two numbers then multiply and subtract then multiply")#"I want a program to determine the lesser of two objects")#I want a program to add two numbers then multiply and subtract then multiply") # determine the greater of two objects add two numbers then multiply and subtract then multiply#then multiply then subtract and subtract then multiply then multiply 
    #rules.call_pro()
 
 

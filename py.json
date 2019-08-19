@@ -267,6 +267,12 @@
             "vars": "2",
             "code": "op_lesser = <var1> < <var2>",
             "return": "return op_lesser"
+        },
+        "equality": {
+            "name": "op_equality",
+            "vars": "2",
+            "code": "op_equality = <var1> == <var2>",
+            "return": "return op_equality"
         }
     }
 }
