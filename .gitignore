@@ -10,5 +10,5 @@ Testing/
 run_pro.py
 nltk_test*
 .pytest_cache/
-merge.txt
+./merge.txt
 Old_test/
